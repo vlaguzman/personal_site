@@ -19,7 +19,7 @@ export function Journey() {
         </p>
       </div>
       <div className="timeline">
-        {milestones.map((m) => (
+        {[...milestones].reverse().map((m) => (
           <Milestone key={m.id} milestone={m} />
         ))}
       </div>
