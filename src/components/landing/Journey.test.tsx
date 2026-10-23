@@ -22,6 +22,67 @@ describe("Journey", () => {
     }
   });
 
+  it("lists milestones from latest to earliest", () => {
+    const { container } = render(<Journey />);
+    const ids = [...container.querySelectorAll("article.milestone")].map((el) => el.id);
+    expect(ids).toEqual(milestones.map((m) => m.id).reverse());
+    expect(ids[0]).toBe("now");
+    expect(ids.at(-1)).toBe("year2010");
+  });
+
+  it("places each blog post under its venture", () => {
+    const { container } = render(<Journey />);
+    const titles = (id: string) =>
+      [...container.querySelectorAll(`#${id} details.blog-post summary`)].map((el) => el.textContent);
+    expect(titles("year2010")).toEqual([expect.stringContaining("12 cosas que aprendí de la quiebra de un restaurante")]);
+    expect(titles("year2011")).toEqual([expect.stringContaining("Ser emprendedor, una difícil pero excelente decisión")]);
+    expect(titles("year2017")).toEqual([
+      expect.stringContaining("7 puntos claves a la hora de montar un negocio de caja suscripción"),
+      expect.stringContaining("¿Y ahora te dedicas a vender cerveza?"),
+    ]);
+    expect(titles("year2014-fluvip")).toEqual([expect.stringContaining("Gracias FLUVIP")]);
+  });
+
+  it("renders blog post bodies in Spanish, after the other blocks of the milestone", () => {
+    const { container } = render(<Journey />);
+    const post = container.querySelector("#year2010 details.blog-post")!;
+    expect(post).toHaveAttribute("lang", "es");
+    expect(post.querySelectorAll("p").length).toBeGreaterThanOrEqual(12);
+    const story = container.querySelector("#year2014-fluvip .story")!;
+    expect(story.lastElementChild).toHaveClass("blog-posts");
+  });
+
+  it("renders a photo gallery under the right milestones", () => {
+    const { container } = render(<Journey />);
+    const count = (id: string) => container.querySelectorAll(`#${id} .gallery img`).length;
+    expect(count("year2010")).toBe(0);
+    expect(count("year2014-fluvip")).toBe(1);
+    expect(count("year2017")).toBe(9);
+    expect(count("year2022")).toBe(1);
+    expect(count("year2023-community")).toBe(1);
+    for (const img of container.querySelectorAll(".gallery img")) {
+      expect(img.getAttribute("alt"), img.getAttribute("src")!).toBeTruthy();
+      expect(img).toHaveAttribute("loading", "lazy");
+      expect(img.getAttribute("src")).toMatch(/^\/images\/journey\//);
+    }
+  });
+
+  it("shows a lone photo uncropped instead of as a grid cell", () => {
+    const { container } = render(<Journey />);
+    expect(container.querySelector("#year2022 .gallery")).toHaveClass("single");
+    expect(container.querySelector("#year2017 .gallery")).not.toHaveClass("single");
+  });
+
+  it("shows the gallery before the blog posts", () => {
+    const { container } = render(<Journey />);
+    const story = container.querySelector("#year2017 .story")!;
+    const kids = [...story.children];
+    const gallery = kids.findIndex((el) => el.classList.contains("gallery"));
+    expect(gallery).toBeGreaterThan(-1);
+    expect(gallery).toBeLessThan(kids.findIndex((el) => el.classList.contains("blog-posts")));
+    expect(story.lastElementChild).toHaveClass("blog-posts");
+  });
+
   it("marks only the Now milestone as current", () => {
     const { container } = render(<Journey />);
     const current = container.querySelectorAll("article.current");

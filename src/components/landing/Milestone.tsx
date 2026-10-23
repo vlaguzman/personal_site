@@ -82,6 +82,35 @@ function BlockView({ block }: { block: Block }) {
           </div>
         </div>
       );
+    case "gallery":
+      return (
+        <div className={block.images.length === 1 ? "gallery single" : "gallery"}>
+          {block.images.map((img) => (
+            <a key={img.src} href={img.src} target="_blank" rel="noopener noreferrer">
+              <img src={img.src} alt={img.alt} loading="lazy" />
+            </a>
+          ))}
+        </div>
+      );
+    case "posts":
+      return (
+        <div className="blog-posts">
+          <span className="eyebrow">{block.label}</span>
+          {block.items.map((post) => (
+            <details key={post.title} className="blog-post" lang="es">
+              <summary>
+                {post.title} <span>+</span>
+              </summary>
+              {post.sections.map((s, i) => (
+                <p key={i}>
+                  {s.heading && <strong>{s.heading} </strong>}
+                  {s.text}
+                </p>
+              ))}
+            </details>
+          ))}
+        </div>
+      );
     case "button":
       return (
         <a className="button" href={block.href} target="_blank" rel="noopener noreferrer">

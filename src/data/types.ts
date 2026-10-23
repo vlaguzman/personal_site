@@ -4,6 +4,13 @@ export type Role = { period: string; title: string; description: string };
 
 export type Venture = { href: string; name: string; note: string };
 
+export type PostSection = { heading?: string; text: string };
+
+/** A blog entry, written in Spanish. */
+export type Post = { title: string; sections: PostSection[] };
+
+export type GalleryImage = { src: string; alt: string };
+
 export type Block =
   | { kind: "paragraph"; text: string; variant?: "reflection" | "small" }
   | { kind: "facts"; items: Fact[] }
@@ -12,6 +19,8 @@ export type Block =
   | { kind: "origin"; href: string; label: string }
   | { kind: "ventureTree"; ariaLabel: string; root: { eyebrow: string; name: string; tagline: string }; ventures: Venture[]; experiments: { name: string; note: string } }
   | { kind: "yc"; label: string; season: string }
+  | { kind: "gallery"; images: GalleryImage[] }
+  | { kind: "posts"; label: string; items: Post[] }
   | { kind: "button"; label: string; href: string };
 
 export type Milestone = {

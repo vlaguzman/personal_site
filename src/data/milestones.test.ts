@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { milestones } from "./milestones";
 import type { Block } from "./types";
@@ -38,6 +40,21 @@ describe("milestones", () => {
     milestones.forEach((m) => m.blocks.forEach(collect));
     expect(hrefs.length).toBeGreaterThan(0);
     for (const href of hrefs) expect(ids).toContain(href.slice(1));
+  });
+
+  it("gives every blog post a title and body", () => {
+    const posts = milestones.flatMap((m) => m.blocks).flatMap((b) => (b.kind === "posts" ? b.items : []));
+    expect(posts).toHaveLength(5);
+    for (const post of posts) {
+      expect(post.title, post.title).not.toBe("");
+      expect(post.sections.length, post.title).toBeGreaterThan(0);
+    }
+  });
+
+  it("only references gallery images that exist in public/", () => {
+    const srcs = milestones.flatMap((m) => m.blocks).flatMap((b) => (b.kind === "gallery" ? b.images.map((i) => i.src) : []));
+    expect(srcs).toHaveLength(12);
+    for (const src of srcs) expect(existsSync(join("public", src)), src).toBe(true);
   });
 
   it("opens Gingga externally", () => {

@@ -1,4 +1,12 @@
-import type { Milestone } from "./types";
+import { beingAnEntrepreneur, fluvipThanks, funkyLessons, sellingBeer, subscriptionBoxPoints } from "./posts";
+import type { Milestone, Post } from "./types";
+
+const gallery = (...images: [file: string, alt: string][]) => ({
+  kind: "gallery" as const,
+  images: images.map(([file, alt]) => ({ src: `/images/journey/${file}`, alt })),
+});
+
+const posts = (...items: Post[]) => ({ kind: "posts" as const, label: "FROM MY BLOG · IN SPANISH", items });
 
 const p = (text: string, variant?: "reflection" | "small") => ({ kind: "paragraph" as const, text, variant });
 
@@ -12,6 +20,7 @@ export const milestones: Milestone[] = [
     blocks: [
       p("After graduating as a software engineer, while classmates were heading towards companies like Microsoft, I chose to co-found a small restaurant: Funky’s, in Chía, Colombia. It was an early lesson in how hard building a business can be, and how much it changes you."),
       p("I worked on the brand, business plan and sales strategies, alongside community management, website development and day-to-day operations."),
+      posts(funkyLessons),
     ],
   },
   {
@@ -23,6 +32,7 @@ export const milestones: Milestone[] = [
     blocks: [
       p("Conectando Mentes began as a proposal for a social network for entrepreneurs. I developed the brand, worked on sales and built the technical MVP of contactU, an application designed to make networking spaces more useful."),
       p("We created Mindup and Visionario workshops, taking the idea into an in-person format to validate it and learn from early adopters."),
+      posts(beingAnEntrepreneur),
     ],
   },
   {
@@ -69,6 +79,8 @@ export const milestones: Milestone[] = [
         summary: "Building for international growth",
         text: "The company raised US$4.5m. In three months, I delivered the technology requirements for the Spark acquisition in Brazil. Today, I remain a minority shareholder and am no longer operationally involved.",
       },
+      gallery(["fluvip-wayra.webp", "Presenting the FLUVIP founding team on stage at Wayra"]),
+      posts(fluvipThanks),
     ],
   },
   {
@@ -114,6 +126,18 @@ export const milestones: Milestone[] = [
         summary: "The lessons behind the business",
         text: "The pandemic hit the bar concept hard and the business eventually closed. The experience strengthened my approach to commercial validation and financial discipline.",
       },
+      gallery(
+        ["beer-happy-team.jpg", "The Beer Happy Club team toasting with craft beer in front of the club logo"],
+        ["beer-happy-box.jpg", "A Beer Happy Club box with four craft beers, a tasting guide and a membership card"],
+        ["beer-happy-night.jpg", "A Beer Happy Club box with Manigua craft beers at night"],
+        ["beer-happy-shipment.jpg", "A table full of Beer Happy Club boxes tied with red ribbons, ready to ship"],
+        ["ecommerce-award-2017.jpg", "The eCommerce Startup Competition award, Bogotá, 14 September 2017, in front of a Beer Happy box"],
+        ["puerto-cervecero-storefront.jpg", "The Puerto Cervecero beer market and pub storefront"],
+        ["puerto-cervecero-interior.jpg", "A crowded evening inside Puerto Cervecero, with the beer menu on the wall"],
+        ["puerto-cervecero-window.jpg", "People drinking craft beer, seen through the Puerto Cervecero window"],
+        ["puerto-cervecero-wall.jpg", "An Antaño craft beer under a wall quote at Puerto Cervecero"],
+      ),
+      posts(subscriptionBoxPoints, sellingBeer),
     ],
   },
   {
@@ -155,6 +179,7 @@ export const milestones: Milestone[] = [
     blocks: [
       p("HoyTrabajas joined Y Combinator’s Winter 2022 batch. The company raised US$5.5m in total, opening new possibilities for growth."),
       { kind: "yc", label: "Y Combinator", season: "WINTER 2022" },
+      gallery(["yc-sign.jpg", "The HoyTrabajas co-founders at the Y Combinator sign"]),
     ],
   },
   {
@@ -201,6 +226,7 @@ export const milestones: Milestone[] = [
         ],
       },
       p("Working with migrant entrepreneurs deepened my commitment to combining technology, education and practical support. Talent is often already there; what people need is a chance to recognise it, develop it and put it to work."),
+      gallery(["consulate-london.jpg", "A selfie with the audience at an entrepreneurship event of the Colombian Consulate in London"]),
     ],
   },
   {
