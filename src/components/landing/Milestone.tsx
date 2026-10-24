@@ -1,5 +1,8 @@
 import { Fragment } from "react";
+import Link from "next/link";
+import { ESSAYS } from "@/data/essays";
 import type { Block, Milestone as MilestoneData } from "@/data/types";
+import { Gallery } from "./Gallery";
 
 function BlockView({ block }: { block: Block }) {
   switch (block.kind) {
@@ -83,32 +86,20 @@ function BlockView({ block }: { block: Block }) {
         </div>
       );
     case "gallery":
-      return (
-        <div className={block.images.length === 1 ? "gallery single" : "gallery"}>
-          {block.images.map((img) => (
-            <a key={img.src} href={img.src} target="_blank" rel="noopener noreferrer">
-              <img src={img.src} alt={img.alt} loading="lazy" />
-            </a>
-          ))}
-        </div>
-      );
+      return <Gallery images={block.images} />;
     case "posts":
       return (
         <div className="blog-posts">
           <span className="eyebrow">{block.label}</span>
-          {block.items.map((post) => (
-            <details key={post.title} className="blog-post" lang="es">
-              <summary>
-                {post.title} <span>+</span>
-              </summary>
-              {post.sections.map((s, i) => (
-                <p key={i}>
-                  {s.heading && <strong>{s.heading} </strong>}
-                  {s.text}
-                </p>
-              ))}
-            </details>
-          ))}
+          {block.items.map((post) => {
+            const essay = ESSAYS.find((e) => e.title === post.title);
+            if (!essay) throw new Error(`Timeline post "${post.title}" has no matching essay`);
+            return (
+              <Link key={essay.slug} href={`/essays/${essay.slug}`} className="blog-post" lang={essay.lang}>
+                {post.title} <span aria-hidden="true">→</span>
+              </Link>
+            );
+          })}
         </div>
       );
     case "button":
@@ -120,9 +111,21 @@ function BlockView({ block }: { block: Block }) {
   }
 }
 
+function Learned({ text }: { text: string }) {
+  return (
+    <aside className="learned" aria-label="What I learned">
+      <span className="eyebrow">What I learned</span>
+      <p>{text}</p>
+    </aside>
+  );
+}
+
 export function Milestone({ milestone }: { milestone: MilestoneData }) {
-  const { id, year, yearIsRange, period, eyebrow, titleLines, titleEmphasis, current, companyBuilder, blocks } =
+  const { id, year, yearIsRange, period, eyebrow, titleLines, titleEmphasis, current, companyBuilder, learned, blocks } =
     milestone;
+  // The lesson closes the story, ahead of any photos and blog posts.
+  const mediaAt = blocks.findIndex((b) => b.kind === "gallery" || b.kind === "posts");
+  const learnedAt = mediaAt === -1 ? blocks.length : mediaAt;
   const className = ["milestone", companyBuilder && "company-builder", current && "current"]
     .filter(Boolean)
     .join(" ");
@@ -132,7 +135,7 @@ export function Milestone({ milestone }: { milestone: MilestoneData }) {
       <div className={yearIsRange ? "year words" : "year"}>
         {year}
         <span>
-          {current && <i />}
+          {current && <i aria-hidden="true" />}
           {current && " "}
           {period}
         </span>
@@ -154,7 +157,16 @@ export function Milestone({ milestone }: { milestone: MilestoneData }) {
             </>
           )}
         </h3>
-        {blocks.map((block, i) => (blocks[0]?.kind === "origin" && i === 0 ? null : <BlockView key={i} block={block} />))}
+        {blocks.map((block, i) => {
+          if (blocks[0]?.kind === "origin" && i === 0) return null;
+          return (
+            <Fragment key={i}>
+              {i === learnedAt && learned && <Learned text={learned} />}
+              <BlockView block={block} />
+            </Fragment>
+          );
+        })}
+        {learned && learnedAt === blocks.length && <Learned text={learned} />}
       </div>
     </article>
   );

@@ -57,6 +57,17 @@ describe("milestones", () => {
     for (const src of srcs) expect(existsSync(join("public", src)), src).toBe(true);
   });
 
+  it("only adds a short `learned` lesson where the copy already states one", () => {
+    const withLesson = milestones.filter((m) => m.learned !== undefined);
+    expect(withLesson.length).toBeGreaterThanOrEqual(5);
+    for (const m of withLesson) {
+      expect(m.learned!.trim(), m.id).not.toBe("");
+      expect(m.learned!.length, m.id).toBeLessThanOrEqual(200);
+    }
+    expect(milestones.find((m) => m.id === "now")?.learned).toBeUndefined();
+    expect(milestones.find((m) => m.id === "year2012")?.learned).toBeUndefined();
+  });
+
   it("opens Gingga externally", () => {
     const button = milestones.flatMap((m) => m.blocks).find((b) => b.kind === "button");
     expect(button).toMatchObject({ href: "https://gingga.com/" });

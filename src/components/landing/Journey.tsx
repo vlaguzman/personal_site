@@ -1,5 +1,7 @@
+import { ARC } from "@/data/arc";
 import { milestones } from "@/data/milestones";
 import { Milestone } from "./Milestone";
+import { ScrollReveal } from "./ScrollReveal";
 
 export function Journey() {
   return (
@@ -18,11 +20,23 @@ export function Journey() {
           lives while others, equally talented, never get the chance?
         </p>
       </div>
+      <ol className="arc" aria-label="The arc of the journey">
+        {ARC.map((stage, i) => (
+          <li key={stage.label}>
+            <span className="arc-index" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <strong>{stage.label}</strong>
+            <p>{stage.text}</p>
+          </li>
+        ))}
+      </ol>
       <div className="timeline">
         {[...milestones].reverse().map((m) => (
           <Milestone key={m.id} milestone={m} />
         ))}
       </div>
+      <ScrollReveal selector="#journey .milestone, #journey .arc li" />
     </section>
   );
 }

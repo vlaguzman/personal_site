@@ -5,7 +5,7 @@ export function Talks() {
     <section id="talks" className="talks wrap">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">03 / TALKS &amp; EVENTS</span>
+          <span className="eyebrow">04 / TALKS &amp; EVENTS</span>
           <h2>
             Ideas worth
             <br />

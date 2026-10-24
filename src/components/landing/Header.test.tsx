@@ -25,4 +25,25 @@ describe("Header", () => {
     const link = screen.getByRole("link", { name: /Let’s connect/ });
     expect(link.querySelector("[aria-hidden='true']")).toHaveTextContent("↗");
   });
+
+  it("links to the essays hub with a plain route", () => {
+    render(<Header />);
+    expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("href", "/essays");
+  });
+
+  describe("on a sub-page", () => {
+    it("sends home anchors back to the home page", () => {
+      render(<Header currentPath="/essays" />);
+      expect(screen.getByRole("link", { name: /Vladimir Guzmán/ })).toHaveAttribute("href", "/#home");
+      expect(screen.getByRole("link", { name: /Let’s connect/ })).toHaveAttribute("href", "/#contact");
+      expect(screen.getByRole("link", { name: /The journey/ })).toHaveAttribute("href", "/#journey");
+      expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("href", "/essays");
+    });
+
+    it("marks the current section with aria-current", () => {
+      render(<Header currentPath="/essays" />);
+      expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("aria-current", "page");
+      expect(screen.getByRole("link", { name: /Let’s connect/ })).not.toHaveAttribute("aria-current");
+    });
+  });
 });

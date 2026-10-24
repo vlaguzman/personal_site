@@ -33,7 +33,7 @@ describe("Journey", () => {
   it("places each blog post under its venture", () => {
     const { container } = render(<Journey />);
     const titles = (id: string) =>
-      [...container.querySelectorAll(`#${id} details.blog-post summary`)].map((el) => el.textContent);
+      [...container.querySelectorAll(`#${id} a.blog-post`)].map((el) => el.textContent);
     expect(titles("year2010")).toEqual([expect.stringContaining("12 cosas que aprendí de la quiebra de un restaurante")]);
     expect(titles("year2011")).toEqual([expect.stringContaining("Ser emprendedor, una difícil pero excelente decisión")]);
     expect(titles("year2017")).toEqual([
@@ -43,11 +43,19 @@ describe("Journey", () => {
     expect(titles("year2014-fluvip")).toEqual([expect.stringContaining("Gracias FLUVIP")]);
   });
 
-  it("renders blog post bodies in Spanish, after the other blocks of the milestone", () => {
+  it("links each blog post to its in-site essay instead of inlining the body", () => {
     const { container } = render(<Journey />);
-    const post = container.querySelector("#year2010 details.blog-post")!;
+    const post = container.querySelector("#year2010 a.blog-post")!;
+    expect(post).toHaveAttribute("href", "/essays/lecciones-quiebra-restaurante");
     expect(post).toHaveAttribute("lang", "es");
-    expect(post.querySelectorAll("p").length).toBeGreaterThanOrEqual(12);
+    expect(container.querySelectorAll("details.blog-post")).toHaveLength(0);
+    const hrefs = [...container.querySelectorAll("a.blog-post")].map((a) => a.getAttribute("href"));
+    expect(hrefs).toHaveLength(5);
+    hrefs.forEach((h) => expect(h).toMatch(/^\/essays\/[a-z-]+$/));
+  });
+
+  it("keeps the blog posts as the last block of the milestone story", () => {
+    const { container } = render(<Journey />);
     const story = container.querySelector("#year2014-fluvip .story")!;
     expect(story.lastElementChild).toHaveClass("blog-posts");
   });
@@ -122,5 +130,44 @@ describe("Journey", () => {
     const { container } = render(<Journey />);
     expect(container.querySelector("#year2012 .year")).toHaveClass("words");
     expect(container.querySelector("#year2010 .year")).not.toHaveClass("words");
+  });
+
+  it("introduces the narrative arc from developer to AI builder, in order", () => {
+    render(<Journey />);
+    const arc = screen.getByRole("list", { name: "The arc of the journey" });
+    const labels = [...arc.querySelectorAll("li strong")].map((el) => el.textContent);
+    expect(labels).toEqual(["Developer", "Product", "Founder", "AI builder"]);
+  });
+
+  it("renders the learned callout only for milestones that define it, before gallery and posts", () => {
+    const { container } = render(<Journey />);
+    const callouts = container.querySelectorAll("aside.learned");
+    expect(callouts).toHaveLength(milestones.filter((m) => m.learned).length);
+    for (const m of milestones) {
+      const el = container.querySelector(`#${m.id} aside.learned`);
+      if (!m.learned) {
+        expect(el, m.id).toBeNull();
+        continue;
+      }
+      expect(el).toHaveTextContent("What I learned");
+      expect(el).toHaveTextContent(m.learned);
+    }
+    const story = container.querySelector("#year2017 .story")!;
+    const kids = [...story.children];
+    const learned = kids.findIndex((el) => el.classList.contains("learned"));
+    expect(learned).toBeGreaterThan(-1);
+    expect(learned).toBeLessThan(kids.findIndex((el) => el.classList.contains("gallery")));
+  });
+
+  it("wraps gallery photos in buttons that open the lightbox", () => {
+    const { container } = render(<Journey />);
+    expect(container.querySelectorAll(".gallery img")).toHaveLength(12);
+    expect(container.querySelectorAll(".gallery button img")).toHaveLength(12);
+    expect(container.querySelectorAll(".gallery a")).toHaveLength(0);
+  });
+
+  it("gives the Now milestone a labelled marker for the accent treatment", () => {
+    const { container } = render(<Journey />);
+    expect(container.querySelector("#now .year i")).toHaveAttribute("aria-hidden", "true");
   });
 });
