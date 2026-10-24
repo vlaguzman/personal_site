@@ -1,12 +1,3 @@
-import { milestones as allMilestones } from "./milestones";
-import type { Milestone } from "./types";
-
-/** Anchor of the most recent milestone that carries blog posts; falls back to the journey section. */
-export function getLatestEssayHref(list: readonly Milestone[] = allMilestones): string {
-  const latest = list.filter((m) => m.blocks.some((b) => b.kind === "posts")).at(-1);
-  return latest ? `#${latest.id}` : "#journey";
-}
-
 export const HERO = {
   eyebrow: "COLOMBIAN ROOTS. LONDON CHAPTER.",
   headlineLines: ["Builder.", "Founder."],
@@ -19,6 +10,6 @@ export const HERO = {
     width: 2000,
     height: 1500,
   },
-  primaryCta: { label: "Read my latest essay", href: getLatestEssayHref() },
+  primaryCta: { label: "Read my essays", href: "/essays" },
   secondaryCta: { label: "Work with me", href: "#contact" },
 } as const;

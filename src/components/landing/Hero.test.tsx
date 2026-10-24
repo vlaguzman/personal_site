@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { getLatestEssayHref } from "@/data/hero";
 import { Hero } from "./Hero";
 
 describe("Hero", () => {
@@ -21,10 +20,10 @@ describe("Hero", () => {
     expect(img.getAttribute("src")).toContain("hero-cambridge-talk.jpg");
   });
 
-  it("has a primary CTA to the latest essay and a secondary CTA to contact", () => {
+  it("has a primary CTA to the essays hub and a secondary CTA to contact", () => {
     render(<Hero />);
-    const primary = screen.getByRole("link", { name: /Read my latest essay/ });
-    expect(primary).toHaveAttribute("href", getLatestEssayHref());
+    const primary = screen.getByRole("link", { name: /Read my essays/ });
+    expect(primary).toHaveAttribute("href", "/essays");
     expect(primary).toHaveClass("cta-primary");
     const secondary = screen.getByRole("link", { name: /Work with me/ });
     expect(secondary).toHaveAttribute("href", "#contact");

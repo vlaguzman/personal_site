@@ -49,3 +49,16 @@ export type Belief = { title: string; text: string };
 
 /** A stage of the narrative arc shown above the timeline. */
 export type ArcStage = { label: string; text: string };
+
+export type Topic = "Startups" | "Product" | "Technology" | "Strategy" | "Fundraising";
+
+/** An essay published on the site. `sections` is the full body, in the language given by `lang`. */
+export type Essay = {
+  slug: string;
+  title: string;
+  /** Omitted when the title and body do not clearly belong to one topic. */
+  topic?: Topic;
+  lang: "es" | "en";
+  sections: PostSection[];
+  image?: { src: string; alt: string; width: number; height: number };
+};

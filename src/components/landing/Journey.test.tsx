@@ -33,7 +33,7 @@ describe("Journey", () => {
   it("places each blog post under its venture", () => {
     const { container } = render(<Journey />);
     const titles = (id: string) =>
-      [...container.querySelectorAll(`#${id} details.blog-post summary`)].map((el) => el.textContent);
+      [...container.querySelectorAll(`#${id} a.blog-post`)].map((el) => el.textContent);
     expect(titles("year2010")).toEqual([expect.stringContaining("12 cosas que aprendí de la quiebra de un restaurante")]);
     expect(titles("year2011")).toEqual([expect.stringContaining("Ser emprendedor, una difícil pero excelente decisión")]);
     expect(titles("year2017")).toEqual([
@@ -43,11 +43,19 @@ describe("Journey", () => {
     expect(titles("year2014-fluvip")).toEqual([expect.stringContaining("Gracias FLUVIP")]);
   });
 
-  it("renders blog post bodies in Spanish, after the other blocks of the milestone", () => {
+  it("links each blog post to its in-site essay instead of inlining the body", () => {
     const { container } = render(<Journey />);
-    const post = container.querySelector("#year2010 details.blog-post")!;
+    const post = container.querySelector("#year2010 a.blog-post")!;
+    expect(post).toHaveAttribute("href", "/essays/lecciones-quiebra-restaurante");
     expect(post).toHaveAttribute("lang", "es");
-    expect(post.querySelectorAll("p").length).toBeGreaterThanOrEqual(12);
+    expect(container.querySelectorAll("details.blog-post")).toHaveLength(0);
+    const hrefs = [...container.querySelectorAll("a.blog-post")].map((a) => a.getAttribute("href"));
+    expect(hrefs).toHaveLength(5);
+    hrefs.forEach((h) => expect(h).toMatch(/^\/essays\/[a-z-]+$/));
+  });
+
+  it("keeps the blog posts as the last block of the milestone story", () => {
+    const { container } = render(<Journey />);
     const story = container.querySelector("#year2014-fluvip .story")!;
     expect(story.lastElementChild).toHaveClass("blog-posts");
   });

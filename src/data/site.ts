@@ -11,6 +11,7 @@ export const NAV_LINKS = [
   { href: "#journey", label: "The journey" },
   { href: "#now", label: "Now" },
   { href: "#talks", label: "Talks & events" },
+  { href: "/essays", label: "Essays" },
   { href: "#contact", label: "Let’s connect" },
 ] as const;
 
@@ -24,3 +25,9 @@ export const TALK = {
     "Unlocking Human Potential in the Age of AI, Vladimir Guzmán Mendoza. Clare Hall Cambridge and Hero Amazonia. Conference 2026.",
   themes: ["Entrepreneurship", "AI & adaptation", "Human potential"],
 } as const;
+
+/**
+ * Newsletter service. There is no backend yet: while `endpoint` is null the
+ * signup block shows a mailto call to action instead of a form.
+ */
+export const NEWSLETTER: { endpoint: string | null } = { endpoint: null };

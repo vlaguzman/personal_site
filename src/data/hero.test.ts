@@ -1,17 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { HERO, getLatestEssayHref } from "./hero";
-import { milestones } from "./milestones";
+import { HERO } from "./hero";
 
 describe("hero data", () => {
-  it("points the essay CTA at the latest milestone that has blog posts", () => {
-    const withPosts = milestones.filter((m) => m.blocks.some((b) => b.kind === "posts"));
-    const href = getLatestEssayHref();
-    expect(href).toBe(`#${withPosts.at(-1)!.id}`);
-    expect(milestones.map((m) => m.id)).toContain(href.slice(1));
-  });
-
-  it("falls back to the journey anchor when there are no posts", () => {
-    expect(getLatestEssayHref([])).toBe("#journey");
+  it("points the essay CTA at the essays hub", () => {
+    expect(HERO.primaryCta).toEqual({ label: "Read my essays", href: "/essays" });
   });
 
   it("introduces him by his former CTO roles", () => {
