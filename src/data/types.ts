@@ -38,5 +38,14 @@ export type Milestone = {
   current?: boolean;
   /** Dfounders milestone gets the bigger company-builder marker. */
   companyBuilder?: boolean;
+  /** One lesson, paraphrased from what the milestone copy already says. Omit when the copy states none. */
+  learned?: string;
   blocks: Block[];
 };
+
+export type Credential = { value: string; label: string };
+
+export type Belief = { title: string; text: string };
+
+/** A stage of the narrative arc shown above the timeline. */
+export type ArcStage = { label: string; text: string };

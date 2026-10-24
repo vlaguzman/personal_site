@@ -1,34 +1,41 @@
+import Image from "next/image";
+import { Fragment } from "react";
+import { HERO } from "@/data/hero";
+
 export function Hero() {
   return (
     <section id="home" className="hero">
-      <div className="hero-top">
-        <span className="eyebrow">COLOMBIAN ROOTS. LONDON CHAPTER.</span>
-        <span className="edition">A CONTINUING STORY / 01</span>
+      <div className="hero-media">
+        <Image
+          className="hero-photo"
+          src={HERO.photo.src}
+          alt={HERO.photo.alt}
+          width={HERO.photo.width}
+          height={HERO.photo.height}
+          sizes="(max-width: 760px) 100vw, 60vw"
+          priority
+        />
       </div>
-      <h1>
-        Building businesses.
-        <br />
-        Connecting people.
-        <br />
-        <em>Creating possibility.</em>
-      </h1>
-      <div className="hero-bottom">
-        <p>
-          I’m Vladimir, an entrepreneur and software engineer.
-          <br />
-          My purpose is to help entrepreneurs make a living
-          <br className="desktop" /> from their passion.
-        </p>
-        <a className="circle-link" href="#journey">
-          <span>Explore my journey</span>
-          <b aria-hidden="true">↓</b>
-        </a>
-      </div>
-      <div className="hero-rule">
-        <span>PRODUCT</span>
-        <span>TECHNOLOGY</span>
-        <span>ENTREPRENEURSHIP</span>
-        <span>COMMUNITY</span>
+      <div className="hero-inner">
+        <span className="eyebrow">{HERO.eyebrow}</span>
+        <h1>
+          {HERO.headlineLines.map((line) => (
+            <Fragment key={line}>
+              {line}
+              <br />
+            </Fragment>
+          ))}
+          <em>{HERO.headlineEmphasis}</em>
+        </h1>
+        <p className="hero-lead">{HERO.subheadline}</p>
+        <div className="hero-actions">
+          <a className="cta-primary" href={HERO.primaryCta.href}>
+            {HERO.primaryCta.label} <span aria-hidden="true">→</span>
+          </a>
+          <a className="cta-secondary" href={HERO.secondaryCta.href}>
+            {HERO.secondaryCta.label}
+          </a>
+        </div>
       </div>
     </section>
   );

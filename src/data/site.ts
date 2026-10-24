@@ -2,7 +2,7 @@ export const SITE = {
   title: "Vladimir Guzmán | A builder’s journey",
   description:
     "Vladimir Guzmán. Colombian entrepreneur, software engineer and founder of Gingga. A journey through technology, entrepreneurship and community.",
-  themeColor: "#192f34",
+  themeColor: "#0F1F18",
   email: "guzman.vla@gmail.com",
   linkedin: "https://www.linkedin.com/in/vlaguzman/",
 } as const;

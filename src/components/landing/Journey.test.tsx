@@ -123,4 +123,43 @@ describe("Journey", () => {
     expect(container.querySelector("#year2012 .year")).toHaveClass("words");
     expect(container.querySelector("#year2010 .year")).not.toHaveClass("words");
   });
+
+  it("introduces the narrative arc from developer to AI builder, in order", () => {
+    render(<Journey />);
+    const arc = screen.getByRole("list", { name: "The arc of the journey" });
+    const labels = [...arc.querySelectorAll("li strong")].map((el) => el.textContent);
+    expect(labels).toEqual(["Developer", "Product", "Founder", "AI builder"]);
+  });
+
+  it("renders the learned callout only for milestones that define it, before gallery and posts", () => {
+    const { container } = render(<Journey />);
+    const callouts = container.querySelectorAll("aside.learned");
+    expect(callouts).toHaveLength(milestones.filter((m) => m.learned).length);
+    for (const m of milestones) {
+      const el = container.querySelector(`#${m.id} aside.learned`);
+      if (!m.learned) {
+        expect(el, m.id).toBeNull();
+        continue;
+      }
+      expect(el).toHaveTextContent("What I learned");
+      expect(el).toHaveTextContent(m.learned);
+    }
+    const story = container.querySelector("#year2017 .story")!;
+    const kids = [...story.children];
+    const learned = kids.findIndex((el) => el.classList.contains("learned"));
+    expect(learned).toBeGreaterThan(-1);
+    expect(learned).toBeLessThan(kids.findIndex((el) => el.classList.contains("gallery")));
+  });
+
+  it("wraps gallery photos in buttons that open the lightbox", () => {
+    const { container } = render(<Journey />);
+    expect(container.querySelectorAll(".gallery img")).toHaveLength(12);
+    expect(container.querySelectorAll(".gallery button img")).toHaveLength(12);
+    expect(container.querySelectorAll(".gallery a")).toHaveLength(0);
+  });
+
+  it("gives the Now milestone a labelled marker for the accent treatment", () => {
+    const { container } = render(<Journey />);
+    expect(container.querySelector("#now .year i")).toHaveAttribute("aria-hidden", "true");
+  });
 });

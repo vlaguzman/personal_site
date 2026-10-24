@@ -1,25 +1,38 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { getLatestEssayHref } from "@/data/hero";
 import { Hero } from "./Hero";
 
 describe("Hero", () => {
-  it("renders the headline and the home anchor", () => {
+  it("renders the builder headline and the home anchor", () => {
     const { container } = render(<Hero />);
     expect(container.querySelector("section#home")).not.toBeNull();
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Building businesses.Connecting people.Creating possibility.",
-    );
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Builder.Founder.YC alumnus.");
   });
 
-  it("links to the journey section", () => {
+  it("introduces him by his former CTO roles", () => {
     render(<Hero />);
-    expect(screen.getByRole("link", { name: /Explore my journey/ })).toHaveAttribute("href", "#journey");
+    expect(screen.getByText(/Former CTO at HoyTrabajas\.com \(YC W22\) & FLUVIP/)).toBeInTheDocument();
   });
 
-  it("lists the four focus areas", () => {
+  it("shows the Cambridge talk photo with a meaningful alt text", () => {
     render(<Hero />);
-    for (const label of ["PRODUCT", "TECHNOLOGY", "ENTREPRENEURSHIP", "COMMUNITY"]) {
-      expect(screen.getByText(label)).toBeInTheDocument();
-    }
+    const img = screen.getByRole("img", { name: "Vladimir Guzmán presenting at Clare Hall, Cambridge" });
+    expect(img.getAttribute("src")).toContain("hero-cambridge-talk.jpg");
+  });
+
+  it("has a primary CTA to the latest essay and a secondary CTA to contact", () => {
+    render(<Hero />);
+    const primary = screen.getByRole("link", { name: /Read my latest essay/ });
+    expect(primary).toHaveAttribute("href", getLatestEssayHref());
+    expect(primary).toHaveClass("cta-primary");
+    const secondary = screen.getByRole("link", { name: /Work with me/ });
+    expect(secondary).toHaveAttribute("href", "#contact");
+    expect(secondary).toHaveClass("cta-secondary");
+  });
+
+  it("does not use consultant language", () => {
+    const { container } = render(<Hero />);
+    expect(container.textContent).not.toMatch(/consultant|expert/i);
   });
 });
