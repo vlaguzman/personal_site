@@ -11,7 +11,7 @@ export function getCredentials(now: Date = new Date()): Credential[] {
     { value: "YC W22", label: "HoyTrabajas, Y Combinator Winter 2022" },
     { value: String(now.getFullYear() - startYear), label: `years building, since ${startYear}` },
     { value: "50,000", label: "monthly users supported at HoyTrabajas" },
-    { value: "20", label: "developers led at FLUVIP" },
+    { value: "20+", label: "different companies where I have managed teams" },
     { value: "270+", label: "entrepreneurs reached at the Colombian Consulate in London" },
   ];
 }
