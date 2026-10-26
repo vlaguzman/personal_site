@@ -43,7 +43,7 @@ function BlockView({ block }: { block: Block }) {
     case "origin":
       return (
         <a className="venture-origin" href={block.href}>
-          <span aria-hidden="true">↳</span> {block.label}
+          <span aria-hidden="true">↱</span> {block.label}
         </a>
       );
     case "ventureTree":
@@ -62,7 +62,7 @@ function BlockView({ block }: { block: Block }) {
                     <strong>{v.name}</strong>
                     <small>{v.note}</small>
                   </span>
-                  <b aria-hidden="true">↓</b>
+                  <b aria-hidden="true">↑</b>
                 </a>
               </li>
             ))}
