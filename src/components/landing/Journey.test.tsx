@@ -126,6 +126,18 @@ describe("Journey", () => {
     expect(button).toHaveAttribute("rel", "noopener noreferrer");
   });
 
+  it("embeds the Consulate documentary from privacy-friendly YouTube", () => {
+    const { container } = render(<Journey />);
+    const frame = container.querySelector("#year2023-community iframe.video-embed");
+    expect(frame).toHaveAttribute("src", "https://www.youtube-nocookie.com/embed/mp1-CpcOQUE");
+    expect(frame).toHaveAttribute("title", expect.stringMatching(/documentary/i));
+    expect(frame).toHaveAttribute("loading", "lazy");
+    expect(screen.getByRole("link", { name: /Watch on YouTube/ })).toHaveAttribute(
+      "href",
+      "https://www.youtube.com/watch?v=mp1-CpcOQUE",
+    );
+  });
+
   it("uses the smaller year style for ranges", () => {
     const { container } = render(<Journey />);
     expect(container.querySelector("#year2012 .year")).toHaveClass("words");

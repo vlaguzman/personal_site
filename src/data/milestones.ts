@@ -233,6 +233,7 @@ export const milestones: Milestone[] = [
         ],
       },
       p("Working with migrant entrepreneurs deepened my commitment to combining technology, education and practical support. Talent is often already there; what people need is a chance to recognise it, develop it and put it to work."),
+      { kind: "video" as const, youtubeId: "mp1-CpcOQUE", title: "Documentary of the first Entrepreneurship programme at the Colombian Consulate in London, 2023" },
       gallery(["consulate-london.jpg", "A selfie with the audience at an entrepreneurship event of the Colombian Consulate in London"]),
     ],
   },
