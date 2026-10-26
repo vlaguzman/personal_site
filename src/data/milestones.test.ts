@@ -53,7 +53,7 @@ describe("milestones", () => {
 
   it("only references gallery images that exist in public/", () => {
     const srcs = milestones.flatMap((m) => m.blocks).flatMap((b) => (b.kind === "gallery" ? b.images.map((i) => i.src) : []));
-    expect(srcs).toHaveLength(12);
+    expect(srcs).toHaveLength(13);
     for (const src of srcs) expect(existsSync(join("public", src)), src).toBe(true);
   });
 

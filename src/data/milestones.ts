@@ -163,6 +163,7 @@ export const milestones: Milestone[] = [
         ],
       },
       p("I led the technical team, coordinated development across the business, managed technology risks and explored opportunities for growth and monetisation. The mission also sharpened my belief that learning begins with awareness: people need to see how a new skill could change their lives."),
+      gallery(["hoytrabajas-team.jpg", "The HoyTrabajas team posing together on a stone wall, wearing HoyTrabajas hoodies"]),
     ],
   },
   {
