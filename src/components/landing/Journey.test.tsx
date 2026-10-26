@@ -66,8 +66,9 @@ describe("Journey", () => {
     expect(count("year2010")).toBe(0);
     expect(count("year2014-fluvip")).toBe(1);
     expect(count("year2017")).toBe(9);
+    expect(count("year2019")).toBe(1);
     expect(count("year2022")).toBe(1);
-    expect(count("year2023-community")).toBe(1);
+    expect(count("year2023-community")).toBe(4);
     for (const img of container.querySelectorAll(".gallery img")) {
       expect(img.getAttribute("alt"), img.getAttribute("src")!).toBeTruthy();
       expect(img).toHaveAttribute("loading", "lazy");
@@ -126,6 +127,18 @@ describe("Journey", () => {
     expect(button).toHaveAttribute("rel", "noopener noreferrer");
   });
 
+  it("embeds the Consulate documentary from privacy-friendly YouTube", () => {
+    const { container } = render(<Journey />);
+    const frame = container.querySelector("#year2023-community iframe.video-embed");
+    expect(frame).toHaveAttribute("src", "https://www.youtube-nocookie.com/embed/mp1-CpcOQUE");
+    expect(frame).toHaveAttribute("title", expect.stringMatching(/documentary/i));
+    expect(frame).toHaveAttribute("loading", "lazy");
+    expect(screen.getByRole("link", { name: /Watch on YouTube/ })).toHaveAttribute(
+      "href",
+      "https://www.youtube.com/watch?v=mp1-CpcOQUE",
+    );
+  });
+
   it("uses the smaller year style for ranges", () => {
     const { container } = render(<Journey />);
     expect(container.querySelector("#year2012 .year")).toHaveClass("words");
@@ -161,8 +174,8 @@ describe("Journey", () => {
 
   it("wraps gallery photos in buttons that open the lightbox", () => {
     const { container } = render(<Journey />);
-    expect(container.querySelectorAll(".gallery img")).toHaveLength(12);
-    expect(container.querySelectorAll(".gallery button img")).toHaveLength(12);
+    expect(container.querySelectorAll(".gallery img")).toHaveLength(16);
+    expect(container.querySelectorAll(".gallery button img")).toHaveLength(16);
     expect(container.querySelectorAll(".gallery a")).toHaveLength(0);
   });
 

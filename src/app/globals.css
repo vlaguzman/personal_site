@@ -1183,6 +1183,25 @@ footer {
 /* ==========================================================================
    Gallery (bento grid) and lightbox
    ========================================================================== */
+.video {
+  margin: 38px 0;
+  max-width: 760px;
+}
+
+.video-embed {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 14px;
+  background: var(--line);
+}
+
+.video figcaption {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

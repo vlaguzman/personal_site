@@ -62,7 +62,7 @@ function BlockView({ block }: { block: Block }) {
                     <strong>{v.name}</strong>
                     <small>{v.note}</small>
                   </span>
-                  <b aria-hidden="true">↓</b>
+                  <b aria-hidden="true">↑</b>
                 </a>
               </li>
             ))}
@@ -102,6 +102,24 @@ function BlockView({ block }: { block: Block }) {
           })}
         </div>
       );
+    case "video":
+      return (
+        <figure className="video">
+          <iframe
+            className="video-embed"
+            src={`https://www.youtube-nocookie.com/embed/${block.youtubeId}`}
+            title={block.title}
+            loading="lazy"
+            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+          <figcaption>
+            <a href={`https://www.youtube.com/watch?v=${block.youtubeId}`} target="_blank" rel="noopener noreferrer">
+              Watch on YouTube <span aria-hidden="true">↗</span>
+            </a>
+          </figcaption>
+        </figure>
+      );
     case "button":
       return (
         <a className="button" href={block.href} target="_blank" rel="noopener noreferrer">
@@ -124,7 +142,7 @@ export function Milestone({ milestone }: { milestone: MilestoneData }) {
   const { id, year, yearIsRange, period, eyebrow, titleLines, titleEmphasis, current, companyBuilder, learned, blocks } =
     milestone;
   // The lesson closes the story, ahead of any photos and blog posts.
-  const mediaAt = blocks.findIndex((b) => b.kind === "gallery" || b.kind === "posts");
+  const mediaAt = blocks.findIndex((b) => b.kind === "video" || b.kind === "gallery" || b.kind === "posts");
   const learnedAt = mediaAt === -1 ? blocks.length : mediaAt;
   const className = ["milestone", companyBuilder && "company-builder", current && "current"]
     .filter(Boolean)

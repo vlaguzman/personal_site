@@ -163,6 +163,7 @@ export const milestones: Milestone[] = [
         ],
       },
       p("I led the technical team, coordinated development across the business, managed technology risks and explored opportunities for growth and monetisation. The mission also sharpened my belief that learning begins with awareness: people need to see how a new skill could change their lives."),
+      gallery(["hoytrabajas-team.jpg", "The HoyTrabajas team posing together on a stone wall, wearing HoyTrabajas hoodies"]),
     ],
   },
   {
@@ -233,7 +234,13 @@ export const milestones: Milestone[] = [
         ],
       },
       p("Working with migrant entrepreneurs deepened my commitment to combining technology, education and practical support. Talent is often already there; what people need is a chance to recognise it, develop it and put it to work."),
-      gallery(["consulate-london.jpg", "A selfie with the audience at an entrepreneurship event of the Colombian Consulate in London"]),
+      { kind: "video" as const, youtubeId: "mp1-CpcOQUE", title: "Documentary of the first Entrepreneurship programme at the Colombian Consulate in London, 2023" },
+      gallery(
+        ["consulate-london.jpg", "A selfie with the audience at an entrepreneurship event of the Colombian Consulate in London"],
+        ["consulate-community-fair.jpg", "A large group of community members, one dressed as an inflatable unicorn, at a Colombian Consulate entrepreneurship fair in London"],
+        ["consulate-documentary-screening.jpg", "The Consulate documentary projected on a screen to an audience in a room decorated with Colombian flags and a Christmas tree"],
+        ["consulate-entrepreneurship-route-2025.jpg", "Entrepreneurs and the Consulate team posing in front of the Ruta de Emprendimiento 2025 presentation"],
+      ),
     ],
   },
   {

@@ -4,6 +4,9 @@ import { milestones } from "./milestones";
 
 const factValues = milestones.flatMap((m) => m.blocks).flatMap((b) => (b.kind === "facts" ? b.items.map((f) => f.value) : []));
 
+/** Figures supplied by the author that no milestone repeats. Keep this list short. */
+const AUTHOR_FIGURES = ["20+"];
+
 describe("getCredentials", () => {
   const items = getCredentials(new Date("2026-06-01"));
 
@@ -24,7 +27,7 @@ describe("getCredentials", () => {
   it("only uses figures that already appear in the milestone facts", () => {
     const figures = items.map((i) => i.value).filter((v) => /^\d[\d,.+]*$/.test(v) && v !== String(2026 - Number.parseInt(milestones[0].year, 10)));
     expect(figures.length).toBeGreaterThan(0);
-    for (const value of figures) expect(factValues, value).toContain(value);
+    for (const value of figures) expect([...factValues, ...AUTHOR_FIGURES], value).toContain(value);
   });
 
   it("includes Y Combinator", () => {

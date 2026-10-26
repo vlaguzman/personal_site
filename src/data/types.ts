@@ -21,6 +21,7 @@ export type Block =
   | { kind: "yc"; label: string; season: string }
   | { kind: "gallery"; images: GalleryImage[] }
   | { kind: "posts"; label: string; items: Post[] }
+  | { kind: "video"; youtubeId: string; title: string }
   | { kind: "button"; label: string; href: string };
 
 export type Milestone = {
