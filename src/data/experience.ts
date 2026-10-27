@@ -32,7 +32,6 @@ export function getExperience(now: Date = new Date()) {
           href: "https://forbes.co/emprendedores/plataforma-de-empleos-hoytrabajas-capta-us5-millones-en-ronda-semilla",
         },
       },
-      { value: "50,000", label: "monthly users supported at HoyTrabajas" },
       { value: "20+", label: "people in the teams I have led across my companies" },
       { value: "270+", label: "entrepreneurs reached at the Colombian Consulate in London" },
     ],

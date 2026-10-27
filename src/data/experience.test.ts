@@ -38,8 +38,8 @@ describe("getExperience", () => {
     expect(experience.cta).toEqual({ label: "Explore my journey", href: "#journey" });
   });
 
-  it("backs the story with the money raised and three operating figures", () => {
-    expect(experience.figures.map((f) => f.value)).toEqual(["US$4.5m", "US$5m", "50,000", "20+", "270+"]);
+  it("backs the story with the money raised and two operating figures", () => {
+    expect(experience.figures.map((f) => f.value)).toEqual(["US$4.5m", "US$5m", "20+", "270+"]);
     const text = [...experience.paragraphs, ...experience.roles.flatMap((r) => [r.title, r.context])].join(" ");
     for (const figure of experience.figures) {
       expect(text).not.toContain(figure.value);

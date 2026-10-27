@@ -36,10 +36,10 @@ describe("Experience", () => {
     render(<Experience />);
     const list = screen.getByRole("list", { name: "Track record" });
     const items = within(list).getAllByRole("listitem");
-    expect(items).toHaveLength(5);
-    expect(items[2]).toHaveTextContent("50,000");
-    expect(items[2]).toHaveTextContent("monthly users supported at HoyTrabajas");
-    expect(items[4]).toHaveTextContent("270+");
+    expect(items).toHaveLength(4);
+    expect(items[2]).toHaveTextContent("20+");
+    expect(items[3]).toHaveTextContent("270+");
+    expect(list).not.toHaveTextContent("50,000");
   });
 
   it("links the money raised to the press that reported it, opening in a new tab", () => {
