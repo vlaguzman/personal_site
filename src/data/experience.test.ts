@@ -47,6 +47,11 @@ describe("getExperience", () => {
     }
   });
 
+  it("describes 20+ as the size of the teams he has led, not a number of companies", () => {
+    const figure = experience.figures.find((f) => f.value === "20+");
+    expect(figure?.label).toBe("people in the teams I have led across my companies");
+  });
+
   it("cites the press for the money raised", () => {
     const raised = experience.figures.filter((f) => "source" in f);
     expect(raised.map((f) => f.label)).toEqual(["Series A at FLUVIP, 2018", "Seed round at HoyTrabajas, 2022"]);

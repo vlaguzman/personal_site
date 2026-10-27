@@ -33,7 +33,7 @@ export function getExperience(now: Date = new Date()) {
         },
       },
       { value: "50,000", label: "monthly users supported at HoyTrabajas" },
-      { value: "20+", label: "different companies where I have managed teams" },
+      { value: "20+", label: "people in the teams I have led across my companies" },
       { value: "270+", label: "entrepreneurs reached at the Colombian Consulate in London" },
     ],
     cta: { label: "Explore my journey", href: "#journey" },
