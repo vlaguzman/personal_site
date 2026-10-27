@@ -25,10 +25,10 @@ describe("Experience", () => {
     expect(items[4]).toHaveTextContent("AI, entrepreneurship and human potential");
   });
 
-  it("links to the journey", () => {
+  it("links to the journey page", () => {
     render(<Experience />);
     const cta = screen.getByRole("link", { name: /Explore my journey/ });
-    expect(cta).toHaveAttribute("href", "#journey");
+    expect(cta).toHaveAttribute("href", "/journey");
     expect(cta).toHaveClass("cta-secondary");
   });
 

@@ -4,10 +4,11 @@ import { milestones } from "@/data/milestones";
 import { Journey } from "./Journey";
 
 describe("Journey", () => {
-  it("renders the section heading and anchor", () => {
+  it("is the page's main heading and anchor", () => {
     const { container } = render(<Journey />);
     expect(container.querySelector("section#journey")).not.toBeNull();
-    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent("Different ventures.One purpose.");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Different ventures.One purpose.");
+    expect(screen.queryAllByRole("heading", { level: 2 })).toEqual([]);
   });
 
   it("renders every milestone as an article with its id and eyebrow", () => {

@@ -35,7 +35,7 @@ describe("getExperience", () => {
   });
 
   it("sends readers to the journey", () => {
-    expect(experience.cta).toEqual({ label: "Explore my journey", href: "#journey" });
+    expect(experience.cta).toEqual({ label: "Explore my journey", href: "/journey" });
   });
 
   it("backs the story with the money raised and two operating figures", () => {

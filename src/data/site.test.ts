@@ -9,8 +9,8 @@ describe("site data", () => {
     expect(SITE.description).toMatch(/founder of Gingga/);
   });
 
-  it("has the journey anchors, the essays hub and contact in order", () => {
-    expect(NAV_LINKS.map((l) => l.href)).toEqual(["#journey", "#now", "#talks", "/essays", "#contact"]);
+  it("links the journey page, its Now section, talks, the essays hub and contact in order", () => {
+    expect(NAV_LINKS.map((l) => l.href)).toEqual(["/journey", "/journey#now", "#talks", "/essays", "#contact"]);
   });
 
   it("points at files that exist in public/", () => {

@@ -8,12 +8,12 @@ export function Journey() {
     <section id="journey" className="journey wrap">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">01 / THE JOURNEY</span>
-          <h2>
+          <span className="eyebrow">THE JOURNEY</span>
+          <h1>
             Different ventures.
             <br />
             <em>One purpose.</em>
-          </h2>
+          </h1>
         </div>
         <p>
           Building, learning and starting again since 2010, guided by a question: why do some people transform their

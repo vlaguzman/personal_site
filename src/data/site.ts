@@ -9,8 +9,8 @@ export const SITE = {
 } as const;
 
 export const NAV_LINKS = [
-  { href: "#journey", label: "The journey" },
-  { href: "#now", label: "Now" },
+  { href: "/journey", label: "The journey" },
+  { href: "/journey#now", label: "Now" },
   { href: "#talks", label: "Talks & events" },
   { href: "/essays", label: "Essays" },
   { href: "#contact", label: "Let’s connect" },

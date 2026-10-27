@@ -36,8 +36,15 @@ describe("Header", () => {
       render(<Header currentPath="/essays" />);
       expect(screen.getByRole("link", { name: /Vladimir Guzmán/ })).toHaveAttribute("href", "/#home");
       expect(screen.getByRole("link", { name: /Let’s connect/ })).toHaveAttribute("href", "/#contact");
-      expect(screen.getByRole("link", { name: /The journey/ })).toHaveAttribute("href", "/#journey");
+      expect(screen.getByRole("link", { name: /The journey/ })).toHaveAttribute("href", "/journey");
       expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("href", "/essays");
+    });
+
+    it("marks the journey page as current when on it", () => {
+      render(<Header currentPath="/journey" />);
+      expect(screen.getByRole("link", { name: /The journey/ })).toHaveAttribute("aria-current", "page");
+      expect(screen.getByRole("link", { name: "Now" })).not.toHaveAttribute("aria-current");
+      expect(screen.getByRole("link", { name: "Now" })).toHaveAttribute("href", "/journey#now");
     });
 
     it("marks the current section with aria-current", () => {

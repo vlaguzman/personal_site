@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getExperience } from "@/data/experience";
 
 export function Experience() {
@@ -13,9 +14,9 @@ export function Experience() {
           {experience.paragraphs.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
-          <a className="cta-secondary" href={experience.cta.href}>
+          <Link className="cta-secondary" href={experience.cta.href}>
             {experience.cta.label} <span aria-hidden="true">→</span>
-          </a>
+          </Link>
         </div>
         <ul className="experience-roles" aria-label="Experience">
           {experience.roles.map((role) => (

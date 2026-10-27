@@ -35,6 +35,6 @@ export function getExperience(now: Date = new Date()) {
       { value: "20+", label: "people in the teams I have led across my companies" },
       { value: "270+", label: "entrepreneurs reached at the Colombian Consulate in London" },
     ],
-    cta: { label: "Explore my journey", href: "#journey" },
+    cta: { label: "Explore my journey", href: "/journey" },
   } as const;
 }

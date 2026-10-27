@@ -22,4 +22,9 @@ describe("Footer", () => {
     render(<Footer />);
     expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("href", "/essays");
   });
+
+  it("links to the journey page", () => {
+    render(<Footer />);
+    expect(screen.getByRole("link", { name: "Journey" })).toHaveAttribute("href", "/journey");
+  });
 });
