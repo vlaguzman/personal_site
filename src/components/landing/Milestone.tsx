@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import Link from "next/link";
-import { ESSAYS } from "@/data/essays";
+import { ESSAYS, getEssays } from "@/data/essays";
+import { getJourneyUi } from "@/data/journey-ui";
 import type { Block, Milestone as MilestoneData } from "@/data/types";
 import { localePath, type Locale } from "@/i18n/config";
 import { Gallery } from "./Gallery";
@@ -94,11 +95,13 @@ function BlockView({ block, lang }: { block: Block; lang: Locale }) {
         <div className="blog-posts">
           <span className="eyebrow">{block.label}</span>
           {block.items.map((post) => {
-            const essay = ESSAYS.find((e) => e.title === post.title);
+            // The post is the Spanish original: it is only the key to the essay of this locale.
+            const original = ESSAYS.find((e) => e.title === post.title);
+            const essay = original && getEssays(lang).find((e) => e.slug === original.slug);
             if (!essay) throw new Error(`Timeline post "${post.title}" has no matching essay`);
             return (
               <Link key={essay.slug} href={localePath(lang, `/essays/${essay.slug}`)} className="blog-post" lang={essay.lang}>
-                {post.title} <span aria-hidden="true">→</span>
+                {essay.title} <span aria-hidden="true">→</span>
               </Link>
             );
           })}
@@ -115,10 +118,11 @@ function BlockView({ block, lang }: { block: Block; lang: Locale }) {
   }
 }
 
-function Learned({ text }: { text: string }) {
+function Learned({ text, lang }: { text: string; lang: Locale }) {
+  const { learnedLabel } = getJourneyUi(lang);
   return (
-    <aside className="learned" aria-label="What I learned">
-      <span className="eyebrow">What I learned</span>
+    <aside className="learned" aria-label={learnedLabel}>
+      <span className="eyebrow">{learnedLabel}</span>
       <p>{text}</p>
     </aside>
   );
@@ -165,12 +169,12 @@ export function Milestone({ milestone, lang }: { milestone: MilestoneData; lang:
           if (blocks[0]?.kind === "origin" && i === 0) return null;
           return (
             <Fragment key={i}>
-              {i === learnedAt && learned && <Learned text={learned} />}
+              {i === learnedAt && learned && <Learned text={learned} lang={lang} />}
               <BlockView block={block} lang={lang} />
             </Fragment>
           );
         })}
-        {learned && learnedAt === blocks.length && <Learned text={learned} />}
+        {learned && learnedAt === blocks.length && <Learned text={learned} lang={lang} />}
       </div>
     </article>
   );

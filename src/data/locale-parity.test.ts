@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { getArc } from "./arc";
 import { getBeliefs } from "./beliefs";
 import { getChrome } from "./chrome";
 import { getContact } from "./contact";
@@ -8,6 +9,7 @@ import { getExperience } from "./experience";
 import { getHero } from "./hero";
 import { getIdeas } from "./ideas";
 import { getIntro } from "./intro";
+import { getJourneyUi } from "./journey-ui";
 import { getMedia } from "./media";
 import { getPurpose } from "./purpose";
 import { getSiteMeta } from "./site";
@@ -53,6 +55,8 @@ const getters = {
   media: getMedia,
   work: getWork,
   essaysUi: getEssaysUi,
+  journeyUi: getJourneyUi,
+  arc: getArc,
 };
 
 describe("locale content parity", () => {

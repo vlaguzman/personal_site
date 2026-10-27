@@ -1,7 +1,15 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { milestones } from "@/data/milestones";
+import { getMilestones, milestones } from "@/data/milestones";
+import {
+  beingAnEntrepreneurEn,
+  fluvipThanksEn,
+  funkyLessonsEn,
+  sellingBeerEn,
+  subscriptionBoxPointsEn,
+} from "@/data/posts-en";
 import { Journey } from "./Journey";
+import { Milestone } from "./Milestone";
 
 describe("Journey", () => {
   it("is the page's main heading and anchor", () => {
@@ -45,20 +53,28 @@ describe("Journey", () => {
     const { container } = render(<Journey lang="en" />);
     const titles = (id: string) =>
       [...container.querySelectorAll(`#${id} a.blog-post`)].map((el) => el.textContent);
-    expect(titles("year2010")).toEqual([expect.stringContaining("12 cosas que aprendí de la quiebra de un restaurante")]);
-    expect(titles("year2011")).toEqual([expect.stringContaining("Ser emprendedor, una difícil pero excelente decisión")]);
+    expect(titles("year2010")).toEqual([expect.stringContaining(funkyLessonsEn.title)]);
+    expect(titles("year2011")).toEqual([expect.stringContaining(beingAnEntrepreneurEn.title)]);
     expect(titles("year2017")).toEqual([
-      expect.stringContaining("7 puntos claves a la hora de montar un negocio de caja suscripción"),
-      expect.stringContaining("¿Y ahora te dedicas a vender cerveza?"),
+      expect.stringContaining(subscriptionBoxPointsEn.title),
+      expect.stringContaining(sellingBeerEn.title),
     ]);
-    expect(titles("year2014-fluvip")).toEqual([expect.stringContaining("Gracias FLUVIP")]);
+    expect(titles("year2014-fluvip")).toEqual([expect.stringContaining(fluvipThanksEn.title)]);
+  });
+
+  it("shows the translated English titles, marked as translated with AI", () => {
+    const { container } = render(<Journey lang="en" />);
+    const post = container.querySelector("#year2010 a.blog-post")!;
+    expect(post).toHaveAttribute("lang", "en");
+    expect(post.textContent).not.toContain("12 cosas que aprendí");
+    expect(container.querySelector("#year2010 .blog-posts .eyebrow")).toHaveTextContent("FROM MY BLOG · TRANSLATED WITH AI");
   });
 
   it("links each blog post to its in-site essay instead of inlining the body", () => {
     const { container } = render(<Journey lang="en" />);
     const post = container.querySelector("#year2010 a.blog-post")!;
     expect(post).toHaveAttribute("href", "/en/essays/lecciones-quiebra-restaurante");
-    expect(post).toHaveAttribute("lang", "es");
+    expect(post).toHaveAttribute("lang", "en");
     expect(container.querySelectorAll("details.blog-post")).toHaveLength(0);
     const hrefs = [...container.querySelectorAll("a.blog-post")].map((a) => a.getAttribute("href"));
     expect(hrefs).toHaveLength(5);
@@ -204,5 +220,54 @@ describe("Journey with the Spanish locale", () => {
     posts.forEach((h) => expect(h).toMatch(/^\/es\/essays\/[a-z-]+$/));
     const anchors = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href") ?? "");
     anchors.filter((h) => h.startsWith("#")).forEach((h) => expect(h).toMatch(/^#year/));
+  });
+
+  it("renders the Spanish heading, arc and milestone copy", () => {
+    const { container } = render(<Journey lang="es" />);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Distintos proyectos.Un solo propósito.");
+    const arc = screen.getByRole("list", { name: "El arco de la trayectoria" });
+    expect([...arc.querySelectorAll("li strong")].map((el) => el.textContent)).toEqual([
+      "Desarrollador",
+      "Producto",
+      "Fundador",
+      "Constructor de IA",
+    ]);
+    const es = getMilestones("es");
+    const ids = [...container.querySelectorAll("article.milestone")].map((el) => el.id);
+    expect(ids).toEqual(es.map((m) => m.id).reverse());
+    for (const m of es) {
+      const el = container.querySelector(`article#${m.id}`)!;
+      expect(el).toHaveTextContent(m.eyebrow);
+      expect(el).toHaveTextContent(m.period);
+      expect(el.querySelector("h2")).toHaveTextContent(m.titleLines[0]!);
+    }
+  });
+
+  it("shows the Spanish original titles under the Spanish milestones", () => {
+    const { container } = render(<Journey lang="es" />);
+    const post = container.querySelector("#year2010 a.blog-post")!;
+    expect(post).toHaveAttribute("lang", "es");
+    expect(post).toHaveAttribute("href", "/es/essays/lecciones-quiebra-restaurante");
+    expect(post.textContent).toContain("12 cosas que aprendí de la quiebra de un restaurante");
+    expect(container.querySelector("#year2010 .blog-posts .eyebrow")).toHaveTextContent("DE MI BLOG");
+  });
+
+  it("labels the learned box, the venture tree and the Gingga button in Spanish", () => {
+    const { container } = render(<Journey lang="es" />);
+    expect(container.querySelector("#year2010 aside.learned")).toHaveTextContent("Lo que aprendí");
+    expect(screen.getByLabelText("Emprendimientos que surgieron de Dfounders")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Conoce Gingga/ })).toHaveAttribute("href", "https://gingga.com/");
+  });
+
+  it("throws loudly when a timeline post has no matching essay", () => {
+    // The lookup is by the Spanish original title, so a post without an essay must not render silently.
+    const original = milestones.find((m) => m.id === "year2010")!;
+    const stray = {
+      ...original,
+      blocks: original.blocks.map((b) =>
+        b.kind === "posts" ? { ...b, items: [{ title: "Not an essay", sections: [{ text: "x" }] }] } : b,
+      ),
+    };
+    expect(() => render(<Milestone milestone={stray} lang="en" />)).toThrow(/no matching essay/);
   });
 });

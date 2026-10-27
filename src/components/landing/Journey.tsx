@@ -1,28 +1,32 @@
-import { ARC } from "@/data/arc";
+import { Fragment } from "react";
+import { getArc } from "@/data/arc";
+import { getJourneyUi } from "@/data/journey-ui";
 import type { Locale } from "@/i18n/config";
-import { milestones } from "@/data/milestones";
+import { getMilestones } from "@/data/milestones";
 import { Milestone } from "./Milestone";
 import { ScrollReveal } from "./ScrollReveal";
 
 export function Journey({ lang }: { lang: Locale }) {
+  const ui = getJourneyUi(lang);
   return (
     <section id="journey" className="journey wrap">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">THE JOURNEY</span>
+          <span className="eyebrow">{ui.eyebrow}</span>
           <h1>
-            Different ventures.
-            <br />
-            <em>One purpose.</em>
+            {ui.headlineLines.map((line) => (
+              <Fragment key={line}>
+                {line}
+                <br />
+              </Fragment>
+            ))}
+            <em>{ui.headlineEmphasis}</em>
           </h1>
         </div>
-        <p>
-          Building, learning and starting again since 2010, guided by a question: why do some people transform their
-          lives while others, equally talented, never get the chance?
-        </p>
+        <p>{ui.intro}</p>
       </div>
-      <ol className="arc" aria-label="The arc of the journey">
-        {ARC.map((stage, i) => (
+      <ol className="arc" aria-label={ui.arcLabel}>
+        {getArc(lang).map((stage, i) => (
           <li key={stage.label}>
             <span className="arc-index" aria-hidden="true">
               {String(i + 1).padStart(2, "0")}
@@ -33,7 +37,7 @@ export function Journey({ lang }: { lang: Locale }) {
         ))}
       </ol>
       <div className="timeline">
-        {[...milestones].reverse().map((m) => (
+        {[...getMilestones(lang)].reverse().map((m) => (
           <Milestone key={m.id} lang={lang} milestone={m} />
         ))}
       </div>

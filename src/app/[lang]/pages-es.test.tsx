@@ -6,6 +6,7 @@ import { ESSAYS } from "@/data/essays";
 import type { Locale } from "@/i18n/config";
 import EssayPage from "./essays/[slug]/page";
 import EssaysPage from "./essays/page";
+import JourneyPage from "./journey/page";
 import SpeakingPage from "./speaking/page";
 import WorkTogetherPage from "./work-together/page";
 
@@ -81,6 +82,45 @@ describe("speaking, work together and essays copy", () => {
     expect(await pageText("work-together", "es")).toContain("Pensamiento independiente.");
     expect(await pageText("essays", "es")).toContain("Lo que aprendí construyendo");
     expect(await pageText("essay", "es")).toContain("Lecturas relacionadas");
+  });
+});
+
+const JOURNEY_ENGLISH_PHRASES = [
+  "Different ventures",
+  "One purpose",
+  "What I learned",
+  "Where my entrepreneurial",
+  "Helping others",
+  "Backing other builders",
+  "Exploring a new market",
+  "Technology that opens doors",
+  "Explore Gingga",
+  "FROM MY BLOG",
+  "developers led",
+  "monthly users supported",
+];
+
+async function journeyText(lang: Locale) {
+  const { container } = render(await JourneyPage(params(lang)));
+  return (container.textContent ?? "").replace(/\s+/g, " ");
+}
+
+describe("journey copy", () => {
+  it("shows no English phrase on the Spanish journey page", async () => {
+    const text = await journeyText("es");
+    for (const phrase of JOURNEY_ENGLISH_PHRASES) expect(text, phrase).not.toContain(phrase);
+    expect(text).toContain("Distintos proyectos.");
+    // The title lines are separated by a <br />, which adds no text.
+    expect(text).toContain("Donde empezó micamino emprendedor.");
+    expect(text).toContain("DE MI BLOG");
+  });
+
+  it("keeps the English journey page in English, with the blog posts translated with AI", async () => {
+    const text = await journeyText("en");
+    expect(text).toContain("Different ventures");
+    expect(text).toContain("What I learned");
+    expect(text).toContain("FROM MY BLOG · TRANSLATED WITH AI");
+    expect(text).not.toContain("IN SPANISH");
   });
 });
 

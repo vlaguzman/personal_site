@@ -88,3 +88,43 @@ describe("leadership figures", () => {
     expect(facts("year2019").find((f) => f.label === "developers led")?.value).toBe("15");
   });
 });
+
+describe("duplicated lessons", () => {
+  /** All paragraph and details text of a milestone, the copy that sits around its `learned` box. */
+  const prose = (id: string) =>
+    milestones
+      .find((m) => m.id === id)!
+      .blocks.flatMap((b) => (b.kind === "paragraph" ? [b.text] : b.kind === "details" ? [b.text] : []))
+      .join(" ");
+  const learned = (id: string) => milestones.find((m) => m.id === id)!.learned;
+
+  const removed: [id: string, sentence: string][] = [
+    ["year2010", "It was an early lesson in how hard building a business can be, and how much it changes you."],
+    ["year2011", "to validate it and learn from early adopters"],
+    ["year2014-tappsi", "It gave me an early view of how product, funding and a business model come together."],
+    ["year2014-fluvip", "It was where I learned to connect technology decisions with the realities of building a company."],
+    ["year2017", "The experience strengthened my approach to commercial validation and financial discipline."],
+    ["year2019", "The mission also sharpened my belief that learning begins with awareness: people need to see how a new skill could change their lives."],
+    ["year2023-community", "Talent is often already there; what people need is a chance to recognise it, develop it and put it to work."],
+  ];
+
+  it.each(removed)("%s no longer repeats its lesson in the copy", (id, sentence) => {
+    expect(prose(id)).not.toContain(sentence);
+    expect(learned(id)).toBeTruthy();
+  });
+
+  it("keeps the learned boxes as they were", () => {
+    expect(learned("year2010")).toBe("Building a business is harder than it looks, and it changes the person who builds it.");
+    expect(learned("year2011")).toBe("Take an idea to people in person first: validate it and learn from early adopters.");
+    expect(learned("year2014-tappsi")).toBe("How product, funding and a business model come together.");
+    expect(learned("year2019")).toBe("Learning begins with awareness: people need to see how a new skill could change their lives.");
+  });
+
+  it("leaves the surrounding sentences readable", () => {
+    expect(prose("year2011")).toContain("taking the idea into an in-person format.");
+    expect(prose("year2014-tappsi")).toContain("Tappsi would later become a Colombian startup success story");
+    expect(prose("year2017")).toContain("The pandemic hit the bar concept hard and the business eventually closed.");
+    expect(prose("year2023-community")).toContain("Working with migrant entrepreneurs deepened my commitment to combining technology, education and practical support.");
+    expect(prose("year2010")).toContain("I chose to co-found a small restaurant: Funky’s, in Chía, Colombia.");
+  });
+});

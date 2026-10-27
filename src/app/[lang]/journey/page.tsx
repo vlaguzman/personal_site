@@ -4,6 +4,7 @@ import { Footer } from "@/components/landing/Footer";
 import { Header } from "@/components/landing/Header";
 import { Journey } from "@/components/landing/Journey";
 import { ReadingProgress } from "@/components/landing/ReadingProgress";
+import { getJourneyUi } from "@/data/journey-ui";
 import { alternatesFor, hasLocale } from "@/i18n/config";
 
 type Props = Pick<PageProps<"/[lang]/journey">, "params">;
@@ -12,9 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   return {
-    title: "The journey | Vladimir Guzmán",
-    description:
-      "Building, learning and starting again since 2010: the ventures, failures and lessons behind Vladimir Guzmán, from a restaurant in Colombia to Y Combinator.",
+    ...getJourneyUi(lang).meta,
     alternates: alternatesFor(lang, "/journey"),
   };
 }

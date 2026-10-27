@@ -1,15 +1,13 @@
 import { beingAnEntrepreneur, fluvipThanks, funkyLessons, sellingBeer, subscriptionBoxPoints } from "./posts";
+import type { Locale } from "@/i18n/config";
+import { gallery, p, posts as postsBlock } from "./milestone-blocks";
+import { milestonesEs } from "./milestones-es";
 import type { Milestone, Post } from "./types";
 
-const gallery = (...images: [file: string, alt: string][]) => ({
-  kind: "gallery" as const,
-  images: images.map(([file, alt]) => ({ src: `/images/journey/${file}`, alt })),
-});
+/** The blog posts of the English timeline are shown as their AI translations, and say so. */
+const posts = (...items: Post[]) => postsBlock("FROM MY BLOG · TRANSLATED WITH AI", ...items);
 
-const posts = (...items: Post[]) => ({ kind: "posts" as const, label: "FROM MY BLOG · IN SPANISH", items });
-
-const p = (text: string, variant?: "reflection" | "small") => ({ kind: "paragraph" as const, text, variant });
-
+/** The English timeline. `getMilestones("es")` returns its Spanish mirror. */
 export const milestones: Milestone[] = [
   {
     id: "year2010",
@@ -19,7 +17,7 @@ export const milestones: Milestone[] = [
     titleLines: ["Where my entrepreneurial", "journey began."],
     learned: "Building a business is harder than it looks, and it changes the person who builds it.",
     blocks: [
-      p("After graduating as a software engineer, while classmates were heading towards companies like Microsoft, I chose to co-found a small restaurant: Funky’s, in Chía, Colombia. It was an early lesson in how hard building a business can be, and how much it changes you."),
+      p("After graduating as a software engineer, while classmates were heading towards companies like Microsoft, I chose to co-found a small restaurant: Funky’s, in Chía, Colombia."),
       p("I worked on the brand, business plan and sales strategies, alongside community management, website development and day-to-day operations."),
       posts(funkyLessons),
     ],
@@ -33,7 +31,7 @@ export const milestones: Milestone[] = [
     learned: "Take an idea to people in person first: validate it and learn from early adopters.",
     blocks: [
       p("Conectando Mentes began as a proposal for a social network for entrepreneurs. I developed the brand, worked on sales and built the technical MVP of contactU, an application designed to make networking spaces more useful."),
-      p("We created Mindup and Visionario workshops, taking the idea into an in-person format to validate it and learn from early adopters."),
+      p("We created Mindup and Visionario workshops, taking the idea into an in-person format."),
       posts(beingAnEntrepreneur),
     ],
   },
@@ -57,7 +55,7 @@ export const milestones: Milestone[] = [
     learned: "How product, funding and a business model come together.",
     blocks: [
       p("Tappsi was my first experience of startup life from the inside. While developing features for its internal platforms, I saw first-hand what raising investment felt like and how the business moved from a free app to a service taxi drivers paid to use."),
-      p("It gave me an early view of how product, funding and a business model come together. Tappsi would later become a Colombian startup success story, joining Easy Taxi in 2015 and eventually becoming part of Cabify."),
+      p("Tappsi would later become a Colombian startup success story, joining Easy Taxi in 2015 and eventually becoming part of Cabify."),
     ],
   },
   {
@@ -69,7 +67,7 @@ export const milestones: Milestone[] = [
     learned: "How to connect technology decisions with the realities of building a company.",
     blocks: [
       p("At FLUVIP, I experienced what it takes to grow from a team of four into a multinational with a presence across Latin America and the United States. Working alongside the founders, I saw fundraising, acceleration through Wayra and international expansion from the inside."),
-      p("I grew with the business: starting as a developer, learning to lead others and taking on responsibilities as a product owner, project manager and CTO. It was where I learned to connect technology decisions with the realities of building a company."),
+      p("I grew with the business: starting as a developer, learning to lead others and taking on responsibilities as a product owner, project manager and CTO."),
       p("The creator economy showed me how something once seen as a hobby could become a livelihood. Learning a new skill at the right moment could open opportunities far beyond someone’s background.", "reflection"),
       {
         kind: "facts",
@@ -129,7 +127,7 @@ export const milestones: Milestone[] = [
       {
         kind: "details",
         summary: "The lessons behind the business",
-        text: "The pandemic hit the bar concept hard and the business eventually closed. The experience strengthened my approach to commercial validation and financial discipline.",
+        text: "The pandemic hit the bar concept hard and the business eventually closed.",
       },
       gallery(
         ["beer-happy-team.jpg", "The Beer Happy Club team toasting with craft beer in front of the club logo"],
@@ -162,7 +160,7 @@ export const milestones: Milestone[] = [
           { value: "15", label: "developers led" },
         ],
       },
-      p("I led the technical team, coordinated development across the business, managed technology risks and explored opportunities for growth and monetisation. The mission also sharpened my belief that learning begins with awareness: people need to see how a new skill could change their lives."),
+      p("I led the technical team, coordinated development across the business, managed technology risks and explored opportunities for growth and monetisation."),
       gallery(["hoytrabajas-team.jpg", "The HoyTrabajas team posing together on a stone wall, wearing HoyTrabajas hoodies"]),
     ],
   },
@@ -233,7 +231,7 @@ export const milestones: Milestone[] = [
           { value: "87.1", label: "NPS in the latest edition" },
         ],
       },
-      p("Working with migrant entrepreneurs deepened my commitment to combining technology, education and practical support. Talent is often already there; what people need is a chance to recognise it, develop it and put it to work."),
+      p("Working with migrant entrepreneurs deepened my commitment to combining technology, education and practical support."),
       { kind: "video" as const, youtubeId: "mp1-CpcOQUE", title: "Documentary of the first Entrepreneurship programme at the Colombian Consulate in London, 2023" },
       gallery(
         ["consulate-london.jpg", "A selfie with the audience at an entrepreneurship event of the Colombian Consulate in London"],
@@ -259,3 +257,8 @@ export const milestones: Milestone[] = [
     ],
   },
 ];
+
+/** The timeline of a locale: the English list for `en`, its Spanish mirror for `es`. */
+export function getMilestones(lang: Locale): Milestone[] {
+  return lang === "es" ? milestonesEs : milestones;
+}

@@ -83,6 +83,14 @@ describe("page metadata", () => {
     }
   });
 
+  it("localises the title and description of the journey", async () => {
+    const metaEn = await journey.generateMetadata(params({ lang: "en" }));
+    const metaEs = await journey.generateMetadata(params({ lang: "es" }));
+    expect(metaEn.title).toBe("The journey | Vladimir Guzmán");
+    expect(metaEs.title).toBe("Mi trayectoria | Vladimir Guzmán");
+    expect(metaEs.description).not.toBe(metaEn.description);
+  });
+
   it("localises the title and description of speaking, work together and the essays hub", async () => {
     const titles = {
       "/speaking": ["Speaking | Vladimir Guzmán", "Charlas | Vladimir Guzmán"],
