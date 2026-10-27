@@ -1,6 +1,7 @@
 import { Beliefs } from "@/components/landing/Beliefs";
 import { Contact } from "@/components/landing/Contact";
 import { CredibilityStrip } from "@/components/landing/CredibilityStrip";
+import { Experience } from "@/components/landing/Experience";
 import { Footer } from "@/components/landing/Footer";
 import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
@@ -20,6 +21,7 @@ export default function Home() {
         <Intro />
         <CredibilityStrip />
         <Ideas />
+        <Experience />
         <Journey />
         <Purpose />
         <Beliefs />
