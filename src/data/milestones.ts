@@ -159,7 +159,7 @@ export const milestones: Milestone[] = [
         kind: "facts",
         items: [
           { value: "50,000", label: "monthly users supported" },
-          { value: "14", label: "developers led" },
+          { value: "15", label: "developers led" },
         ],
       },
       p("I led the technical team, coordinated development across the business, managed technology risks and explored opportunities for growth and monetisation. The mission also sharpened my belief that learning begins with awareness: people need to see how a new skill could change their lives."),

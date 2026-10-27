@@ -73,3 +73,18 @@ describe("milestones", () => {
     expect(button).toMatchObject({ href: "https://gingga.com/" });
   });
 });
+
+describe("leadership figures", () => {
+  const facts = (id: string) =>
+    milestones
+      .find((m) => m.id === id)
+      ?.blocks.flatMap((b) => (b.kind === "facts" ? b.items : [])) ?? [];
+
+  it("starts FLUVIP with 4 people (him included) and 20 people led", () => {
+    expect(facts("year2014-fluvip").map((f) => f.value)).toEqual(["4", "20"]);
+  });
+
+  it("has him leading 15 people at HoyTrabajas", () => {
+    expect(facts("year2019").find((f) => f.label === "developers led")?.value).toBe("15");
+  });
+});
