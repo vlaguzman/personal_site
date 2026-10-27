@@ -538,6 +538,18 @@ nav a:last-child {
   padding-bottom: 80px;
 }
 
+/* Same scale as the page title on /essays, with a wider title column so it breaks after "ventures.". */
+.journey h1 {
+  font-size: var(--fs-display);
+}
+
+@media (min-width: 761px) {
+  .journey .section-heading {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 64px;
+  }
+}
+
 .arc {
   list-style: none;
   margin: 0 0 110px;
@@ -1650,12 +1662,9 @@ footer {
   }
 
   nav {
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 8px 20px;
     font-size: var(--fs-ui-sm);
-  }
-
-  nav a:first-child {
-    display: none;
   }
 
   .wrap {
