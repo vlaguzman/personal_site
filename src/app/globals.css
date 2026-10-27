@@ -1623,6 +1623,196 @@ footer {
 }
 
 /* ==========================================================================
+   Speaking page
+   ========================================================================== */
+.speaking-closing {
+  --focus: var(--accent);
+}
+
+.speaking-intro {
+  padding-top: 96px;
+  padding-bottom: 72px;
+}
+
+.speaking-intro-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.speaking-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 45% 55%;
+  border-radius: 14px;
+}
+
+.speaking-intro h1 {
+  font-size: var(--fs-display);
+  margin: 4px 0 40px;
+}
+
+.speaking-intro p {
+  max-width: 640px;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 0 0 36px;
+}
+
+.speaking-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+}
+
+.speaking-link {
+  font-size: var(--fs-ui-sm);
+  padding-bottom: 2px;
+  border-bottom: 1px solid currentColor;
+}
+
+.speaking-link:hover {
+  color: var(--secondary);
+}
+
+.speaking-topics,
+.speaking-featured,
+.speaking-community,
+.speaking-bio {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.speaking-topics h2,
+.speaking-featured h2,
+.speaking-community h2,
+.speaking-bio h2 {
+  margin-bottom: 40px;
+}
+
+.speaking-topics ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 32px;
+}
+
+.speaking-topics li {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+
+.speaking-topics h3 {
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+}
+
+.speaking-topics p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 14px 0 0;
+}
+
+.speaking-community-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.speaking-community h3 {
+  font-size: var(--fs-h3);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.speaking-community-grid p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 0 0 28px;
+}
+
+.speaking-community .video {
+  margin: 0;
+  max-width: none;
+}
+
+.speaking-community .gallery {
+  max-width: none;
+  margin: 40px 0 0;
+}
+
+.speaking-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 40px;
+  margin: 0;
+}
+
+.speaking-facts dt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+}
+
+.speaking-facts dd {
+  margin: 4px 0 0;
+  font-size: var(--fs-ui-sm);
+  color: var(--text-secondary);
+}
+
+.speaking-bio {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0 56px;
+  align-items: start;
+}
+
+.speaking-bio h2 {
+  margin-bottom: 0;
+}
+
+.speaking-bio p {
+  max-width: 62ch;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  margin: 0 0 24px;
+}
+
+.speaking-closing {
+  background: var(--primary);
+  color: var(--on-dark);
+  padding: 96px 0;
+  margin-top: 32px;
+}
+
+.speaking-closing em {
+  color: var(--accent);
+}
+
+.speaking-closing h2 {
+  margin-bottom: 20px;
+}
+
+.speaking-closing p {
+  max-width: 560px;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--on-dark-secondary);
+  margin: 0 0 32px;
+}
+
+/* ==========================================================================
    Tablet
    ========================================================================== */
 @media (max-width: 1000px) {
@@ -1769,6 +1959,54 @@ footer {
     grid-template-columns: repeat(2, 1fr);
     margin-top: 48px;
     padding-top: 32px;
+  }
+
+  .speaking-intro {
+    padding-top: 56px;
+    padding-bottom: 40px;
+  }
+
+  .speaking-intro-body {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .speaking-topics,
+  .speaking-featured,
+  .speaking-community,
+  .speaking-bio {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .speaking-topics h2,
+  .speaking-featured h2,
+  .speaking-community h2 {
+    margin-bottom: 28px;
+  }
+
+  .speaking-topics ul,
+  .speaking-community-grid,
+  .speaking-bio {
+    grid-template-columns: 1fr;
+  }
+
+  .speaking-community-grid {
+    gap: 28px;
+  }
+
+  .speaking-bio h2 {
+    margin-bottom: 24px;
+  }
+
+  .speaking-closing {
+    padding: 64px 0;
+  }
+
+  .speaking-actions .cta-primary,
+  .speaking-closing .cta-primary {
+    width: 100%;
+    justify-content: center;
   }
 
   .hero-actions {

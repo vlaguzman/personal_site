@@ -27,4 +27,9 @@ describe("Footer", () => {
     render(<Footer />);
     expect(screen.getByRole("link", { name: "Journey" })).toHaveAttribute("href", "/journey");
   });
+
+  it("links to the speaking page", () => {
+    render(<Footer />);
+    expect(screen.getByRole("link", { name: "Speaking" })).toHaveAttribute("href", "/speaking");
+  });
 });

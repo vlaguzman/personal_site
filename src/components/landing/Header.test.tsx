@@ -26,6 +26,11 @@ describe("Header", () => {
     expect(link.querySelector("[aria-hidden='true']")).toHaveTextContent("↗");
   });
 
+  it("links to the speaking page with a plain route", () => {
+    render(<Header />);
+    expect(screen.getByRole("link", { name: "Speaking" })).toHaveAttribute("href", "/speaking");
+  });
+
   it("links to the essays hub with a plain route", () => {
     render(<Header />);
     expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("href", "/essays");

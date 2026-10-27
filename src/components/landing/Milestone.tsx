@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ESSAYS } from "@/data/essays";
 import type { Block, Milestone as MilestoneData } from "@/data/types";
 import { Gallery } from "./Gallery";
+import { VideoEmbed } from "./VideoEmbed";
 
 function BlockView({ block }: { block: Block }) {
   switch (block.kind) {
@@ -103,23 +104,7 @@ function BlockView({ block }: { block: Block }) {
         </div>
       );
     case "video":
-      return (
-        <figure className="video">
-          <iframe
-            className="video-embed"
-            src={`https://www.youtube-nocookie.com/embed/${block.youtubeId}`}
-            title={block.title}
-            loading="lazy"
-            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
-          <figcaption>
-            <a href={`https://www.youtube.com/watch?v=${block.youtubeId}`} target="_blank" rel="noopener noreferrer">
-              Watch on YouTube <span aria-hidden="true">↗</span>
-            </a>
-          </figcaption>
-        </figure>
-      );
+      return <VideoEmbed youtubeId={block.youtubeId} title={block.title} />;
     case "button":
       return (
         <a className="button" href={block.href} target="_blank" rel="noopener noreferrer">

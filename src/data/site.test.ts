@@ -10,8 +10,8 @@ describe("site data", () => {
     expect(SITE.description).toMatch(/founder of Gingga/);
   });
 
-  it("links the journey page, its Now section, talks, the essays hub and contact in order", () => {
-    expect(NAV_LINKS.map((l) => l.href)).toEqual(["/journey", "/journey#now", "#talks", "/essays", "#contact"]);
+  it("links the journey page, its Now section, speaking, the essays hub and contact in order", () => {
+    expect(NAV_LINKS.map((l) => l.href)).toEqual(["/journey", "/journey#now", "/speaking", "/essays", "#contact"]);
   });
 
   it("only links to journey sections that exist in the timeline", () => {
