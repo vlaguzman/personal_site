@@ -70,7 +70,7 @@ describe("getSpeaking in Spanish", () => {
 
   it("translates topics, sections, closing and page metadata", () => {
     expect(speaking.topics.map((t) => t.title)).toEqual([
-      "Emprendimiento sin mitología",
+      "Emprendimiento sin tapujos",
       "Tecnología más allá del hype",
       "Potencial humano y oportunidad",
     ]);

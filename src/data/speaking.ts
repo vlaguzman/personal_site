@@ -90,7 +90,7 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
     topicsLabel: "Temas de las charlas",
     topics: [
       {
-        title: "Emprendimiento sin mitología",
+        title: "Emprendimiento sin tapujos",
         text: "Cuestionar las historias populares sobre levantar capital, escalar, fracasar, el riesgo, la libertad y lo que realmente significa construir un negocio.",
       },
       {
