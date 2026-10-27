@@ -339,6 +339,61 @@ nav a:last-child {
 }
 
 /* ==========================================================================
+   Ideas worth challenging
+   ========================================================================== */
+.ideas {
+  padding: 104px 0 96px;
+}
+
+.ideas-heading {
+  margin-bottom: 56px;
+}
+
+.idea-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.idea-list li {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 24px 80px;
+  align-items: start;
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+}
+
+.idea-list h3 {
+  font-size: var(--fs-h3);
+  line-height: 1.15;
+}
+
+.idea-list p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+}
+
+.ideas-closing {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px 48px;
+  margin-top: 48px;
+}
+
+.ideas-closing p {
+  max-width: 560px;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  margin: 0;
+}
+
+/* ==========================================================================
    Credibility strip
    ========================================================================== */
 .credibility {
@@ -1500,6 +1555,37 @@ footer {
 
   .intro p {
     font-size: var(--fs-body);
+  }
+
+  .ideas {
+    padding: 64px 0 56px;
+  }
+
+  .ideas-heading {
+    margin-bottom: 32px;
+  }
+
+  .idea-list li {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 28px 0;
+  }
+
+  .idea-list p {
+    margin-top: 0;
+  }
+
+  .ideas-closing {
+    margin-top: 32px;
+  }
+
+  .ideas-closing p {
+    font-size: var(--fs-body);
+  }
+
+  .ideas-closing .cta-primary {
+    width: 100%;
+    justify-content: center;
   }
 
   .hero-actions {

@@ -4,6 +4,7 @@ import { CredibilityStrip } from "@/components/landing/CredibilityStrip";
 import { Footer } from "@/components/landing/Footer";
 import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
+import { Ideas } from "@/components/landing/Ideas";
 import { Intro } from "@/components/landing/Intro";
 import { Journey } from "@/components/landing/Journey";
 import { Purpose } from "@/components/landing/Purpose";
@@ -18,6 +19,7 @@ export default function Home() {
         <Hero />
         <Intro />
         <CredibilityStrip />
+        <Ideas />
         <Journey />
         <Purpose />
         <Beliefs />
