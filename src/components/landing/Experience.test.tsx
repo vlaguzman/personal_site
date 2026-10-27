@@ -31,4 +31,26 @@ describe("Experience", () => {
     expect(cta).toHaveAttribute("href", "#journey");
     expect(cta).toHaveClass("cta-secondary");
   });
+
+  it("shows the track-record figures with their labels", () => {
+    render(<Experience />);
+    const list = screen.getByRole("list", { name: "Track record" });
+    const items = within(list).getAllByRole("listitem");
+    expect(items).toHaveLength(5);
+    expect(items[2]).toHaveTextContent("50,000");
+    expect(items[2]).toHaveTextContent("monthly users supported at HoyTrabajas");
+    expect(items[4]).toHaveTextContent("270+");
+  });
+
+  it("links the money raised to the press that reported it, opening in a new tab", () => {
+    render(<Experience />);
+    const forbes = screen.getByRole("link", { name: /Forbes Colombia/ });
+    expect(forbes).toHaveAttribute(
+      "href",
+      "https://forbes.co/emprendedores/plataforma-de-empleos-hoytrabajas-capta-us5-millones-en-ronda-semilla",
+    );
+    expect(forbes).toHaveAttribute("target", "_blank");
+    expect(forbes).toHaveAttribute("rel", expect.stringContaining("noopener"));
+    expect(screen.getByRole("link", { name: /LatamList/ })).toHaveAttribute("target", "_blank");
+  });
 });

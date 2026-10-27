@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { getExperience } from "./experience";
+import { milestones } from "./milestones";
+
+const factValues = milestones.flatMap((m) => m.blocks).flatMap((b) => (b.kind === "facts" ? b.items.map((f) => f.value) : []));
+
+/** Figures supplied by the author that no milestone repeats. Keep this list short. */
+const AUTHOR_FIGURES = ["20+"];
 
 describe("getExperience", () => {
   const experience = getExperience(new Date("2026-06-01"));
@@ -30,5 +36,36 @@ describe("getExperience", () => {
 
   it("sends readers to the journey", () => {
     expect(experience.cta).toEqual({ label: "Explore my journey", href: "#journey" });
+  });
+
+  it("backs the story with the money raised and three operating figures", () => {
+    expect(experience.figures.map((f) => f.value)).toEqual(["US$4.5m", "US$5m", "50,000", "20+", "270+"]);
+    const text = [...experience.paragraphs, ...experience.roles.flatMap((r) => [r.title, r.context])].join(" ");
+    for (const figure of experience.figures) {
+      expect(text).not.toContain(figure.value);
+      expect(figure.label.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("cites the press for the money raised", () => {
+    const raised = experience.figures.filter((f) => "source" in f);
+    expect(raised.map((f) => f.label)).toEqual(["Series A at FLUVIP, 2018", "Seed round at HoyTrabajas, 2022"]);
+    expect(raised.map((f) => ("source" in f ? f.source : null))).toEqual([
+      {
+        label: "LatamList",
+        href: "https://latamlist.com/colombian-marketing-startup-fluvip-receives-us4-5m-series-a-investment/",
+      },
+      {
+        label: "Forbes Colombia",
+        href: "https://forbes.co/emprendedores/plataforma-de-empleos-hoytrabajas-capta-us5-millones-en-ronda-semilla",
+      },
+    ]);
+  });
+
+  it("only uses uncited figures that already appear in the milestone facts", () => {
+    for (const figure of experience.figures) {
+      if ("source" in figure) continue;
+      expect([...factValues, ...AUTHOR_FIGURES], figure.value).toContain(figure.value);
+    }
   });
 });

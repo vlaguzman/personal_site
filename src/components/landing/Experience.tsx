@@ -26,6 +26,19 @@ export function Experience() {
           ))}
         </ul>
       </div>
+      <ul className="wrap experience-figures" aria-label="Track record">
+        {experience.figures.map((figure) => (
+          <li key={figure.value}>
+            <strong>{figure.value}</strong>
+            <span>{figure.label}</span>
+            {"source" in figure && (
+              <a href={figure.source.href} target="_blank" rel="noopener noreferrer">
+                {figure.source.label} <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

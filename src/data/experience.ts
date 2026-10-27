@@ -15,6 +15,27 @@ export function getExperience(now: Date = new Date()) {
       { title: "Entrepreneurship programmes and workshops", context: "London" },
       { title: "Speaker", context: "AI, entrepreneurship and human potential" },
     ],
+    figures: [
+      {
+        value: "US$4.5m",
+        label: "Series A at FLUVIP, 2018",
+        source: {
+          label: "LatamList",
+          href: "https://latamlist.com/colombian-marketing-startup-fluvip-receives-us4-5m-series-a-investment/",
+        },
+      },
+      {
+        value: "US$5m",
+        label: "Seed round at HoyTrabajas, 2022",
+        source: {
+          label: "Forbes Colombia",
+          href: "https://forbes.co/emprendedores/plataforma-de-empleos-hoytrabajas-capta-us5-millones-en-ronda-semilla",
+        },
+      },
+      { value: "50,000", label: "monthly users supported at HoyTrabajas" },
+      { value: "20+", label: "different companies where I have managed teams" },
+      { value: "270+", label: "entrepreneurs reached at the Colombian Consulate in London" },
+    ],
     cta: { label: "Explore my journey", href: "#journey" },
   } as const;
 }
