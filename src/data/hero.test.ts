@@ -30,10 +30,10 @@ describe("hero data", () => {
     expect("lead" in getHero("es")).toBe(false);
   });
 
-  it("points the primary CTA at the essays hub and the secondary at contact", () => {
-    expect(getHero("en").primaryCta).toEqual({ label: "Explore my thinking", href: "/essays" });
+  it("points the primary CTA at the writing section of the speaking page and the secondary at contact", () => {
+    expect(getHero("en").primaryCta).toEqual({ label: "Explore my thinking", href: "/speaking#writing" });
     expect(getHero("en").secondaryCta).toEqual({ label: "Invite me to speak", href: "#contact" });
-    expect(getHero("es").primaryCta).toEqual({ label: "Explora mis ideas", href: "/essays" });
+    expect(getHero("es").primaryCta).toEqual({ label: "Explora mis ideas", href: "/speaking#writing" });
     expect(getHero("es").secondaryCta).toEqual({ label: "Invítame a conversar", href: "#contact" });
   });
 

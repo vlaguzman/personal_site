@@ -10,8 +10,7 @@ describe("getChrome", () => {
     expect(chrome.nav).toEqual([
       { href: "/journey", label: "The journey" },
       { href: "/journey#now", label: "Now" },
-      { href: "/speaking", label: "Speaking" },
-      { href: "/essays", label: "Essays" },
+      { href: "/speaking", label: "Speaking & writing" },
       { href: "/work-together", label: "Work together" },
       { href: "#contact", label: "Let’s connect" },
     ]);
@@ -25,8 +24,7 @@ describe("getChrome", () => {
     expect(chrome.nav).toEqual([
       { href: "/journey", label: "Mi trayectoria" },
       { href: "/journey#now", label: "Ahora" },
-      { href: "/speaking", label: "Charlas" },
-      { href: "/essays", label: "Ensayos" },
+      { href: "/speaking", label: "Charlas y escritos" },
       { href: "/work-together", label: "Trabajemos juntos" },
       { href: "#contact", label: "Conectemos" },
     ]);
@@ -35,12 +33,12 @@ describe("getChrome", () => {
   it("labels the footer in each language", () => {
     expect(getChrome("en").footer).toEqual({
       tagline: "Colombian entrepreneur. Based in London.",
-      links: { journey: "Journey", speaking: "Speaking", workTogether: "Work together", essays: "Essays" },
+      links: { journey: "Journey", speaking: "Speaking & writing", workTogether: "Work together" },
       backToTop: "Back to top ↑",
     });
     expect(getChrome("es").footer).toEqual({
       tagline: "Emprendedor colombiano. Radicado en Londres.",
-      links: { journey: "Trayectoria", speaking: "Charlas", workTogether: "Trabajemos juntos", essays: "Ensayos" },
+      links: { journey: "Trayectoria", speaking: "Charlas y escritos", workTogether: "Trabajemos juntos" },
       backToTop: "Volver arriba ↑",
     });
   });

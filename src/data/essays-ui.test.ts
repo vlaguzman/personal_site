@@ -17,21 +17,19 @@ describe("getEssaysUi", () => {
     });
   });
 
+  it("keeps no text of the removed essays hub", () => {
+    for (const lang of ["en", "es"] as const) {
+      const ui = getEssaysUi(lang) as Record<string, unknown>;
+      for (const key of ["meta", "hub", "startHere", "newsletter"]) expect(ui[key], `${lang} ${key}`).toBeUndefined();
+    }
+  });
+
   it("has English chrome that matches the current site", () => {
     const ui = getEssaysUi("en");
-    expect(ui.meta.title).toBe("Essays | Vladimir Guzmán");
-    expect(ui.hub).toMatchObject({ eyebrow: "ESSAYS", titleLead: "Lessons from", titleEmphasis: "building" });
-    expect(ui.hub.intro).toMatch(
-      /The originals are in Spanish, the language I wrote them in\. Each one also has an English translation, made with AI\.$/,
-    );
-    expect(ui.hub.intro).not.toContain("The essays are in Spanish");
     expect(ui.filterLabel).toBe("Filter by topic");
     expect(ui.allLabel).toBe("All");
-    expect(ui.startHere).toBe("Start here");
     expect(ui.fallbackLabel).toBe("ESSAY");
     expect(ui.share).toEqual({ label: "SHARE", x: "Share on X", linkedin: "Share on LinkedIn" });
-    expect(ui.newsletter.title).toBe("New essays, when they’re ready");
-    expect(ui.newsletter.subscribe).toBe("Subscribe");
     expect(ui.article).toEqual({ back: "All essays", related: "Related reading" });
   });
 
@@ -57,10 +55,6 @@ describe("getEssaysUi", () => {
 
   it("has Spanish chrome that does not repeat the English words", () => {
     const ui = getEssaysUi("es");
-    expect(ui.meta.title).toBe("Ensayos | Vladimir Guzmán");
-    expect(ui.hub.eyebrow).toBe("ENSAYOS");
-    expect(ui.startHere).toBe("Empieza aquí");
-    expect(ui.hub.intro).toMatch(/Están en su idioma original, el español\. Cada uno tiene también una traducción al inglés hecha con IA\.$/);
     expect(ui.topics.Product).toBe("Producto");
   });
 

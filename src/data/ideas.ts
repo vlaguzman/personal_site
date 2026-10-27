@@ -12,7 +12,7 @@ export type IdeasContent = {
   cta: { label: string; href: string };
 };
 
-const CTA_HREF = "/essays";
+const CTA_HREF = "/speaking#writing";
 
 const IDEAS: Record<Locale, IdeasContent> = {
   en: {

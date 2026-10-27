@@ -20,7 +20,7 @@ export function EssayArticle({ essay, related, lang, translationAvailable = fals
   return (
     <>
       <article className="essay" lang={essay.lang}>
-        <Link className="essay-back" href={localePath(lang, "/essays")} lang={lang}>
+        <Link className="essay-back" href={localePath(lang, "/speaking#writing")} lang={lang}>
           <span aria-hidden="true">←</span> {ui.article.back}
         </Link>
         <div className="essay-header">

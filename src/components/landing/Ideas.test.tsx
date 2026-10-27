@@ -24,7 +24,7 @@ describe("Ideas", () => {
     render(<Ideas lang="en" />);
     expect(screen.getByText(/I don’t claim to have every answer/)).toBeInTheDocument();
     const cta = screen.getByRole("link", { name: /Explore more ideas/ });
-    expect(cta).toHaveAttribute("href", "/en/essays");
+    expect(cta).toHaveAttribute("href", "/en/speaking#writing");
     expect(cta).toHaveClass("cta-primary");
   });
 
@@ -55,6 +55,6 @@ describe("Ideas with the Spanish locale", () => {
   it("closes in Spanish and prefixes the essays link with /es", () => {
     render(<Ideas lang="es" />);
     expect(screen.getByText(/No pretendo tener todas las respuestas/)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Explora más ideas/ })).toHaveAttribute("href", "/es/essays");
+    expect(screen.getByRole("link", { name: /Explora más ideas/ })).toHaveAttribute("href", "/es/speaking#writing");
   });
 });

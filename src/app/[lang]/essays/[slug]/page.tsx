@@ -41,7 +41,7 @@ export default async function EssayPage({ params }: Props) {
 
   return (
     <>
-      <Header lang={lang} currentPath="/essays" path={`/essays/${slug}`} />
+      <Header lang={lang} currentPath="/speaking" path={`/essays/${slug}`} />
       <main id="home" className="wrap">
         <EssayArticle lang={lang} essay={essay} related={relatedEssays(slug, essays, 3)} translationAvailable={translationAvailable} />
       </main>

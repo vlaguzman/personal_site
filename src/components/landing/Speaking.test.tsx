@@ -1,5 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { ESSAYS, getEssays } from "@/data/essays";
 import { FOUNDER_PROFILE_PDF, SITE, TALK } from "@/data/site";
 import { Speaking } from "./Speaking";
 
@@ -43,6 +44,37 @@ describe("Speaking", () => {
     expect(container.textContent).not.toMatch(/270\+|NPS|87\.1/);
   });
 
+  it("shows a Writing section with the intro and every essay as a translated card", () => {
+    const { container } = render(<Speaking lang="en" />);
+    const section = container.querySelector("#writing") as HTMLElement;
+    expect(section.tagName).toBe("SECTION");
+    const heading = within(section).getByRole("heading", { level: 2, name: "Writing" });
+    expect(section).toHaveAttribute("aria-labelledby", heading.id);
+    expect(section.textContent).toContain(
+      "The originals are in Spanish, the language I wrote them in; each one also has an English translation, made with AI.",
+    );
+    const cards = section.querySelectorAll(".essay-card");
+    expect(cards).toHaveLength(ESSAYS.length);
+    for (const [i, translation] of getEssays("en").entries()) {
+      expect(within(section).getByRole("link", { name: translation.title })).toHaveAttribute(
+        "href",
+        `/en/essays/${ESSAYS[i]!.slug}`,
+      );
+    }
+    for (const card of cards) expect(within(card as HTMLElement).getByText("Translated with AI")).toBeVisible();
+    expect(within(section).getByRole("group", { name: "Filter by topic" })).toBeInTheDocument();
+  });
+
+  it("places Writing after Teaching and before the bio", () => {
+    const { container } = render(<Speaking lang="en" />);
+    const ids = [...container.querySelectorAll("section[id], section[aria-labelledby]")].map(
+      (s) => s.id || s.getAttribute("aria-labelledby"),
+    );
+    const order = ["speaking-teaching-title", "writing", "speaking-bio-title"].map((id) => ids.indexOf(id));
+    expect(order.every((i) => i >= 0)).toBe(true);
+    expect([...order].sort((a, b) => a - b)).toEqual(order);
+  });
+
   it("offers a short bio and the founder profile to download", () => {
     render(<Speaking lang="en" />);
     expect(screen.getByRole("heading", { level: 2, name: /About/ })).toBeInTheDocument();
@@ -81,7 +113,7 @@ describe("Speaking in Spanish", () => {
   it("translates the sections, the topics list, the talk and the bio", () => {
     render(<Speaking lang="es" />);
     expect(screen.getByRole("img", { name: "Vladimir Guzmán presentando en Clare Hall, Cambridge" })).toBeInTheDocument();
-    for (const name of ["Sobre qué hablo", "Charla destacada", "Docencia", "Sobre Vladimir"]) {
+    for (const name of ["Sobre qué hablo", "Charla destacada", "Docencia", "Escritos", "Sobre Vladimir"]) {
       expect(screen.getByRole("heading", { level: 2, name })).toBeInTheDocument();
     }
     expect(screen.getByRole("list", { name: "Temas de las charlas" })).toBeInTheDocument();
@@ -91,6 +123,18 @@ describe("Speaking in Spanish", () => {
       "href",
       FOUNDER_PROFILE_PDF,
     );
+  });
+
+  it("shows the Spanish originals in the Writing section, with no translation badge", () => {
+    const { container } = render(<Speaking lang="es" />);
+    const section = container.querySelector("#writing") as HTMLElement;
+    expect(within(section).getByRole("heading", { level: 2, name: "Escritos" })).toBeInTheDocument();
+    expect(section.textContent).toContain("Están en su idioma original, el español; cada una tiene también una traducción al inglés hecha con IA.");
+    expect(section.querySelectorAll(".essay-card")).toHaveLength(ESSAYS.length);
+    for (const essay of ESSAYS) {
+      expect(within(section).getByRole("link", { name: essay.title })).toHaveAttribute("href", `/es/essays/${essay.slug}`);
+    }
+    expect(container.querySelector(".essay-ai-badge")).toBeNull();
   });
 
   it("closes with a second invitation, never skips a heading level and keeps ids unique", () => {

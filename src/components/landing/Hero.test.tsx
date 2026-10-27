@@ -26,10 +26,10 @@ describe("Hero", () => {
     expect(img.getAttribute("src")).toContain("hero-cambridge-talk.jpg");
   });
 
-  it("has a primary CTA to the essays hub and a secondary CTA to contact", () => {
+  it("has a primary CTA to the writing section and a secondary CTA to contact", () => {
     render(<Hero lang="en" />);
     const primary = screen.getByRole("link", { name: /Explore my thinking/ });
-    expect(primary).toHaveAttribute("href", "/en/essays");
+    expect(primary).toHaveAttribute("href", "/en/speaking#writing");
     expect(primary).toHaveClass("cta-primary");
     const secondary = screen.getByRole("link", { name: /Invite me to speak/ });
     expect(secondary).toHaveAttribute("href", "#contact");
@@ -62,10 +62,10 @@ describe("Hero with the Spanish locale", () => {
     expect(img.getAttribute("src")).toContain("hero-cambridge-talk.jpg");
   });
 
-  it("prefixes the essays link with /es and keeps the in-page contact anchor", () => {
+  it("prefixes the writing link with /es and keeps the in-page contact anchor", () => {
     render(<Hero lang="es" />);
     const primary = screen.getByRole("link", { name: /Explora mis ideas/ });
-    expect(primary).toHaveAttribute("href", "/es/essays");
+    expect(primary).toHaveAttribute("href", "/es/speaking#writing");
     expect(primary).toHaveClass("cta-primary");
     const secondary = screen.getByRole("link", { name: /Invítame a conversar/ });
     expect(secondary).toHaveAttribute("href", "#contact");

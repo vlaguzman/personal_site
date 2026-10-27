@@ -1,7 +1,9 @@
 import Image from "next/image";
+import { getEssays } from "@/data/essays";
 import { FOUNDER_PROFILE_PDF } from "@/data/site";
 import { getSpeaking, getTeaching } from "@/data/speaking";
 import type { Locale } from "@/i18n/config";
+import { EssayBrowser } from "./EssayBrowser";
 import { Gallery } from "./Gallery";
 import { TalkFeature } from "./TalkFeature";
 
@@ -75,6 +77,12 @@ export function Speaking({ lang }: { lang: Locale }) {
           <p>{teaching.text}</p>
           <Gallery lang={lang} images={teaching.images} />
         </div>
+      </section>
+
+      <section className="speaking-writing wrap" id="writing" aria-labelledby="speaking-writing-title">
+        <h2 id="speaking-writing-title">{speaking.sections.writing}</h2>
+        <p className="speaking-writing-intro">{speaking.writingIntro}</p>
+        <EssayBrowser lang={lang} essays={getEssays(lang)} />
       </section>
 
       <section className="speaking-bio wrap" aria-labelledby="speaking-bio-title">

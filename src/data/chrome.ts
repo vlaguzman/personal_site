@@ -12,7 +12,7 @@ export type ChromeContent = {
   nav: { href: string; label: string }[];
   footer: {
     tagline: string;
-    links: { journey: string; speaking: string; workTogether: string; essays: string };
+    links: { journey: string; speaking: string; workTogether: string };
     backToTop: string;
   };
 };
@@ -28,14 +28,13 @@ const CHROME: Record<Locale, ChromeText> = {
     navLabels: {
       "/journey": "The journey",
       "/journey#now": "Now",
-      "/speaking": "Speaking",
-      "/essays": "Essays",
+      "/speaking": "Speaking & writing",
       "/work-together": "Work together",
       "#contact": "Let’s connect",
     },
     footer: {
       tagline: "Colombian entrepreneur. Based in London.",
-      links: { journey: "Journey", speaking: "Speaking", workTogether: "Work together", essays: "Essays" },
+      links: { journey: "Journey", speaking: "Speaking & writing", workTogether: "Work together" },
       backToTop: "Back to top ↑",
     },
   },
@@ -46,14 +45,13 @@ const CHROME: Record<Locale, ChromeText> = {
     navLabels: {
       "/journey": "Mi trayectoria",
       "/journey#now": "Ahora",
-      "/speaking": "Charlas",
-      "/essays": "Ensayos",
+      "/speaking": "Charlas y escritos",
       "/work-together": "Trabajemos juntos",
       "#contact": "Conectemos",
     },
     footer: {
       tagline: "Emprendedor colombiano. Radicado en Londres.",
-      links: { journey: "Trayectoria", speaking: "Charlas", workTogether: "Trabajemos juntos", essays: "Ensayos" },
+      links: { journey: "Trayectoria", speaking: "Charlas y escritos", workTogether: "Trabajemos juntos" },
       backToTop: "Volver arriba ↑",
     },
   },

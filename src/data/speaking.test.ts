@@ -32,13 +32,24 @@ describe("getSpeaking in English", () => {
       topics: "What I speak about",
       featured: "Featured talk",
       teaching: "Teaching",
+      writing: "Writing",
       bio: "About Vladimir",
     });
     expect(speaking.closing).toMatchObject({ titleLead: "Start the", titleEmphasis: "conversation." });
   });
 
-  it("has its own page metadata", () => {
-    expect(speaking.meta.title).toBe("Speaking | Vladimir Guzmán");
+  it("introduces the writing section and says the originals are Spanish with AI translations", () => {
+    expect(speaking.writingIntro).toBe(
+      "Notes on startups, strategy and building companies, written after the fact from my own ventures. The originals are in Spanish, the language I wrote them in; each one also has an English translation, made with AI.",
+    );
+  });
+
+  it("has its own page metadata covering talks and essays", () => {
+    expect(speaking.meta).toEqual({
+      title: "Speaking & writing | Vladimir Guzmán",
+      description:
+        "Talks, workshops and essays on entrepreneurship, technology and human potential. Challenge assumptions, start better conversations.",
+    });
   });
 });
 
@@ -67,10 +78,14 @@ describe("getSpeaking in Spanish", () => {
     expect(speaking.sections.topics).toBe("Sobre qué hablo");
     expect(speaking.topicsLabel).toBe("Temas de las charlas");
     expect(speaking.closing).toMatchObject({ titleLead: "Empieza la", titleEmphasis: "conversación." });
+    expect(speaking.sections.writing).toBe("Escritos");
+    expect(speaking.writingIntro).toBe(
+      "Notas sobre startups, estrategia y cómo construir empresas, escritas en retrospectiva a partir de mis propios proyectos. Están en su idioma original, el español; cada una tiene también una traducción al inglés hecha con IA.",
+    );
     expect(speaking.meta).toEqual({
-      title: "Charlas | Vladimir Guzmán",
+      title: "Charlas y escritos | Vladimir Guzmán",
       description:
-        "Charlas y talleres sobre emprendimiento, tecnología y potencial humano. Cuestiona los supuestos, empieza mejores conversaciones.",
+        "Charlas, talleres y ensayos sobre emprendimiento, tecnología y potencial humano. Cuestiona los supuestos, empieza mejores conversaciones.",
     });
   });
 });

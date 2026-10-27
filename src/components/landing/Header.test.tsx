@@ -22,6 +22,27 @@ describe("Header", () => {
     }
   });
 
+  it("has exactly five links, in order, in both languages", () => {
+    const expected = {
+      en: ["The journey", "Now", "Speaking & writing", "Work together", "Let’s connect ↗"],
+      es: ["Mi trayectoria", "Ahora", "Charlas y escritos", "Trabajemos juntos", "Conectemos ↗"],
+    };
+    for (const lang of ["en", "es"] as const) {
+      render(<Header lang={lang} />);
+      const nav = screen.getByRole("navigation", { name: getChrome(lang).navLabel });
+      const links = [...nav.querySelectorAll("a")];
+      expect(links.map((a) => a.textContent?.trim())).toEqual(expected[lang]);
+      expect(links.map((a) => a.getAttribute("href"))).toEqual([
+        `/${lang}/journey`,
+        `/${lang}/journey#now`,
+        `/${lang}/speaking`,
+        `/${lang}/work-together`,
+        "#contact",
+      ]);
+      cleanup();
+    }
+  });
+
   it("lists the nav links in the same order and with the same hrefs in both languages", () => {
     for (const lang of ["en", "es"] as const) {
       render(<Header lang={lang} />);
@@ -40,9 +61,8 @@ describe("Header", () => {
 
   it("prefixes every route link with the active locale", () => {
     render(<Header lang="es" />);
-    expect(screen.getByRole("link", { name: "Charlas" })).toHaveAttribute("href", "/es/speaking");
+    expect(screen.getByRole("link", { name: "Charlas y escritos" })).toHaveAttribute("href", "/es/speaking");
     expect(screen.getByRole("link", { name: "Trabajemos juntos" })).toHaveAttribute("href", "/es/work-together");
-    expect(screen.getByRole("link", { name: "Ensayos" })).toHaveAttribute("href", "/es/essays");
     expect(screen.getByRole("link", { name: /Mi trayectoria/ })).toHaveAttribute("href", "/es/journey");
     expect(screen.getByRole("link", { name: "Ahora" })).toHaveAttribute("href", "/es/journey#now");
   });
@@ -62,11 +82,11 @@ describe("Header", () => {
 
   describe("on a sub-page", () => {
     it("sends home anchors back to the locale home page", () => {
-      render(<Header lang="en" currentPath="/essays" />);
+      render(<Header lang="en" currentPath="/speaking" />);
       expect(screen.getByRole("link", { name: /Vladimir Guzmán/ })).toHaveAttribute("href", "/en#home");
       expect(screen.getByRole("link", { name: /Let’s connect/ })).toHaveAttribute("href", "/en#contact");
       expect(screen.getByRole("link", { name: /The journey/ })).toHaveAttribute("href", "/en/journey");
-      expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("href", "/en/essays");
+      expect(screen.getByRole("link", { name: "Speaking & writing" })).toHaveAttribute("href", "/en/speaking");
     });
 
     it("keeps the Spanish locale in home anchors", () => {
@@ -83,8 +103,8 @@ describe("Header", () => {
     });
 
     it("marks the current section with aria-current", () => {
-      render(<Header lang="en" currentPath="/essays" />);
-      expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("aria-current", "page");
+      render(<Header lang="en" currentPath="/speaking" />);
+      expect(screen.getByRole("link", { name: "Speaking & writing" })).toHaveAttribute("aria-current", "page");
       expect(screen.getByRole("link", { name: /Let’s connect/ })).not.toHaveAttribute("aria-current");
     });
   });
@@ -111,10 +131,10 @@ describe("Header", () => {
     });
 
     it("uses the explicit page path for nested pages such as an essay", () => {
-      render(<Header lang="es" currentPath="/essays" path="/essays/some-slug" />);
+      render(<Header lang="es" currentPath="/speaking" path="/essays/some-slug" />);
       expect(screen.getByRole("link", { name: "English" })).toHaveAttribute("href", "/en/essays/some-slug");
       expect(screen.getByRole("link", { name: "Español" })).toHaveAttribute("href", "/es/essays/some-slug");
-      expect(screen.getByRole("link", { name: "Ensayos" })).toHaveAttribute("aria-current", "page");
+      expect(screen.getByRole("link", { name: "Charlas y escritos" })).toHaveAttribute("aria-current", "page");
     });
 
     it("flags the active language", () => {

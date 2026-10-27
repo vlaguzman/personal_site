@@ -17,7 +17,6 @@ vi.mock("next/font/google", () => {
 import RootLayout, * as layoutModule from "./layout";
 import * as home from "./page";
 import * as essay from "./essays/[slug]/page";
-import * as essays from "./essays/page";
 import * as journey from "./journey/page";
 import * as speaking from "./speaking/page";
 import * as workTogether from "./work-together/page";
@@ -90,7 +89,6 @@ describe("page metadata", () => {
     ["/journey", journey.generateMetadata, journey],
     ["/speaking", speaking.generateMetadata, speaking],
     ["/work-together", workTogether.generateMetadata, workTogether],
-    ["/essays", essays.generateMetadata, essays],
   ] as const;
 
   it.each(cases)("%s keeps its title and declares locale alternates", async (path, generateMetadata) => {
@@ -110,16 +108,14 @@ describe("page metadata", () => {
     expect(metaEs.description).not.toBe(metaEn.description);
   });
 
-  it("localises the title and description of speaking, work together and the essays hub", async () => {
+  it("localises the title and description of speaking and writing, and of work together", async () => {
     const titles = {
-      "/speaking": ["Speaking | Vladimir Guzmán", "Charlas | Vladimir Guzmán"],
+      "/speaking": ["Speaking & writing | Vladimir Guzmán", "Charlas y escritos | Vladimir Guzmán"],
       "/work-together": ["Work together | Vladimir Guzmán", "Trabajemos juntos | Vladimir Guzmán"],
-      "/essays": ["Essays | Vladimir Guzmán", "Ensayos | Vladimir Guzmán"],
     } as const;
     const generators = {
       "/speaking": speaking.generateMetadata,
       "/work-together": workTogether.generateMetadata,
-      "/essays": essays.generateMetadata,
     } as const;
     for (const [path, [en, es]] of Object.entries(titles) as [keyof typeof titles, readonly [string, string]][]) {
       const metaEn = await generators[path](params({ lang: "en" }));

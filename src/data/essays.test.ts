@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { ESSAYS, getEssays, START_HERE_SLUG, TOPICS } from "./essays";
+import { ESSAYS, getEssays, TOPICS } from "./essays";
 import { milestones } from "./milestones";
 import { beingAnEntrepreneurEn, fluvipThanksEn, funkyLessonsEn, sellingBeerEn, subscriptionBoxPointsEn } from "./posts-en";
-import { NEWSLETTER } from "./site";
 
 describe("essays data", () => {
   const blogPosts = milestones.flatMap((m) => m.blocks).flatMap((b) => (b.kind === "posts" ? b.items : []));
@@ -26,13 +25,6 @@ describe("essays data", () => {
     for (const e of ESSAYS) if (e.topic) expect(TOPICS).toContain(e.topic);
   });
 
-  it("starts the reader at an essay that exists", () => {
-    expect(ESSAYS.map((e) => e.slug)).toContain(START_HERE_SLUG);
-  });
-
-  it("has no newsletter endpoint until a real service is configured", () => {
-    expect(NEWSLETTER.endpoint).toBeNull();
-  });
 });
 
 describe("getEssays", () => {

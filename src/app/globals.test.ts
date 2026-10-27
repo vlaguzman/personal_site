@@ -106,6 +106,27 @@ describe("visual identity", () => {
 
 });
 
+describe("essays on the speaking page", () => {
+  it("drops the rules of the removed essays hub", () => {
+    expect(css).not.toMatch(/essays-start|essays-newsletter|essays-intro/);
+    expect(css).not.toMatch(/^\.essays\s*[{,]/m);
+  });
+
+  it("gives the Writing section the same vertical padding as its siblings and a readable intro measure", () => {
+    expect(css).toMatch(/\.speaking-writing,[^{]*\{[^}]*padding-top:\s*64px/);
+    expect(css).toMatch(/\.speaking-writing-intro\s*\{[^}]*max-width:\s*62ch/);
+  });
+
+  it("tightens the Writing section on phones like the other speaking sections", () => {
+    const phone = [...css.matchAll(/@media \(max-width: 760px\) \{([\s\S]*?)\n\}/g)].map((m) => m[1]).join("\n");
+    expect(phone).toMatch(/\.speaking-writing,[^{]*\{[^}]*padding-top:\s*40px/);
+  });
+
+  it("does not add the card grid's own bottom margin inside the Writing section", () => {
+    expect(css).toMatch(/\.speaking-writing \.essays-grid\s*\{[^}]*margin-bottom:\s*0/);
+  });
+});
+
 describe("tablet reading width", () => {
   /** Rules inside every `@media (max-width: 1000px)` block, concatenated. */
   const tablet = [...css.matchAll(/@media \(max-width: 1000px\) \{([\s\S]*?)\n\}/g)].map((m) => m[1]).join("\n");

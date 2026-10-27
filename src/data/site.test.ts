@@ -25,8 +25,8 @@ describe("site data", () => {
     expect(Object.keys(SITE).sort()).toEqual(["calendly", "email", "linkedin", "themeColor", "url"]);
   });
 
-  it("links the journey page, its Now section, speaking, the essays hub, work together and contact in order", () => {
-    expect(NAV_LINKS.map((l) => l.href)).toEqual(["/journey", "/journey#now", "/speaking", "/essays", "/work-together", "#contact"]);
+  it("links the journey page, its Now section, speaking and writing, work together and contact in order", () => {
+    expect(NAV_LINKS.map((l) => l.href)).toEqual(["/journey", "/journey#now", "/speaking", "/work-together", "#contact"]);
   });
 
   it("only links to journey sections that exist in the timeline", () => {

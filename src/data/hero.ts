@@ -12,7 +12,7 @@ export type HeroContent = {
 
 // Locale-neutral values are defined once; only text differs per locale.
 const PHOTO = { src: "/images/hero-cambridge-talk.jpg", width: 2000, height: 1500 };
-const PRIMARY_HREF = "/essays";
+const PRIMARY_HREF = "/speaking#writing";
 const SECONDARY_HREF = "#contact";
 const NAME = "Vladimir Guzmán";
 

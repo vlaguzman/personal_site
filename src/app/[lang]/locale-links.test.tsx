@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 import { ESSAYS } from "@/data/essays";
 import { LOCALES, type Locale } from "@/i18n/config";
 import EssayPage from "./essays/[slug]/page";
-import EssaysPage from "./essays/page";
 import Home from "./page";
 import JourneyPage from "./journey/page";
 import SpeakingPage from "./speaking/page";
@@ -17,7 +16,6 @@ const pages: Record<string, (lang: Locale) => Promise<ReactElement>> = {
   journey: (lang) => JourneyPage({ params: Promise.resolve({ lang }) }),
   speaking: (lang) => SpeakingPage({ params: Promise.resolve({ lang }) }),
   "work-together": (lang) => WorkTogetherPage({ params: Promise.resolve({ lang }) }),
-  essays: (lang) => EssaysPage({ params: Promise.resolve({ lang }) }),
   essay: (lang) => EssayPage({ params: Promise.resolve({ lang, slug }) }),
 };
 

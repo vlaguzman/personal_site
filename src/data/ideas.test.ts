@@ -47,10 +47,10 @@ describe("getIdeas", () => {
     expect(getIdeas("en").closing).toBe(
       "I don’t claim to have every answer. I believe good questions, honest debate and the willingness to experiment can take us further.",
     );
-    expect(getIdeas("en").cta).toEqual({ label: "Explore more ideas", href: "/essays" });
+    expect(getIdeas("en").cta).toEqual({ label: "Explore more ideas", href: "/speaking#writing" });
     expect(getIdeas("es").closing).toBe(
       "No pretendo tener todas las respuestas. Creo en las buenas preguntas, en debatir con honestidad y en aprender haciendo.",
     );
-    expect(getIdeas("es").cta).toEqual({ label: "Explora más ideas", href: "/essays" });
+    expect(getIdeas("es").cta).toEqual({ label: "Explora más ideas", href: "/speaking#writing" });
   });
 });

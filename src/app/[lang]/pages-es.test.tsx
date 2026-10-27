@@ -1,11 +1,9 @@
 import { render } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { describe, expect, it } from "vitest";
-import { NewsletterSignup } from "@/components/landing/NewsletterSignup";
 import { ESSAYS } from "@/data/essays";
 import type { Locale } from "@/i18n/config";
 import EssayPage from "./essays/[slug]/page";
-import EssaysPage from "./essays/page";
 import JourneyPage from "./journey/page";
 import SpeakingPage from "./speaking/page";
 import WorkTogetherPage from "./work-together/page";
@@ -17,6 +15,7 @@ const ENGLISH_PHRASES = [
   "What I speak about",
   "Featured talk",
   "Teaching",
+  "Writing",
   "About Vladimir",
   "Independent thinking",
   "Practical experience",
@@ -28,9 +27,7 @@ const ENGLISH_PHRASES = [
   "View slides",
   "Download PDF",
   "Download founder profile",
-  "Subscribe",
   "Related reading",
-  "Start here",
   "Translated with AI",
   "Read the original in Spanish",
 ];
@@ -41,7 +38,6 @@ const params = (lang: Locale) => ({ params: Promise.resolve({ lang }) });
 const pages: Record<string, (lang: Locale) => Promise<ReactElement>> = {
   speaking: (lang) => SpeakingPage(params(lang)),
   "work-together": (lang) => WorkTogetherPage(params(lang)),
-  essays: (lang) => EssaysPage(params(lang)),
   essay: (lang) => EssayPage({ params: Promise.resolve({ lang, slug }) }),
 };
 
@@ -50,25 +46,14 @@ async function pageText(name: string, lang: Locale) {
   return (container.textContent ?? "").replace(/\s+/g, " ");
 }
 
-/** The signup form is only rendered once a newsletter endpoint exists, so it is rendered directly. */
-function signupFormText(lang: Locale) {
-  const { container } = render(<NewsletterSignup lang={lang} endpoint="https://example.com/subscribe" email="a@b.c" />);
-  return (container.textContent ?? "").replace(/\s+/g, " ");
-}
-
 async function allText(lang: Locale) {
   const texts = await Promise.all(Object.keys(pages).map((name) => pageText(name, lang)));
-  return [...texts, signupFormText(lang)].join(" ");
+  return texts.join(" ");
 }
 
-describe("speaking, work together and essays copy", () => {
+describe("speaking and writing, work together and essay copy", () => {
   it.each(Object.keys(pages))("shows no English phrase on the Spanish %s page", async (name) => {
     const text = await pageText(name, "es");
-    for (const phrase of ENGLISH_PHRASES) expect(text, phrase).not.toContain(phrase);
-  });
-
-  it("shows no English phrase in the Spanish newsletter form", () => {
-    const text = signupFormText("es");
     for (const phrase of ENGLISH_PHRASES) expect(text, phrase).not.toContain(phrase);
   });
 
@@ -77,10 +62,10 @@ describe("speaking, work together and essays copy", () => {
     for (const phrase of ENGLISH_PHRASES) expect(text, phrase).toContain(phrase);
   });
 
-  it("shows the Spanish headlines, hub title and article chrome on the Spanish pages", async () => {
+  it("shows the Spanish headlines, writing section and article chrome on the Spanish pages", async () => {
     expect(await pageText("speaking", "es")).toContain("Cuestiona los supuestos.");
     expect(await pageText("work-together", "es")).toContain("Pensamiento independiente.");
-    expect(await pageText("essays", "es")).toContain("Lo que aprendí construyendo");
+    expect(await pageText("speaking", "es")).toContain("Escritos");
     expect(await pageText("essay", "es")).toContain("Lecturas relacionadas");
   });
 });

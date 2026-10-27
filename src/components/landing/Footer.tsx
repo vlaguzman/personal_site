@@ -11,7 +11,6 @@ export function Footer({ lang, year = new Date().getFullYear() }: { lang: Locale
       <Link href={localePath(lang, "/journey")}>{footer.links.journey}</Link>
       <Link href={localePath(lang, "/speaking")}>{footer.links.speaking}</Link>
       <Link href={localePath(lang, "/work-together")}>{footer.links.workTogether}</Link>
-      <Link href={localePath(lang, "/essays")}>{footer.links.essays}</Link>
       <a href="#home">{footer.backToTop}</a>
     </footer>
   );

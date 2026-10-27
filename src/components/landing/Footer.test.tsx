@@ -18,9 +18,12 @@ describe("Footer", () => {
     expect(screen.getByRole("link", { name: /Back to top/ })).toHaveAttribute("href", "#home");
   });
 
-  it("links to the essays hub", () => {
+  it("has no separate essays link, since essays live on the speaking and writing page", () => {
     render(<Footer lang="en" />);
-    expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("href", "/en/essays");
+    expect(screen.queryByRole("link", { name: "Essays" })).toBeNull();
+    expect(document.querySelector('footer a[href$="/essays"]')).toBeNull();
+    render(<Footer lang="es" />);
+    expect(screen.queryByRole("link", { name: "Ensayos" })).toBeNull();
   });
 
   it("links to the journey page", () => {
@@ -30,7 +33,7 @@ describe("Footer", () => {
 
   it("links to the speaking page", () => {
     render(<Footer lang="en" />);
-    expect(screen.getByRole("link", { name: "Speaking" })).toHaveAttribute("href", "/en/speaking");
+    expect(screen.getByRole("link", { name: "Speaking & writing" })).toHaveAttribute("href", "/en/speaking");
   });
 
   it("links to the work together page", () => {
@@ -40,9 +43,8 @@ describe("Footer", () => {
 
   it("prefixes every route with the Spanish locale on the Spanish site", () => {
     render(<Footer lang="es" />);
-    expect(screen.getByRole("link", { name: "Ensayos" })).toHaveAttribute("href", "/es/essays");
     expect(screen.getByRole("link", { name: "Trayectoria" })).toHaveAttribute("href", "/es/journey");
-    expect(screen.getByRole("link", { name: "Charlas" })).toHaveAttribute("href", "/es/speaking");
+    expect(screen.getByRole("link", { name: "Charlas y escritos" })).toHaveAttribute("href", "/es/speaking");
     expect(screen.getByRole("link", { name: "Trabajemos juntos" })).toHaveAttribute("href", "/es/work-together");
   });
 

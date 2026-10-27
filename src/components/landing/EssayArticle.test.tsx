@@ -62,16 +62,16 @@ describe("EssayArticle", () => {
     expect(screen.queryByRole("region", { name: "Related reading" })).not.toBeInTheDocument();
   });
 
-  it("links back to the essays hub", () => {
+  it("links back to the writing section of the speaking page", () => {
     render(<EssayArticle lang="en" essay={fixture} related={[]} />);
-    expect(screen.getByRole("link", { name: /All essays/ })).toHaveAttribute("href", "/en/essays");
+    expect(screen.getByRole("link", { name: /All essays/ })).toHaveAttribute("href", "/en/speaking#writing");
   });
 });
 
 describe("EssayArticle with the Spanish locale", () => {
   it("prefixes the back link and the related essays with /es", () => {
     render(<EssayArticle lang="es" essay={fixture} related={related} />);
-    expect(screen.getByRole("link", { name: /Todos los ensayos/ })).toHaveAttribute("href", "/es/essays");
+    expect(screen.getByRole("link", { name: /Todos los ensayos/ })).toHaveAttribute("href", "/es/speaking#writing");
     expect(screen.getByRole("link", { name: /Related one/ })).toHaveAttribute("href", "/es/essays/r1");
   });
 

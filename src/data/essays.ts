@@ -39,6 +39,3 @@ const ESSAYS_EN: readonly Essay[] = ESSAYS.map((original, i) => ({
 export function getEssays(lang: Locale): readonly Essay[] {
   return lang === "es" ? ESSAYS : ESSAYS_EN;
 }
-
-/** The essay a founder should read first: the most complete lessons-learned piece. */
-export const START_HERE_SLUG = "lecciones-quiebra-restaurante";
