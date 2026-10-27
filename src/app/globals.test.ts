@@ -64,6 +64,13 @@ describe("visual identity", () => {
     expect(css).not.toMatch(/background:\s*var\(--accent-hover\)/);
   });
 
+  it("keeps the Y Combinator mark in YC's own orange, outside the site palette", () => {
+    expect(token("--yc-orange")).toBe("#FF6600");
+    const rule = css.match(/\.yc > span \{[^}]*\}/)?.[0] ?? "";
+    expect(rule).toMatch(/background:\s*var\(--yc-orange\)/);
+    expect(rule).not.toMatch(/--accent/);
+  });
+
   it("lightens the accent on dark surfaces", () => {
     expect(css).toMatch(/--accent:\s*var\(--accent-on-dark\)/);
   });
@@ -95,5 +102,55 @@ describe("visual identity", () => {
       expect(b, bg).toBeDefined();
       expect(ratio(a!, b!)).toBeGreaterThanOrEqual(4.5);
     });
+  });
+
+});
+
+describe("tablet reading width", () => {
+  /** Rules inside every `@media (max-width: 1000px)` block, concatenated. */
+  const tablet = [...css.matchAll(/@media \(max-width: 1000px\) \{([\s\S]*?)\n\}/g)].map((m) => m[1]).join("\n");
+
+  const stacked = [
+    ".intro-inner",
+    ".experience-inner",
+    ".idea-list li",
+    ".conversations-heading",
+    ".beliefs-heading",
+    ".speaking-intro-body",
+    ".speaking-topics ul",
+    ".speaking-teaching-grid",
+    ".speaking-bio",
+    ".work-offers li",
+    ".work-gingga",
+    ".talk-feature",
+    ".contact",
+    ".section-heading",
+  ];
+
+  it.each(stacked)("stacks %s into one column so lines stay readable", (selector) => {
+    const rule = tablet.match(new RegExp(`(^|[\\s,])${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(,|\\s*\\{)[^{}]*\\{[^}]*grid-template-columns:\\s*1fr;`, "m"));
+    // The selector may sit in a comma list; fall back to checking it appears in a rule that sets one column.
+    const inList = new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^{]*\\{[^}]*grid-template-columns:\\s*1fr;`).test(tablet);
+    expect(Boolean(rule) || inList, selector).toBe(true);
+  });
+
+  it("drives the timeline column from one variable that tablets shrink, instead of four hard-coded 30%", () => {
+    expect(css).not.toMatch(/left:\s*(calc\()?30%/);
+    expect(css).not.toMatch(/grid-template-columns:\s*30%\s*70%/);
+    expect(css).toMatch(/--timeline-col:\s*30%/);
+    expect(tablet).toMatch(/--timeline-col:\s*2\d%/);
+  });
+
+  it("keeps year ranges such as 2020–2021 on one line in the narrower tablet column", () => {
+    expect(tablet).toMatch(/\.year\.words\s*\{[^}]*white-space:\s*nowrap/);
+  });
+
+  it("lowers the display size on tablets so two-line hero titles do not leave a one-word last line", () => {
+    expect(tablet).toMatch(/--fs-display:\s*clamp\([^)]*3\.25rem\)/);
+  });
+
+  it("balances headings and avoids one-word last lines in paragraphs", () => {
+    expect(css).toMatch(/h1,\s*h2,\s*h3\s*\{[^}]*text-wrap:\s*balance/);
+    expect(css).toMatch(/\bp\s*\{[^}]*text-wrap:\s*pretty/);
   });
 });

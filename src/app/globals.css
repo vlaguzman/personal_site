@@ -17,6 +17,8 @@
 
   /* Secondary text: Midnight at reduced opacity. 0.76 keeps >= 4.5:1 even on tinted callouts. */
   --text-secondary: rgb(23 32 51 / 0.76);
+  /* Third-party brand colour: the Y Combinator mark keeps its own orange. */
+  --yc-orange: #FF6600;
   --on-dark: #F7F5EF;
   --on-dark-secondary: rgb(247 245 239 / 0.74);
   --line: rgb(23 32 51 / 0.14);
@@ -51,6 +53,10 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 body {
@@ -91,6 +97,7 @@ header,
 h1,
 h2,
 h3 {
+  text-wrap: balance;
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.1;
@@ -626,6 +633,7 @@ nav a:last-child {
 }
 
 .timeline {
+  --timeline-col: 30%; /* width of the year column; narrower on tablets */
   position: relative;
 }
 
@@ -634,14 +642,14 @@ nav a:last-child {
   position: absolute;
   top: 15px;
   bottom: 100px;
-  left: 30%;
+  left: var(--timeline-col);
   width: 1px;
   background: var(--line);
 }
 
 .milestone {
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: var(--timeline-col) 1fr;
   padding-bottom: 120px;
   position: relative;
 }
@@ -653,7 +661,7 @@ nav a:last-child {
   border-radius: 50%;
   position: absolute;
   top: 20px;
-  left: calc(30% - 5px);
+  left: calc(var(--timeline-col) - 5px);
   background: var(--primary);
   box-shadow: 0 0 0 7px var(--bg);
   z-index: 1;
@@ -883,9 +891,9 @@ blockquote {
   place-items: center;
   width: 48px;
   height: 48px;
-  background: var(--accent-fill);
-  color: var(--on-dark);
-  font-family: var(--font-display);
+  background: var(--yc-orange);
+  color: #fff;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: var(--fs-h4);
 }
@@ -1501,7 +1509,7 @@ footer {
 .company-builder:before {
   width: 15px;
   height: 15px;
-  left: calc(30% - 7px);
+  left: calc(var(--timeline-col) - 7px);
 }
 
 /* ==========================================================================
@@ -2001,6 +2009,74 @@ footer {
 
   .section-heading {
     gap: 48px;
+  }
+}
+
+/* Tablet: the two- and three-column desktop layouts leave 20 to 30 characters per line
+   (comfortable reading is 45 to 75), so they collapse to one column and text keeps a measure. */
+@media (max-width: 1000px) {
+  :root {
+    --fs-display: clamp(2.75rem, 0.9rem + 6vw, 3.25rem);
+  }
+
+  .intro-inner,
+  .experience-inner,
+  .conversations-heading,
+  .beliefs-heading,
+  .speaking-intro-body,
+  .speaking-topics ul,
+  .speaking-teaching-grid,
+  .speaking-bio,
+  .work-gingga,
+  .talk-feature,
+  .contact,
+  .section-heading {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .idea-list li,
+  .work-offers li {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .experience-story p,
+  .idea-list p,
+  .work-offers p,
+  .speaking-topics p,
+  .section-heading p,
+  .intro p {
+    max-width: 62ch;
+  }
+
+  .talk-cover {
+    max-width: 560px;
+  }
+
+  .story h2 + p {
+    font-size: 1.125rem;
+  }
+
+  .timeline {
+    --timeline-col: 22%;
+  }
+
+  .story {
+    padding-left: 40px;
+  }
+
+  .year {
+    font-size: var(--fs-h2);
+  }
+
+  .year {
+    padding-right: 12px;
+  }
+
+  .year.words {
+    font-size: var(--fs-h4);
+    white-space: nowrap;
   }
 }
 
