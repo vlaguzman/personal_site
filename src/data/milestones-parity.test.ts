@@ -85,8 +85,8 @@ describe("getMilestones", () => {
   it("translates every prose string instead of copying the English", () => {
     es.forEach((m, i) => {
       const source = en[i]!;
-      // Four eyebrows are only brand names, so they are the same in both languages.
-      if (!["year2012", "year2017", "year2020", "year2022"].includes(m.id)) expect(m.eyebrow, m.id).not.toBe(source.eyebrow);
+      // Five eyebrows are only brand names, so they are the same in both languages.
+      if (!["year2012", "year2017", "year2020", "year2022", "year2025-mentor-awards"].includes(m.id)) expect(m.eyebrow, m.id).not.toBe(source.eyebrow);
       expect(m.titleLines, m.id).not.toEqual(source.titleLines);
       m.blocks.forEach((block, j) => {
         const original = source.blocks[j]!;

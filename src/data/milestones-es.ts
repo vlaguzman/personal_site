@@ -243,6 +243,17 @@ export const milestonesEs: Milestone[] = [
     ],
   },
   {
+    id: "year2025-mentor-awards",
+    year: "2025",
+    period: "14 JUN 2025",
+    eyebrow: "GUÍA LONDRES / MENTOR AWARDS 2025",
+    titleLines: ["Reconocido como", "Business Mentor."],
+    blocks: [
+      p("El 14 de junio de 2025, Guía Londres me reconoció como Business Mentor en sus Mentor Awards 2025."),
+      gallery(["guia-londres-mentor-awards-2025.jpg", "Vladimir Guzmán caminando por el escenario con su certificado de Business Mentor en los Guía Londres Mentor Awards 2025"]),
+    ],
+  },
+  {
     id: "now",
     year: "Hoy",
     period: "CONSTRUYENDO EL SIGUIENTE CAPÍTULO",

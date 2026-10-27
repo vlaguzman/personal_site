@@ -1,14 +1,14 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { milestones } from "./milestones";
+import { getMilestones, milestones } from "./milestones";
 import type { Block } from "./types";
 
 const ids = milestones.map((m) => m.id);
 
 describe("milestones", () => {
-  it("keeps the 14 milestones in chronological order", () => {
-    expect(milestones).toHaveLength(14);
+  it("keeps the 15 milestones in chronological order", () => {
+    expect(milestones).toHaveLength(15);
     expect(ids[0]).toBe("year2010");
     expect(ids.at(-1)).toBe("now");
   });
@@ -53,7 +53,7 @@ describe("milestones", () => {
 
   it("only references gallery images that exist in public/", () => {
     const srcs = milestones.flatMap((m) => m.blocks).flatMap((b) => (b.kind === "gallery" ? b.images.map((i) => i.src) : []));
-    expect(srcs).toHaveLength(16);
+    expect(srcs).toHaveLength(17);
     for (const src of srcs) expect(existsSync(join("public", src)), src).toBe(true);
   });
 
@@ -118,6 +118,38 @@ describe("duplicated lessons", () => {
     expect(learned("year2011")).toBe("Take an idea to people in person first: validate it and learn from early adopters.");
     expect(learned("year2014-tappsi")).toBe("How product, funding and a business model come together.");
     expect(learned("year2019")).toBe("Learning begins with awareness: people need to see how a new skill could change their lives.");
+  });
+
+  it("records the Guía Londres Business Mentor recognition as its own milestone, apart from the Consulate", () => {
+    for (const lang of ["en", "es"] as const) {
+      const list = getMilestones(lang);
+      const ids = list.map((m) => m.id);
+      const award = list.find((m) => m.id === "year2025-mentor-awards")!;
+      expect(award, lang).toBeDefined();
+      expect(award.year).toBe("2025");
+      expect(award.period).toBe("14 JUN 2025");
+      expect(award.eyebrow).toBe("GUÍA LONDRES / MENTOR AWARDS 2025");
+      expect(award.titleLines.join(" ")).toMatch(/Business Mentor/);
+      expect(ids.indexOf("year2025-mentor-awards")).toBe(ids.indexOf("year2023-community") + 1);
+      expect(ids.indexOf("year2025-mentor-awards")).toBeLessThan(ids.indexOf("now"));
+
+      const consulate = list.find((m) => m.id === "year2023-community")!;
+      const text = (blocks: typeof award.blocks) => blocks.flatMap((b) => (b.kind === "paragraph" ? [b.text] : []));
+      expect(text(consulate.blocks).join(" "), lang).not.toMatch(/Business Mentor|Guía Londres/);
+      expect(consulate.blocks.flatMap((b) => (b.kind === "gallery" ? b.images.map((i) => i.src) : []))).not.toContain(
+        "/images/journey/guia-londres-mentor-awards-2025.jpg",
+      );
+
+      expect(text(award.blocks)).toEqual([
+        lang === "en"
+          ? "On 14 June 2025, Guía Londres recognised me as a Business Mentor at its Mentor Awards 2025."
+          : "El 14 de junio de 2025, Guía Londres me reconoció como Business Mentor en sus Mentor Awards 2025.",
+      ]);
+      const gallery = award.blocks.find((b) => b.kind === "gallery");
+      expect(gallery?.kind === "gallery" && gallery.images.map((i) => i.src)).toEqual([
+        "/images/journey/guia-londres-mentor-awards-2025.jpg",
+      ]);
+    }
   });
 
   it("leaves the surrounding sentences readable", () => {

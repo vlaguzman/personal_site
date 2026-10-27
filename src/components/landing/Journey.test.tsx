@@ -96,6 +96,7 @@ describe("Journey", () => {
     expect(count("year2019")).toBe(1);
     expect(count("year2022")).toBe(1);
     expect(count("year2023-community")).toBe(4);
+    expect(count("year2025-mentor-awards")).toBe(1);
     for (const img of container.querySelectorAll(".gallery img")) {
       expect(img.getAttribute("alt"), img.getAttribute("src")!).toBeTruthy();
       expect(img).toHaveAttribute("loading", "lazy");
@@ -209,8 +210,8 @@ describe("Journey", () => {
 
   it("wraps gallery photos in buttons that open the lightbox", () => {
     const { container } = render(<Journey lang="en" />);
-    expect(container.querySelectorAll(".gallery img")).toHaveLength(16);
-    expect(container.querySelectorAll(".gallery button img")).toHaveLength(16);
+    expect(container.querySelectorAll(".gallery img")).toHaveLength(17);
+    expect(container.querySelectorAll(".gallery button img")).toHaveLength(17);
     expect(container.querySelectorAll(".gallery a")).toHaveLength(0);
   });
 

@@ -242,6 +242,17 @@ export const milestones: Milestone[] = [
     ],
   },
   {
+    id: "year2025-mentor-awards",
+    year: "2025",
+    period: "14 JUN 2025",
+    eyebrow: "GUÍA LONDRES / MENTOR AWARDS 2025",
+    titleLines: ["Recognised as a", "Business Mentor."],
+    blocks: [
+      p("On 14 June 2025, Guía Londres recognised me as a Business Mentor at its Mentor Awards 2025."),
+      gallery(["guia-londres-mentor-awards-2025.jpg", "Vladimir Guzmán walking across the stage with his Business Mentor certificate at the Guía Londres Mentor Awards 2025"]),
+    ],
+  },
+  {
     id: "now",
     year: "Now",
     period: "BUILDING THE NEXT CHAPTER",
