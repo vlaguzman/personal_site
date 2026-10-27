@@ -113,13 +113,13 @@ describe("essays on the speaking page", () => {
   });
 
   it("gives the Writing section the same vertical padding as its siblings and a readable intro measure", () => {
-    expect(css).toMatch(/\.speaking-writing,[^{]*\{[^}]*padding-top:\s*64px/);
+    expect(css).toMatch(/\.speaking-writing(,[^{]*)?\s*\{[^}]*padding-top:\s*64px/);
     expect(css).toMatch(/\.speaking-writing-intro\s*\{[^}]*max-width:\s*62ch/);
   });
 
   it("tightens the Writing section on phones like the other speaking sections", () => {
     const phone = [...css.matchAll(/@media \(max-width: 760px\) \{([\s\S]*?)\n\}/g)].map((m) => m[1]).join("\n");
-    expect(phone).toMatch(/\.speaking-writing,[^{]*\{[^}]*padding-top:\s*40px/);
+    expect(phone).toMatch(/\.speaking-writing(,[^{]*)?\s*\{[^}]*padding-top:\s*40px/);
   });
 
   it("does not add the card grid's own bottom margin inside the Writing section", () => {
@@ -140,7 +140,6 @@ describe("tablet reading width", () => {
     ".speaking-intro-body",
     ".speaking-topics ul",
     ".speaking-teaching-grid",
-    ".speaking-bio",
     ".work-offers li",
     ".work-gingga",
     ".talk-feature",

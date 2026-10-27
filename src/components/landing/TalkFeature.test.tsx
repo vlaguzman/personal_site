@@ -17,11 +17,10 @@ describe("TalkFeature", () => {
     expect(link).toHaveAttribute("download", TALK.pdfName);
   });
 
-  it("renders the cover image and themes", () => {
+  it("renders the cover image and no theme tags", () => {
     render(<TalkFeature lang="en" />);
     expect(screen.getByAltText(TALK.coverAlt)).toHaveAttribute("src", TALK.cover);
-    expect(screen.getAllByRole("listitem").map((li) => li.textContent)).toEqual(getTalk("en").themes);
-    expect(screen.getByRole("list", { name: "Talk themes" })).toBeInTheDocument();
+    expect(screen.queryByRole("list")).toBeNull();
   });
 
   it("can carry an anchor id so pages can link to it", () => {
@@ -39,8 +38,7 @@ describe("TalkFeature in Spanish", () => {
     );
     expect(screen.getByRole("link", { name: /Ver diapositivas \(en inglés\)/ })).toHaveAttribute("href", TALK.pdf);
     expect(screen.getByRole("link", { name: /Descargar PDF/ })).toHaveAttribute("download", TALK.pdfName);
-    expect(screen.getByRole("list", { name: "Temas de la charla" })).toBeInTheDocument();
-    expect(screen.getAllByRole("listitem").map((li) => li.textContent)).toEqual(getTalk("es").themes);
+    expect(screen.queryByRole("list")).toBeNull();
     expect(screen.getByAltText(TALK.coverAlt)).toHaveAttribute("src", TALK.cover);
     expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent("Unlocking Human Potentialin the Age of AI");
     expect(container.textContent).toContain("CHARLA EN CONFERENCIA");

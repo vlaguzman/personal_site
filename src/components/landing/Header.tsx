@@ -19,7 +19,7 @@ export function Header({ lang, currentPath, path }: Props) {
   return (
     <header>
       <HeaderLink className="wordmark" lang={lang} href={resolve("#home")}>
-        Vladimir Guzmán<span>{chrome.wordmarkSubtitle}</span>
+        Vladimir Guzmán Mendoza<span>{chrome.wordmarkSubtitle}</span>
       </HeaderLink>
       <nav className="site-nav" aria-label={chrome.navLabel}>
         {chrome.nav.map(({ href, label }) => (

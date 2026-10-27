@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { getArc } from "@/data/arc";
 import { getJourneyUi } from "@/data/journey-ui";
+import { FOUNDER_PROFILE_PDF } from "@/data/site";
 import type { Locale } from "@/i18n/config";
 import { getMilestones } from "@/data/milestones";
 import { Milestone } from "./Milestone";
@@ -23,7 +24,12 @@ export function Journey({ lang }: { lang: Locale }) {
             <em>{ui.headlineEmphasis}</em>
           </h1>
         </div>
-        <p>{ui.intro}</p>
+        <div>
+          <p>{ui.intro}</p>
+          <a className="journey-profile" href={FOUNDER_PROFILE_PDF} download="founder-profile.pdf">
+            {ui.profileLabel} ↓
+          </a>
+        </div>
       </div>
       <ol className="arc" aria-label={ui.arcLabel}>
         {getArc(lang).map((stage, i) => (

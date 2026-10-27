@@ -20,12 +20,12 @@ describe("the English writing section", () => {
     }
   });
 
-  it("labels every essay shown with Translated with AI", async () => {
+  it("says once, in the Writing intro, that the English essays are AI translations", async () => {
     const { container } = await speaking("en");
     const cards = container.querySelectorAll("#writing .essay-card");
     expect(cards).toHaveLength(ESSAYS.length);
-    for (const card of cards) expect(within(card as HTMLElement).getByText("Translated with AI")).toBeVisible();
-    expect(screen.getAllByText("Translated with AI")).toHaveLength(ESSAYS.length);
+    expect(screen.queryAllByText("Translated with AI")).toHaveLength(0);
+    expect(container.querySelector("#writing")?.textContent).toContain("made with AI");
   });
 
   it("introduces the translations and never calls an essay Spanish-only", async () => {

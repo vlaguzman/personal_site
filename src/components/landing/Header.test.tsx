@@ -12,6 +12,11 @@ describe("Header", () => {
     expect(home).toHaveTextContent("ENTREPRENEUR & BUILDER");
   });
 
+  it("shows both surnames in the wordmark", () => {
+    render(<Header lang="en" />);
+    expect(screen.getByRole("link", { name: /Vladimir Guzmán Mendoza/ })).toBeInTheDocument();
+  });
+
   it("renders every nav link pointing at its section", () => {
     render(<Header lang="en" />);
     const nav = screen.getByRole("navigation", { name: "Main navigation" });
@@ -22,10 +27,10 @@ describe("Header", () => {
     }
   });
 
-  it("has exactly five links, in order, in both languages", () => {
+  it("has exactly four links, in order, in both languages", () => {
     const expected = {
-      en: ["The journey", "Now", "Speaking & writing", "Work together", "Let’s connect ↗"],
-      es: ["Mi trayectoria", "Ahora", "Charlas y escritos", "Trabajemos juntos", "Conectemos ↗"],
+      en: ["The journey", "Speaking & writing", "Work together", "Let’s connect ↗"],
+      es: ["Mi trayectoria", "Charlas y escritos", "Trabajemos juntos", "Conectemos ↗"],
     };
     for (const lang of ["en", "es"] as const) {
       render(<Header lang={lang} />);
@@ -34,7 +39,6 @@ describe("Header", () => {
       expect(links.map((a) => a.textContent?.trim())).toEqual(expected[lang]);
       expect(links.map((a) => a.getAttribute("href"))).toEqual([
         `/${lang}/journey`,
-        `/${lang}/journey#now`,
         `/${lang}/speaking`,
         `/${lang}/work-together`,
         "#contact",
@@ -64,7 +68,7 @@ describe("Header", () => {
     expect(screen.getByRole("link", { name: "Charlas y escritos" })).toHaveAttribute("href", "/es/speaking");
     expect(screen.getByRole("link", { name: "Trabajemos juntos" })).toHaveAttribute("href", "/es/work-together");
     expect(screen.getByRole("link", { name: /Mi trayectoria/ })).toHaveAttribute("href", "/es/journey");
-    expect(screen.getByRole("link", { name: "Ahora" })).toHaveAttribute("href", "/es/journey#now");
+    expect(screen.queryByRole("link", { name: "Ahora" })).toBeNull();
   });
 
   it("keeps in-page anchors on the home page", () => {
@@ -98,8 +102,7 @@ describe("Header", () => {
     it("marks the journey page as current when on it", () => {
       render(<Header lang="en" currentPath="/journey" />);
       expect(screen.getByRole("link", { name: /The journey/ })).toHaveAttribute("aria-current", "page");
-      expect(screen.getByRole("link", { name: "Now" })).not.toHaveAttribute("aria-current");
-      expect(screen.getByRole("link", { name: "Now" })).toHaveAttribute("href", "/en/journey#now");
+      expect(screen.queryByRole("link", { name: "Now" })).toBeNull();
     });
 
     it("marks the current section with aria-current", () => {

@@ -19,6 +19,7 @@ export const milestones: Milestone[] = [
     blocks: [
       p("After graduating as a software engineer, while classmates were heading towards companies like Microsoft, I chose to co-found a small restaurant: Funky’s, in Chía, Colombia."),
       p("I worked on the brand, business plan and sales strategies, alongside community management, website development and day-to-day operations."),
+      gallery(["funkys-press-feature.jpg", "Magazine clipping of the Funky’s team posing in front of the restaurant’s banner in Chía; the caption reads “Six young entrepreneurs cook and serve in their own restaurant in Chía”"]),
       posts(funkyLessons),
     ],
   },
@@ -239,6 +240,17 @@ export const milestones: Milestone[] = [
         ["consulate-documentary-screening.jpg", "The Consulate documentary projected on a screen to an audience in a room decorated with Colombian flags and a Christmas tree"],
         ["consulate-entrepreneurship-route-2025.jpg", "Entrepreneurs and the Consulate team posing in front of the Ruta de Emprendimiento 2025 presentation"],
       ),
+    ],
+  },
+  {
+    id: "year2025-mentor-awards",
+    year: "2025",
+    period: "14 JUN 2025",
+    eyebrow: "GUÍA LONDRES / MENTOR AWARDS 2025",
+    titleLines: ["Recognised as a", "Business Mentor."],
+    blocks: [
+      p("On 14 June 2025, Guía Londres recognised me as a Business Mentor at its Mentor Awards 2025."),
+      gallery(["guia-londres-mentor-awards-2025.jpg", "Vladimir Guzmán walking across the stage with his Business Mentor certificate at the Guía Londres Mentor Awards 2025"]),
     ],
   },
   {

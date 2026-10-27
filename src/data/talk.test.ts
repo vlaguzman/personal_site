@@ -21,19 +21,23 @@ describe("getTalk", () => {
   it("has English copy", () => {
     expect(getTalk("en")).toMatchObject({
       eyebrow: "CAMBRIDGE · 2026 · CONFERENCE TALK",
-      themes: ["Entrepreneurship", "AI & adaptation", "Human potential"],
-      themesLabel: "Talk themes",
       coverLinkLabel: "Open the Cambridge talk slides as a PDF",
       viewSlides: "View slides",
       download: "Download PDF",
     });
   });
 
+  it("carries no theme tags", () => {
+    for (const lang of ["en", "es"] as const) {
+      const talk = getTalk(lang) as Record<string, unknown>;
+      expect(talk.themes).toBeUndefined();
+      expect(talk.themesLabel).toBeUndefined();
+    }
+  });
+
   it("has Spanish copy and says the slides are in English", () => {
     expect(getTalk("es")).toMatchObject({
       eyebrow: "CAMBRIDGE · 2026 · CHARLA EN CONFERENCIA",
-      themes: ["Emprendimiento", "IA y adaptación", "Potencial humano"],
-      themesLabel: "Temas de la charla",
       coverLinkLabel: "Abrir las diapositivas de la charla de Cambridge en PDF",
       viewSlides: "Ver diapositivas (en inglés)",
       download: "Descargar PDF",

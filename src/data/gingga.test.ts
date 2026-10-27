@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getArc } from "./arc";
 import { getMilestones } from "./milestones";
-import { getSpeaking } from "./speaking";
 import { getWork } from "./work";
 
 /**
@@ -30,16 +29,15 @@ describe.each(["en", "es"] as const)("Gingga copy in %s", (lang) => {
     expect(now.blocks.map((b) => b.kind)).toEqual(["paragraph", "button"]);
   });
 
-  it("describes Gingga the same general way in the arc, the speaking bio and the work page", () => {
+  it("describes Gingga the same general way in the arc and the work page", () => {
     expect(arc.text).toContain(GENERAL[lang]);
-    expect(getSpeaking(lang).bio).toContain(GENERAL[lang].replace("soluciones con IA", "soluciones con inteligencia artificial"));
     expect(getWork(lang).gingga.text).toContain(
       lang === "en" ? GENERAL.en : "soluciones con inteligencia artificial para emprendedores",
     );
   });
 
   it("does not go into channels, sectors or process anywhere", () => {
-    const copy = [...nowText, arc.text, getSpeaking(lang).bio, getWork(lang).gingga.text].join(" ");
+    const copy = [...nowText, arc.text, getWork(lang).gingga.text].join(" ");
     expect(copy).not.toMatch(DETAIL);
   });
 });

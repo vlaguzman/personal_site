@@ -8,6 +8,7 @@ import {
   sellingBeerEn,
   subscriptionBoxPointsEn,
 } from "@/data/posts-en";
+import { FOUNDER_PROFILE_PDF } from "@/data/site";
 import { Journey } from "./Journey";
 import { Milestone } from "./Milestone";
 
@@ -17,6 +18,18 @@ describe("Journey", () => {
     expect(container.querySelector("section#journey")).not.toBeNull();
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Different ventures.One purpose.");
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+  });
+
+  it.each([
+    ["en", "Download founder profile"],
+    ["es", "Descargar perfil de fundador"],
+  ] as const)("offers the founder profile to download under the intro (%s)", (lang, label) => {
+    const { container } = render(<Journey lang={lang} />);
+    const link = screen.getByRole("link", { name: new RegExp(label) });
+    expect(link).toHaveAttribute("href", FOUNDER_PROFILE_PDF);
+    expect(link).toHaveAttribute("download", "founder-profile.pdf");
+    expect(container.querySelector(".section-heading")).toContainElement(link);
+    expect(screen.getAllByRole("link", { name: new RegExp(label) })).toHaveLength(1);
   });
 
   it("titles every milestone with an h2, never skipping a heading level", () => {
@@ -90,12 +103,13 @@ describe("Journey", () => {
   it("renders a photo gallery under the right milestones", () => {
     const { container } = render(<Journey lang="en" />);
     const count = (id: string) => container.querySelectorAll(`#${id} .gallery img`).length;
-    expect(count("year2010")).toBe(0);
+    expect(count("year2010")).toBe(1);
     expect(count("year2014-fluvip")).toBe(1);
     expect(count("year2017")).toBe(9);
     expect(count("year2019")).toBe(1);
     expect(count("year2022")).toBe(1);
     expect(count("year2023-community")).toBe(4);
+    expect(count("year2025-mentor-awards")).toBe(1);
     for (const img of container.querySelectorAll(".gallery img")) {
       expect(img.getAttribute("alt"), img.getAttribute("src")!).toBeTruthy();
       expect(img).toHaveAttribute("loading", "lazy");
@@ -209,8 +223,8 @@ describe("Journey", () => {
 
   it("wraps gallery photos in buttons that open the lightbox", () => {
     const { container } = render(<Journey lang="en" />);
-    expect(container.querySelectorAll(".gallery img")).toHaveLength(16);
-    expect(container.querySelectorAll(".gallery button img")).toHaveLength(16);
+    expect(container.querySelectorAll(".gallery img")).toHaveLength(18);
+    expect(container.querySelectorAll(".gallery button img")).toHaveLength(18);
     expect(container.querySelectorAll(".gallery a")).toHaveLength(0);
   });
 

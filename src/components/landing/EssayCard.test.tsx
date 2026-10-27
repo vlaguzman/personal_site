@@ -13,14 +13,12 @@ const original: Essay = {
 const translation: Essay = { ...original, title: "Being an entrepreneur", lang: "en", translatedWithAI: true };
 
 describe("EssayCard translation label", () => {
-  it("shows a visible Translated with AI label on an AI translation", () => {
+  // The Writing intro says once that the English versions are AI translations; the article page keeps its own badge.
+  it("does not repeat the Translated with AI label on each card", () => {
     const { container } = render(<EssayCard lang="en" essay={translation} />);
-    const badge = screen.getByText("Translated with AI");
-    expect(badge).toBeVisible();
-    expect(badge).toHaveClass("essay-ai-badge");
-    // The topic eyebrow keeps its own text; the badge is a separate chip.
+    expect(screen.queryByText(/Translated with AI|Traducido con IA/)).not.toBeInTheDocument();
+    expect(container.querySelector(".essay-ai-badge")).toBeNull();
     expect(container.querySelector(".eyebrow")).toHaveTextContent(/^STARTUPS$/);
-    expect(badge.closest(".essay-meta")).toBeNull();
   });
 
   it("links the translation to the same slug under the page locale", () => {
@@ -33,8 +31,4 @@ describe("EssayCard translation label", () => {
     expect(screen.queryByText(/Translated with AI|Traducido con IA/)).not.toBeInTheDocument();
   });
 
-  it("labels in the page language", () => {
-    render(<EssayCard lang="es" essay={translation} />);
-    expect(screen.getByText("Traducido con IA")).toHaveClass("essay-ai-badge");
-  });
 });

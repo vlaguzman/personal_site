@@ -16,7 +16,6 @@ const ENGLISH_PHRASES = [
   "Featured talk",
   "Teaching",
   "Writing",
-  "About Vladimir",
   "Independent thinking",
   "Practical experience",
   "How I can help",
@@ -26,7 +25,6 @@ const ENGLISH_PHRASES = [
   "Looking for Gingga",
   "View slides",
   "Download PDF",
-  "Download founder profile",
   "Related reading",
   "Translated with AI",
   "Read the original in Spanish",
@@ -80,6 +78,7 @@ const JOURNEY_ENGLISH_PHRASES = [
   "Exploring a new market",
   "Technology that opens doors",
   "Explore Gingga",
+  "Download founder profile",
   "FROM MY BLOG",
   "developers led",
   "monthly users supported",
@@ -98,12 +97,14 @@ describe("journey copy", () => {
     // The title lines are separated by a <br />, which adds no text.
     expect(text).toContain("Donde empezó micamino emprendedor.");
     expect(text).toContain("DE MI BLOG");
+    expect(text).toContain("Descargar perfil de fundador");
   });
 
   it("keeps the English journey page in English, with the blog posts translated with AI", async () => {
     const text = await journeyText("en");
     expect(text).toContain("Different ventures");
     expect(text).toContain("What I learned");
+    expect(text).toContain("Download founder profile");
     expect(text).toContain("FROM MY BLOG · TRANSLATED WITH AI");
     expect(text).not.toContain("IN SPANISH");
   });
