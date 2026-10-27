@@ -213,3 +213,27 @@ export function getCommunityProgram(lang: Locale) {
     images: COMMUNITY_PROGRAM_PHOTOS.map((src, i) => ({ src, alt: photoAlts[i] })),
   };
 }
+
+type WorkshopText = { title: string; photoAlt: string };
+
+const WORKSHOP: Record<Locale, WorkshopText> = {
+  en: {
+    title: "From idea to prototype in two hours",
+    photoAlt:
+      "Vladimir Guzmán taking a selfie with the workshop group in front of a slide titled “De idea a prototipo en dos horas”",
+  },
+  es: {
+    title: "De idea a prototipo en dos horas",
+    photoAlt:
+      "Vladimir Guzmán tomándose una selfie con el grupo del taller frente a una diapositiva titulada «De idea a prototipo en dos horas»",
+  },
+};
+
+const WORKSHOP_DATE = "23 MAY 2026";
+const WORKSHOP_PHOTO = "/images/speaking/workshop-idea-to-prototype.jpg";
+
+/** The 23 May 2026 session where an idea became a prototype in two hours. */
+export function getWorkshop(lang: Locale) {
+  const { title, photoAlt } = WORKSHOP[lang];
+  return { date: WORKSHOP_DATE, title, images: [{ src: WORKSHOP_PHOTO, alt: photoAlt }] };
+}

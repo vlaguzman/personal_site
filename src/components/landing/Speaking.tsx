@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getEssays } from "@/data/essays";
 import { FOUNDER_PROFILE_PDF } from "@/data/site";
-import { getCommunityProgram, getSpeaking, getTeaching } from "@/data/speaking";
+import { getCommunityProgram, getSpeaking, getTeaching, getWorkshop } from "@/data/speaking";
 import type { Locale } from "@/i18n/config";
 import { EssayBrowser } from "./EssayBrowser";
 import { Gallery } from "./Gallery";
@@ -19,6 +19,7 @@ export function Speaking({ lang }: { lang: Locale }) {
   const speaking = getSpeaking(lang);
   const teaching = getTeaching(lang);
   const program = getCommunityProgram(lang);
+  const workshop = getWorkshop(lang);
 
   return (
     <>
@@ -74,7 +75,7 @@ export function Speaking({ lang }: { lang: Locale }) {
 
       <section className="speaking-teaching wrap" aria-labelledby="speaking-teaching-title">
         <h2 id="speaking-teaching-title">{speaking.sections.teaching}</h2>
-        <div className="speaking-teaching-grid">
+        <div className="speaking-teaching-grid speaking-classes">
           <div className="speaking-teaching-copy">
             <h3 id="speaking-teaching-talks-title">{teaching.talksLabel}</h3>
             <ul className="speaking-teaching-talks" aria-labelledby="speaking-teaching-talks-title">
@@ -99,6 +100,13 @@ export function Speaking({ lang }: { lang: Locale }) {
             </a>
           </div>
           <Gallery lang={lang} images={program.images} />
+        </div>
+        <div className="speaking-teaching-grid speaking-workshop">
+          <div className="speaking-teaching-copy">
+            <span className="eyebrow">{workshop.date}</span>
+            <h3>{workshop.title}</h3>
+          </div>
+          <Gallery lang={lang} images={workshop.images} />
         </div>
       </section>
 

@@ -13,7 +13,7 @@ import { getJourneyUi } from "./journey-ui";
 import { getMedia } from "./media";
 import { getPurpose } from "./purpose";
 import { getSiteMeta } from "./site";
-import { getCommunityProgram, getSpeaking, getTeaching } from "./speaking";
+import { getCommunityProgram, getSpeaking, getTeaching, getWorkshop } from "./speaking";
 import { getTalk } from "./talk";
 import { getWork } from "./work";
 
@@ -52,6 +52,7 @@ const getters = {
   speaking: getSpeaking,
   teaching: getTeaching,
   community: getCommunityProgram,
+  workshop: getWorkshop,
   talk: getTalk,
   media: getMedia,
   work: getWork,

@@ -39,14 +39,14 @@ describe("Speaking", () => {
     const { container } = render(<Speaking lang="en" />);
     expect(screen.getByRole("heading", { level: 2, name: "Teaching" })).toBeInTheDocument();
     expect(screen.queryByText(/taught across three lines|He dado formación/)).not.toBeInTheDocument();
-    expect(container.querySelectorAll(".speaking-teaching-grid:not(.speaking-community) .gallery-item")).toHaveLength(1);
+    expect(container.querySelectorAll(".speaking-classes .gallery-item")).toHaveLength(1);
     expect(container.querySelector("iframe")).toBeNull();
     expect(container.textContent).not.toMatch(/270\+|NPS|87\.1/);
   });
 
   it("lists only the classes inside Teaching, ending with marketing with AI", () => {
     const { container } = render(<Speaking lang="en" />);
-    const section = container.querySelector(".speaking-teaching-grid:not(.speaking-community)") as HTMLElement;
+    const section = container.querySelector(".speaking-classes") as HTMLElement;
     expect(within(section).getAllByRole("list")).toHaveLength(1);
     const talks = within(section).getByRole("list", { name: "I had the opportunity to work with the Colombian community and technology through classes such as:" });
     const items = within(talks).getAllByRole("listitem");
@@ -57,7 +57,7 @@ describe("Speaking", () => {
 
   it("shows the talks in Spanish", () => {
     const { container } = render(<Speaking lang="es" />);
-    const section = container.querySelector(".speaking-teaching-grid:not(.speaking-community)") as HTMLElement;
+    const section = container.querySelector(".speaking-classes") as HTMLElement;
     expect(within(section).getAllByRole("list")).toHaveLength(1);
     expect(
       within(section).getByRole("list", { name: "Tuve la oportunidad de trabajar con la comunidad colombiana y la tecnología en clases como:" }),
@@ -88,6 +88,20 @@ describe("Speaking", () => {
     expect(within(block).getByRole("heading", { level: 3, name: /colideré un programa de inglés/ })).toBeInTheDocument();
     expect(within(block).getByRole("link", { name: /Conocer The Giving Lab/ })).toBeInTheDocument();
     expect(within(block).getAllByRole("listitem")).toHaveLength(4);
+  });
+
+  it("shows the 23 May 2026 idea-to-prototype session with its photo", () => {
+    const { container } = render(<Speaking lang="en" />);
+    const block = container.querySelector(".speaking-workshop") as HTMLElement;
+    expect(block.querySelector(".eyebrow")).toHaveTextContent("23 MAY 2026");
+    expect(within(block).getByRole("heading", { level: 3, name: "From idea to prototype in two hours" })).toBeInTheDocument();
+    expect(block.querySelectorAll(".gallery-item")).toHaveLength(1);
+  });
+
+  it("shows the session title in Spanish", () => {
+    const { container } = render(<Speaking lang="es" />);
+    const block = container.querySelector(".speaking-workshop") as HTMLElement;
+    expect(within(block).getByRole("heading", { level: 3, name: "De idea a prototipo en dos horas" })).toBeInTheDocument();
   });
 
   it("shows a Writing section with the intro and every essay as a translated card", () => {

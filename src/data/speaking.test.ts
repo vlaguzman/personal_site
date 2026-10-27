@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { getWhatsappLink } from "./site";
-import { getCommunityProgram, getSpeaking, getTeaching } from "./speaking";
+import { getCommunityProgram, getSpeaking, getTeaching, getWorkshop } from "./speaking";
 
 describe("getSpeaking in English", () => {
   const speaking = getSpeaking("en");
@@ -192,5 +192,28 @@ describe("getCommunityProgram", () => {
       expect(existsSync(`public${image.src}`)).toBe(true);
       expect(image.alt.length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe("getWorkshop", () => {
+  it("names the 23 May 2026 session in each language", () => {
+    expect(getWorkshop("en")).toMatchObject({ date: "23 MAY 2026", title: "From idea to prototype in two hours" });
+    expect(getWorkshop("es")).toMatchObject({ date: "23 MAY 2026", title: "De idea a prototipo en dos horas" });
+  });
+
+  it.each(["en", "es"] as const)("shows the group photo of the session (%s)", (lang) => {
+    const { images } = getWorkshop(lang);
+    expect(images.map((i) => i.src)).toEqual(["/images/speaking/workshop-idea-to-prototype.jpg"]);
+    expect(existsSync(`public${images[0].src}`)).toBe(true);
+    expect(images[0].alt).toMatch(/De idea a prototipo en dos horas/);
+  });
+
+  it("describes the photo in each language", () => {
+    expect(getWorkshop("en").images[0].alt).toBe(
+      "Vladimir Guzmán taking a selfie with the workshop group in front of a slide titled “De idea a prototipo en dos horas”",
+    );
+    expect(getWorkshop("es").images[0].alt).toBe(
+      "Vladimir Guzmán tomándose una selfie con el grupo del taller frente a una diapositiva titulada «De idea a prototipo en dos horas»",
+    );
   });
 });

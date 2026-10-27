@@ -1805,8 +1805,13 @@ footer {
   line-height: var(--lh-read);
 }
 
-.speaking-community {
+.speaking-community,
+.speaking-workshop {
   margin-top: 72px;
+}
+
+.speaking-workshop h3 {
+  margin-top: 12px;
 }
 
 .speaking-community .speaking-link {
