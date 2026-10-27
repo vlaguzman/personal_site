@@ -14,8 +14,8 @@ describe("Ideas", () => {
     const list = screen.getByRole("list", { name: "Ideas worth challenging" });
     const items = within(list).getAllByRole("listitem");
     expect(items).toHaveLength(3);
-    expect(within(items[0]).getByRole("heading", { level: 3 })).toHaveTextContent("Not every business needs AI.");
-    expect(within(items[0]).getByText(/what becomes possible when we do/)).toBeInTheDocument();
+    expect(within(items[0]).getByRole("heading", { level: 3 })).toHaveTextContent("Faster isn’t always better.");
+    expect(within(items[0]).getByText(/you don’t always have to run/)).toBeInTheDocument();
     expect(within(items[1]).getByRole("heading", { level: 3 })).toHaveTextContent(/Raising money isn’t the same/);
     expect(within(items[2]).getByText(/human potential we haven’t learned to recognise/)).toBeInTheDocument();
   });
@@ -47,7 +47,7 @@ describe("Ideas with the Spanish locale", () => {
     const items = within(screen.getByRole("list", { name: "Ideas que vale la pena cuestionar" })).getAllByRole("listitem");
     expect(items).toHaveLength(3);
     expect(within(items[0]).getByRole("heading", { level: 3 })).toHaveTextContent(
-      "No todos los negocios necesitan inteligencia artificial.",
+      "No siempre más rápido es mejor.",
     );
     expect(within(items[1]).getByText(/El capital abre puertas/)).toBeInTheDocument();
   });
