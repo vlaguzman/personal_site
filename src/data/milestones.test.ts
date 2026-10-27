@@ -166,6 +166,24 @@ describe("duplicated lessons", () => {
     }
   });
 
+  it("embeds the two Conectando Mentes videos in the 2011 milestone, in story order and ahead of the blog post", () => {
+    const titles = {
+      en: ["Connecting Minds - Entirely for reference", "Mindup - A workshop to validate and advance business ideas - Conectando Mentes"],
+      es: [
+        "Conectando mentes - Video enteramente referencial - Ver descripción completa",
+        "Mindup - Un taller para validar y avanzar en ideas de negocio - Conectando mentes",
+      ],
+    };
+    for (const lang of ["en", "es"] as const) {
+      const blocks = getMilestones(lang).find((m) => m.id === "year2011")!.blocks;
+      const videos = blocks.flatMap((b) => (b.kind === "video" ? [b] : []));
+      expect(videos.map((v) => v.youtubeId), lang).toEqual(["lpaQh2NsWX8", "dI8pSxSmIOc"]);
+      expect(videos.map((v) => v.title), lang).toEqual(titles[lang]);
+      const lastVideo = blocks.map((b) => b.kind).lastIndexOf("video");
+      expect(lastVideo, lang).toBeLessThan(blocks.findIndex((b) => b.kind === "posts"));
+    }
+  });
+
   it("leaves the surrounding sentences readable", () => {
     expect(prose("year2011")).toContain("taking the idea into an in-person format.");
     expect(prose("year2014-tappsi")).toContain("Tappsi would later become a Colombian startup success story");
