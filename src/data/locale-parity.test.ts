@@ -79,7 +79,9 @@ describe("locale content parity", () => {
       return [];
     };
     for (const [name, get] of Object.entries(getters)) {
-      expect(hrefs(get("es")), name).toEqual(hrefs(get("en")));
+      // The WhatsApp invitation differs by design in its prefilled `text` parameter only.
+      const normal = (list: string[]) => list.map((h) => h.replace(/&text=.*$/, ""));
+      expect(normal(hrefs(get("es"))), name).toEqual(normal(hrefs(get("en"))));
     }
   });
 });

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Hero } from "./Hero";
-import { SITE } from "@/data/site";
+import { getWhatsappLink } from "@/data/site";
 
 describe("Hero", () => {
   it("renders the brand statement and the home anchor", () => {
@@ -33,7 +33,7 @@ describe("Hero", () => {
     expect(primary).toHaveAttribute("href", "/en/speaking#writing");
     expect(primary).toHaveClass("cta-primary");
     const secondary = screen.getByRole("link", { name: /Invite me to speak/ });
-    expect(secondary).toHaveAttribute("href", SITE.whatsapp);
+    expect(secondary).toHaveAttribute("href", getWhatsappLink("en"));
     expect(secondary).toHaveClass("cta-secondary");
   });
 
@@ -69,7 +69,7 @@ describe("Hero with the Spanish locale", () => {
     expect(primary).toHaveAttribute("href", "/es/speaking#writing");
     expect(primary).toHaveClass("cta-primary");
     const secondary = screen.getByRole("link", { name: /Invítame a conversar/ });
-    expect(secondary).toHaveAttribute("href", SITE.whatsapp);
+    expect(secondary).toHaveAttribute("href", getWhatsappLink("es"));
     expect(secondary).toHaveClass("cta-secondary");
   });
 
@@ -81,7 +81,7 @@ describe("Hero with the Spanish locale", () => {
   it.each(["en", "es"] as const)("opens the invitation on WhatsApp in a new tab, safely (%s)", (lang) => {
     render(<Hero lang={lang} />);
     const invite = document.querySelector(".cta-secondary")!;
-    expect(invite).toHaveAttribute("href", "https://api.whatsapp.com/send/?phone=447551273933");
+    expect(invite).toHaveAttribute("href", getWhatsappLink(lang));
     expect(invite).toHaveAttribute("target", "_blank");
     expect(invite).toHaveAttribute("rel", expect.stringContaining("noopener"));
   });

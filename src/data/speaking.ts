@@ -1,6 +1,6 @@
 import type { Locale } from "@/i18n/config";
 import { getHero, type HeroContent } from "./hero";
-import { SITE } from "./site";
+import { getWhatsappLink } from "./site";
 
 export type SpeakingContent = {
   meta: { title: string; description: string };
@@ -25,7 +25,6 @@ export type SpeakingContent = {
 type CommunityText = { eyebrow: string; title: string; text: string };
 
 // Locale-neutral values are defined once; only text differs per locale.
-const INVITE_HREF = SITE.whatsapp;
 const CAMBRIDGE_HREF = "#cambridge";
 
 const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
@@ -40,7 +39,7 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
     headlineEmphasis: "Start better conversations.",
     intro:
       "I bring firsthand experience from entrepreneurship, technology leadership and AI to conversations about how businesses grow, how people adapt and how we create opportunities that matter.",
-    primaryCta: { label: "Invite me to speak", href: INVITE_HREF },
+    primaryCta: { label: "Invite me to speak", href: getWhatsappLink("en") },
     secondaryCta: { label: "See the Cambridge talk", href: CAMBRIDGE_HREF },
     sections: {
       topics: "What I speak about",
@@ -85,7 +84,7 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
     headlineEmphasis: "Empieza mejores conversaciones.",
     intro:
       "Aporto experiencia directa en emprendimiento, liderazgo tecnológico e inteligencia artificial a conversaciones sobre cómo crecen los negocios, cómo se adaptan las personas y cómo creamos oportunidades que importan.",
-    primaryCta: { label: "Invítame a hablar", href: INVITE_HREF },
+    primaryCta: { label: "Invítame a hablar", href: getWhatsappLink("es") },
     secondaryCta: { label: "Conoce la charla de Cambridge", href: CAMBRIDGE_HREF },
     sections: {
       topics: "Sobre qué hablo",

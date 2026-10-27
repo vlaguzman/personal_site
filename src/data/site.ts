@@ -49,3 +49,13 @@ export const TALK = {
   coverAlt:
     "Unlocking Human Potential in the Age of AI, Vladimir Guzmán Mendoza. Clare Hall Cambridge and Hero Amazonia. Conference 2026.",
 } as const;
+
+const WHATSAPP_MESSAGE: Record<Locale, string> = {
+  en: "Hi Vladimir, I’d like to invite you to speak. Here’s a bit about the event and the audience:",
+  es: "Hola Vladimir, me gustaría invitarte a hablar. Te cuento un poco del evento y de la audiencia:",
+};
+
+/** The WhatsApp chat with a prefilled invitation in the visitor's language. */
+export function getWhatsappLink(lang: Locale): string {
+  return `${SITE.whatsapp}&text=${encodeURIComponent(WHATSAPP_MESSAGE[lang])}`;
+}

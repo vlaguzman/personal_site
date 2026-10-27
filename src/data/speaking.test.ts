@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { SITE } from "./site";
+import { getWhatsappLink } from "./site";
 import { getSpeaking, getTeaching } from "./speaking";
 
 describe("getSpeaking in English", () => {
@@ -9,7 +9,7 @@ describe("getSpeaking in English", () => {
   it("invites people to book a conversation", () => {
     expect(speaking.headlineLines).toEqual(["Challenge assumptions."]);
     expect(speaking.headlineEmphasis).toBe("Start better conversations.");
-    expect(speaking.primaryCta).toEqual({ label: "Invite me to speak", href: SITE.whatsapp });
+    expect(speaking.primaryCta).toEqual({ label: "Invite me to speak", href: getWhatsappLink("en") });
     expect(speaking.secondaryCta).toEqual({ label: "See the Cambridge talk", href: "#cambridge" });
   });
 
@@ -60,7 +60,7 @@ describe("getSpeaking in Spanish", () => {
     expect(speaking.eyebrow).toBe("CHARLAS");
     expect(speaking.headlineLines).toEqual(["Cuestiona los supuestos."]);
     expect(speaking.headlineEmphasis).toBe("Empieza mejores conversaciones.");
-    expect(speaking.primaryCta).toEqual({ label: "Invítame a hablar", href: SITE.whatsapp });
+    expect(speaking.primaryCta).toEqual({ label: "Invítame a hablar", href: getWhatsappLink("es") });
     expect(speaking.secondaryCta).toEqual({ label: "Conoce la charla de Cambridge", href: "#cambridge" });
   });
 

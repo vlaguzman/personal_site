@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ESSAYS, getEssays } from "@/data/essays";
-import { FOUNDER_PROFILE_PDF, SITE, TALK } from "@/data/site";
+import { FOUNDER_PROFILE_PDF, TALK, getWhatsappLink } from "@/data/site";
 import { Speaking } from "./Speaking";
 
 describe("Speaking", () => {
@@ -9,7 +9,7 @@ describe("Speaking", () => {
     render(<Speaking lang="en" />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Challenge assumptions.Start better conversations.");
     const cta = screen.getAllByRole("link", { name: /Invite me to speak/ })[0];
-    expect(cta).toHaveAttribute("href", SITE.whatsapp);
+    expect(cta).toHaveAttribute("href", getWhatsappLink("en"));
     expect(cta).toHaveAttribute("target", "_blank");
     expect(cta).toHaveAttribute("rel", expect.stringContaining("noopener"));
     expect(cta).toHaveClass("cta-primary");
@@ -105,7 +105,7 @@ describe("Speaking in Spanish", () => {
       "Cuestiona los supuestos.Empieza mejores conversaciones.",
     );
     const cta = screen.getAllByRole("link", { name: /Invítame a hablar/ })[0];
-    expect(cta).toHaveAttribute("href", SITE.whatsapp);
+    expect(cta).toHaveAttribute("href", getWhatsappLink("es"));
     expect(cta).toHaveAttribute("target", "_blank");
     expect(cta).toHaveAttribute("rel", expect.stringContaining("noopener"));
   });

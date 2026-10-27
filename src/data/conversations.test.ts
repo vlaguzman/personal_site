@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getConversations } from "./conversations";
-import { SITE } from "./site";
+import { getWhatsappLink } from "./site";
 
 describe("getConversations", () => {
   it("says what he speaks and writes about, without telling people what to think", () => {
@@ -33,8 +33,8 @@ describe("getConversations", () => {
 
   it("sends readers to the speaking page and invites them to book", () => {
     expect(getConversations("en").primaryCta).toEqual({ label: "Explore my talks", href: "/speaking" });
-    expect(getConversations("en").secondaryCta).toEqual({ label: "Invite me to speak", href: SITE.whatsapp });
+    expect(getConversations("en").secondaryCta).toEqual({ label: "Invite me to speak", href: getWhatsappLink("en") });
     expect(getConversations("es").primaryCta).toEqual({ label: "Conoce mis charlas", href: "/speaking" });
-    expect(getConversations("es").secondaryCta).toEqual({ label: "Invítame a un evento", href: SITE.whatsapp });
+    expect(getConversations("es").secondaryCta).toEqual({ label: "Invítame a un evento", href: getWhatsappLink("es") });
   });
 });

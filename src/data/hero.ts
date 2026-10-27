@@ -1,5 +1,5 @@
 import type { Locale } from "@/i18n/config";
-import { SITE } from "./site";
+import { getWhatsappLink } from "./site";
 
 export type HeroContent = {
   eyebrow: string;
@@ -14,7 +14,6 @@ export type HeroContent = {
 // Locale-neutral values are defined once; only text differs per locale.
 const PHOTO = { src: "/images/hero-cambridge-talk.jpg", width: 2000, height: 1500 };
 const PRIMARY_HREF = "/speaking#writing";
-const SECONDARY_HREF = SITE.whatsapp;
 const NAME = "Vladimir Guzmán";
 
 const HERO: Record<Locale, HeroContent> = {
@@ -25,7 +24,7 @@ const HERO: Record<Locale, HeroContent> = {
     byline: { name: NAME, roles: "Entrepreneur · Technology Builder · Speaker" },
     photo: { ...PHOTO, alt: "Vladimir Guzmán presenting at Clare Hall, Cambridge" },
     primaryCta: { label: "Explore my thinking", href: PRIMARY_HREF },
-    secondaryCta: { label: "Invite me to speak", href: SECONDARY_HREF },
+    secondaryCta: { label: "Invite me to speak", href: getWhatsappLink("en") },
   },
   es: {
     eyebrow: "RAÍCES COLOMBIANAS. CAPÍTULO LONDRES.",
@@ -34,7 +33,7 @@ const HERO: Record<Locale, HeroContent> = {
     byline: { name: NAME, roles: "Emprendedor · Líder tecnológico · Conferencista" },
     photo: { ...PHOTO, alt: "Vladimir Guzmán presentando en Clare Hall, Cambridge" },
     primaryCta: { label: "Explora mis ideas", href: PRIMARY_HREF },
-    secondaryCta: { label: "Invítame a conversar", href: SECONDARY_HREF },
+    secondaryCta: { label: "Invítame a conversar", href: getWhatsappLink("es") },
   },
 };
 
