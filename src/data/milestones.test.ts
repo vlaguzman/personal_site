@@ -53,7 +53,7 @@ describe("milestones", () => {
 
   it("only references gallery images that exist in public/", () => {
     const srcs = milestones.flatMap((m) => m.blocks).flatMap((b) => (b.kind === "gallery" ? b.images.map((i) => i.src) : []));
-    expect(srcs).toHaveLength(17);
+    expect(srcs).toHaveLength(18);
     for (const src of srcs) expect(existsSync(join("public", src)), src).toBe(true);
   });
 
@@ -149,6 +149,20 @@ describe("duplicated lessons", () => {
       expect(gallery?.kind === "gallery" && gallery.images.map((i) => i.src)).toEqual([
         "/images/journey/guia-londres-mentor-awards-2025.jpg",
       ]);
+    }
+  });
+
+  it("shows the press photo of the Funky’s team in the first milestone, in both languages", () => {
+    for (const lang of ["en", "es"] as const) {
+      const blocks = getMilestones(lang).find((m) => m.id === "year2010")!.blocks;
+      const gallery = blocks.find((b) => b.kind === "gallery");
+      expect(gallery?.kind, lang).toBe("gallery");
+      if (gallery?.kind !== "gallery") continue;
+      expect(gallery.images.map((i) => i.src)).toEqual(["/images/journey/funkys-press-feature.jpg"]);
+      expect(gallery.images[0].alt).toMatch(/Funky/);
+      expect(existsSync(join(process.cwd(), "public", gallery.images[0].src))).toBe(true);
+      // The photo sits ahead of the blog post, like the other milestones' media.
+      expect(blocks.findIndex((b) => b.kind === "gallery")).toBeLessThan(blocks.findIndex((b) => b.kind === "posts"));
     }
   });
 

@@ -103,7 +103,7 @@ describe("Journey", () => {
   it("renders a photo gallery under the right milestones", () => {
     const { container } = render(<Journey lang="en" />);
     const count = (id: string) => container.querySelectorAll(`#${id} .gallery img`).length;
-    expect(count("year2010")).toBe(0);
+    expect(count("year2010")).toBe(1);
     expect(count("year2014-fluvip")).toBe(1);
     expect(count("year2017")).toBe(9);
     expect(count("year2019")).toBe(1);
@@ -223,8 +223,8 @@ describe("Journey", () => {
 
   it("wraps gallery photos in buttons that open the lightbox", () => {
     const { container } = render(<Journey lang="en" />);
-    expect(container.querySelectorAll(".gallery img")).toHaveLength(17);
-    expect(container.querySelectorAll(".gallery button img")).toHaveLength(17);
+    expect(container.querySelectorAll(".gallery img")).toHaveLength(18);
+    expect(container.querySelectorAll(".gallery button img")).toHaveLength(18);
     expect(container.querySelectorAll(".gallery a")).toHaveLength(0);
   });
 

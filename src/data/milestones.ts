@@ -19,6 +19,7 @@ export const milestones: Milestone[] = [
     blocks: [
       p("After graduating as a software engineer, while classmates were heading towards companies like Microsoft, I chose to co-found a small restaurant: Funky’s, in Chía, Colombia."),
       p("I worked on the brand, business plan and sales strategies, alongside community management, website development and day-to-day operations."),
+      gallery(["funkys-press-feature.jpg", "Magazine clipping of the Funky’s team posing in front of the restaurant’s banner in Chía; the caption reads “Six young entrepreneurs cook and serve in their own restaurant in Chía”"]),
       posts(funkyLessons),
     ],
   },
