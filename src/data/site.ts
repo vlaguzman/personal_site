@@ -1,34 +1,61 @@
+import type { Locale } from "@/i18n/config";
+
 export const SITE = {
-  title: "Vladimir Guzmán | A builder’s journey",
-  description:
-    "Vladimir Guzmán. Colombian entrepreneur, software engineer and founder of Gingga. A journey through technology, entrepreneurship and community.",
-  themeColor: "#0F1F18",
+  /** Production origin, used to make canonical and hreflang URLs absolute. Override per environment. */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://vlaguzman.com",
+  themeColor: "#172033",
   email: "guzman.vla@gmail.com",
   calendly: "https://calendly.com/guzman-vla/ideas",
+  /** Direct line for invitations (talks, events, conversations). */
+  whatsapp: "https://api.whatsapp.com/send/?phone=447551273933",
   linkedin: "https://www.linkedin.com/in/vlaguzman/",
 } as const;
 
+export type SiteMeta = { title: string; description: string };
+
+const SITE_META: Record<Locale, SiteMeta> = {
+  en: {
+    title: "Vladimir Guzmán | A builder’s journey",
+    description:
+      "Vladimir Guzmán. Colombian entrepreneur, software engineer and founder of Gingga. A journey through technology, entrepreneurship and community.",
+  },
+  es: {
+    title: "Vladimir Guzmán | El camino de un constructor",
+    description:
+      "Vladimir Guzmán. Emprendedor colombiano, ingeniero de software y fundador de Gingga. Un recorrido por la tecnología, el emprendimiento y la comunidad.",
+  },
+};
+
+export function getSiteMeta(lang: Locale): SiteMeta {
+  return SITE_META[lang];
+}
+
+/** Main navigation targets, in display order. Labels come from `getChrome(lang).nav`. */
 export const NAV_LINKS = [
-  { href: "#journey", label: "The journey" },
-  { href: "#now", label: "Now" },
-  { href: "#talks", label: "Talks & events" },
-  { href: "/essays", label: "Essays" },
-  { href: "#contact", label: "Let’s connect" },
+  { href: "/journey" },
+  { href: "/journey#now" },
+  { href: "/speaking" },
+  { href: "/work-together" },
+  { href: "#contact" },
 ] as const;
 
 export const FOUNDER_PROFILE_PDF = "/docs/founder-profile.pdf";
 
+/** Locale-neutral parts of the Cambridge talk. The slides are in English, so the cover alt text is too. */
 export const TALK = {
   pdf: "/docs/unlocking-human-potential-cambridge-2026.pdf",
   pdfName: "unlocking-human-potential-cambridge-2026.pdf",
   cover: "/images/cambridge-talk-cover.png",
   coverAlt:
     "Unlocking Human Potential in the Age of AI, Vladimir Guzmán Mendoza. Clare Hall Cambridge and Hero Amazonia. Conference 2026.",
-  themes: ["Entrepreneurship", "AI & adaptation", "Human potential"],
 } as const;
 
-/**
- * Newsletter service. There is no backend yet: while `endpoint` is null the
- * signup block shows a mailto call to action instead of a form.
- */
-export const NEWSLETTER: { endpoint: string | null } = { endpoint: null };
+const WHATSAPP_MESSAGE: Record<Locale, string> = {
+  en: "Hi Vladimir, I’d like to invite you to speak. Here’s a bit about the event and the audience:",
+  es: "Hola Vladimir, me gustaría invitarte a hablar. Te cuento un poco del evento y de la audiencia:",
+};
+
+/** The WhatsApp chat with a prefilled invitation in the visitor's language. */
+export function getWhatsappLink(lang: Locale): string {
+  return `${SITE.whatsapp}&text=${encodeURIComponent(WHATSAPP_MESSAGE[lang])}`;
+}

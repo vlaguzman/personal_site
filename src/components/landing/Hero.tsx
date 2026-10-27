@@ -1,39 +1,44 @@
 import Image from "next/image";
 import { Fragment } from "react";
-import { HERO } from "@/data/hero";
+import { getHero } from "@/data/hero";
+import { localePath, type Locale } from "@/i18n/config";
 
-export function Hero() {
+export function Hero({ lang }: { lang: Locale }) {
+  const hero = getHero(lang);
   return (
     <section id="home" className="hero">
       <div className="hero-media">
         <Image
           className="hero-photo"
-          src={HERO.photo.src}
-          alt={HERO.photo.alt}
-          width={HERO.photo.width}
-          height={HERO.photo.height}
+          src={hero.photo.src}
+          alt={hero.photo.alt}
+          width={hero.photo.width}
+          height={hero.photo.height}
           sizes="(max-width: 760px) 100vw, 60vw"
           priority
         />
       </div>
       <div className="hero-inner">
-        <span className="eyebrow">{HERO.eyebrow}</span>
+        <span className="eyebrow">{hero.eyebrow}</span>
         <h1>
-          {HERO.headlineLines.map((line) => (
+          {hero.headlineLines.map((line) => (
             <Fragment key={line}>
               {line}
               <br />
             </Fragment>
           ))}
-          <em>{HERO.headlineEmphasis}</em>
+          <em>{hero.headlineEmphasis}</em>
         </h1>
-        <p className="hero-lead">{HERO.subheadline}</p>
+        <p className="hero-byline">
+          <strong>{hero.byline.name}</strong>
+          <span>{hero.byline.roles}</span>
+        </p>
         <div className="hero-actions">
-          <a className="cta-primary" href={HERO.primaryCta.href}>
-            {HERO.primaryCta.label} <span aria-hidden="true">→</span>
+          <a className="cta-primary" href={localePath(lang, hero.primaryCta.href)}>
+            {hero.primaryCta.label} <span aria-hidden="true">→</span>
           </a>
-          <a className="cta-secondary" href={HERO.secondaryCta.href}>
-            {HERO.secondaryCta.label}
+          <a className="cta-secondary" href={localePath(lang, hero.secondaryCta.href)} target="_blank" rel="noopener noreferrer">
+            {hero.secondaryCta.label}
           </a>
         </div>
       </div>

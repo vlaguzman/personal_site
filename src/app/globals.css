@@ -1,30 +1,34 @@
 /* ==========================================================================
    Design tokens
-   Brand: dark forest (hero, header, dark sections), cream (~80% of the site),
-   amber accent used sparingly. Amber is never used for small text on cream
-   (2.4:1); it is reserved for dark backgrounds, large text and filled buttons
-   with dark text (6.2:1).
+   Brand: Midnight (hero, header, dark sections), Ivory (~80% of the site),
+   Cobalt for actions, rules and emphasis (no green anywhere). On dark surfaces
+   text accents switch to a lighter cobalt (--accent-on-dark) so every pair
+   keeps >= 4.5:1; filled buttons and markers use --accent-fill with ivory text.
    ========================================================================== */
 :root {
-  --primary: #0F1F18;
-  --secondary: #1C3829;
-  --accent: #C8932A;
-  --accent-hover: #D9A63F;
-  --bg: #F5F0E8;
-  --text: #1A1A1A;
+  --primary: #172033;
+  --surface-dark: #1F2D4A;
+  --accent: #2A4DC6;
+  --accent-fill: #3158D9;
+  --accent-fill-hover: #2748B8;
+  --accent-on-dark: #8FA9F5;
+  --bg: #F7F5EF;
+  --text: #172033;
 
-  /* Secondary text: #1A1A1A at reduced opacity. 0.66 keeps >= 4.5:1 on cream. */
-  --text-secondary: rgb(26 26 26 / 0.66);
-  --on-dark: #F5F0E8;
-  --on-dark-secondary: rgb(245 240 232 / 0.72);
-  --line: rgb(26 26 26 / 0.14);
-  --line-dark: rgb(245 240 232 / 0.16);
-  --accent-tint: rgb(200 147 42 / 0.13);
-  --focus: var(--secondary);
+  /* Secondary text: Midnight at reduced opacity. 0.76 keeps >= 4.5:1 even on tinted callouts. */
+  --text-secondary: rgb(23 32 51 / 0.76);
+  /* Third-party brand colour: the Y Combinator mark keeps its own orange. */
+  --yc-orange: #FF6600;
+  --on-dark: #F7F5EF;
+  --on-dark-secondary: rgb(247 245 239 / 0.74);
+  --line: rgb(23 32 51 / 0.14);
+  --line-dark: rgb(247 245 239 / 0.16);
+  --accent-tint: rgb(49 88 217 / 0.1);
+  --focus: var(--accent);
 
-  --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
-  --font-body: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-geist), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* Modular scale, ratio 1.25, base 16px */
   --fs-label: 0.75rem; /* 12 */
@@ -51,6 +55,10 @@ html {
   scroll-padding-top: 100px;
 }
 
+p {
+  text-wrap: pretty;
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -74,11 +82,12 @@ button:focus-visible {
 
 header,
 .hero,
-.credibility,
+.experience,
 .purpose,
 .venture-tree,
 .milestone.current .story,
 .lightbox {
+  --accent: var(--accent-on-dark);
   --focus: var(--accent);
 }
 
@@ -88,8 +97,9 @@ header,
 h1,
 h2,
 h3 {
+  text-wrap: balance;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.1;
   letter-spacing: var(--tracking-heading);
   margin: 0;
@@ -109,8 +119,8 @@ h3 {
 
 em {
   font-style: italic;
-  font-weight: 700;
-  color: var(--secondary);
+  font-weight: 600;
+  color: var(--accent);
 }
 
 .eyebrow {
@@ -142,21 +152,21 @@ em {
 }
 
 .cta-primary {
-  background: var(--accent);
-  color: var(--primary);
+  background: var(--accent-fill);
+  color: var(--on-dark);
 }
 
 .cta-primary:hover {
-  background: var(--accent-hover);
+  background: var(--accent-fill-hover);
 }
 
 .cta-secondary {
-  border: 1px solid rgb(245 240 232 / 0.55);
+  border: 1px solid rgb(247 245 239 / 0.55);
   color: var(--on-dark);
 }
 
 .cta-secondary:hover {
-  background: var(--secondary);
+  background: var(--accent-fill-hover);
   border-color: var(--on-dark);
 }
 
@@ -169,7 +179,7 @@ em {
 }
 
 .button:hover {
-  background: var(--secondary);
+  background: var(--accent-fill-hover);
 }
 
 /* ==========================================================================
@@ -202,9 +212,11 @@ nav a:last-child {
 
 .wordmark {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.4rem;
   letter-spacing: var(--tracking-heading);
+  /* With three header children, absorb the free space so the main nav and the language switcher sit together on the right. */
+  margin-right: auto;
 }
 
 .wordmark span {
@@ -215,6 +227,31 @@ nav a:last-child {
   letter-spacing: 0.14em;
   margin-top: 6px;
   color: var(--on-dark-secondary);
+}
+
+/* Language switcher: a second <nav> in the header, so it must undo the bare `nav` rules above. */
+.lang-switch {
+  flex-shrink: 0;
+  gap: 2px;
+  margin-left: 28px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+}
+
+.lang-switch a {
+  padding: 6px 8px;
+  color: var(--on-dark-secondary);
+}
+
+.lang-switch a:last-child {
+  border-bottom: 0;
+  padding-bottom: 6px;
+}
+
+.lang-switch a:hover,
+.lang-switch a[aria-current="true"] {
+  color: var(--accent);
 }
 
 /* ==========================================================================
@@ -248,8 +285,8 @@ nav a:last-child {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, var(--primary) 0%, rgb(15 31 24 / 0.82) 22%, rgb(15 31 24 / 0.25) 62%, rgb(15 31 24 / 0.4) 100%),
-    linear-gradient(0deg, var(--primary) 0%, rgb(15 31 24 / 0) 28%);
+    linear-gradient(90deg, var(--primary) 0%, rgb(23 32 51 / 0.82) 22%, rgb(23 32 51 / 0.25) 62%, rgb(23 32 51 / 0.4) 100%),
+    linear-gradient(0deg, var(--primary) 0%, rgb(23 32 51 / 0) 28%);
 }
 
 .hero-inner {
@@ -275,12 +312,24 @@ nav a:last-child {
   color: var(--accent);
 }
 
-.hero-lead {
-  font-size: var(--fs-lead);
-  line-height: 1.6;
-  color: var(--on-dark-secondary);
+.hero-byline {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   margin: 0 0 40px;
 }
+
+.hero-byline strong {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.hero-byline span {
+  color: var(--accent);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
 
 .hero-actions {
   display: flex;
@@ -289,25 +338,169 @@ nav a:last-child {
 }
 
 /* ==========================================================================
-   Credibility strip
+   Intro
    ========================================================================== */
-.credibility {
-  background: var(--secondary);
+.intro {
+  padding: 96px 0 88px;
+}
+
+.intro-inner {
+  display: grid;
+  grid-template-columns: 1fr 2.4fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.intro .eyebrow {
+  margin: 12px 0 0;
+  padding-top: 16px;
+  border-top: 2px solid var(--accent);
+  max-width: 220px;
+}
+
+.intro-body {
+  max-width: 760px;
+}
+
+.intro h2 {
+  font-size: var(--fs-h1);
+  line-height: 1.18;
+  margin-bottom: 32px;
+}
+
+.intro p {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Ideas worth challenging
+   ========================================================================== */
+.ideas {
+  padding: 104px 0 96px;
+}
+
+.ideas-heading {
+  margin-bottom: 56px;
+}
+
+.idea-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.idea-list li {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 24px 80px;
+  align-items: start;
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+}
+
+.idea-list h3 {
+  font-size: var(--fs-h3);
+  line-height: 1.15;
+}
+
+.idea-list p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+}
+
+.ideas-closing {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px 48px;
+  margin-top: 48px;
+}
+
+.ideas-closing p {
+  max-width: 560px;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Built through experience
+   ========================================================================== */
+.experience {
+  background: var(--primary);
   color: var(--on-dark);
+  padding: 104px 0;
+}
+
+.experience-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 96px;
+  align-items: start;
+}
+
+.experience .eyebrow {
+  color: var(--accent);
+}
+
+.experience h2 {
+  margin-bottom: 28px;
+}
+
+.experience em {
+  color: var(--accent);
+}
+
+.experience-story p {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--on-dark-secondary);
+  margin: 0 0 20px;
+}
+
+.experience-story .cta-secondary {
+  margin-top: 16px;
+}
+
+.experience-roles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.experience-roles li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 0;
   border-top: 1px solid var(--line-dark);
 }
 
-.credibility-list {
+.experience-roles strong {
+  font-size: var(--fs-lead);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.experience-figures {
   list-style: none;
-  margin: 0 auto;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  margin: 72px auto 0;
+  padding-top: 40px;
+  padding-bottom: 0;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
 
-.credibility-list li {
+.experience-figures li {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -315,19 +508,38 @@ nav a:last-child {
   border-left: 1px solid var(--line-dark);
 }
 
-.credibility-list strong {
+.experience-figures strong {
   font-family: var(--font-mono);
   font-weight: 400;
   font-size: var(--fs-h4);
   line-height: 1.2;
-  color: var(--on-dark);
 }
 
-.credibility-list span {
+.experience-figures li > span {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   line-height: var(--lh-ui);
   color: var(--on-dark-secondary);
+}
+
+.experience-figures a {
+  align-self: flex-start;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--accent);
+  border-bottom: 1px solid currentColor;
+}
+
+.experience-figures a:hover {
+  color: var(--on-dark);
+}
+
+.experience-roles span {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  color: var(--accent);
 }
 
 /* ==========================================================================
@@ -363,6 +575,18 @@ nav a:last-child {
   padding-bottom: 80px;
 }
 
+/* Same scale as the other page titles, with a wider title column so it breaks after "ventures.". */
+.journey h1 {
+  font-size: var(--fs-display);
+}
+
+@media (min-width: 761px) {
+  .journey .section-heading {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 64px;
+  }
+}
+
 .arc {
   list-style: none;
   margin: 0 0 110px;
@@ -394,7 +618,7 @@ nav a:last-child {
 .arc strong {
   display: block;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   letter-spacing: var(--tracking-heading);
   line-height: 1.15;
@@ -409,6 +633,7 @@ nav a:last-child {
 }
 
 .timeline {
+  --timeline-col: 30%; /* width of the year column; narrower on tablets */
   position: relative;
 }
 
@@ -417,14 +642,14 @@ nav a:last-child {
   position: absolute;
   top: 15px;
   bottom: 100px;
-  left: 30%;
+  left: var(--timeline-col);
   width: 1px;
   background: var(--line);
 }
 
 .milestone {
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: var(--timeline-col) 1fr;
   padding-bottom: 120px;
   position: relative;
 }
@@ -436,7 +661,7 @@ nav a:last-child {
   border-radius: 50%;
   position: absolute;
   top: 20px;
-  left: calc(30% - 5px);
+  left: calc(var(--timeline-col) - 5px);
   background: var(--primary);
   box-shadow: 0 0 0 7px var(--bg);
   z-index: 1;
@@ -447,7 +672,7 @@ nav a:last-child {
   top: 110px;
   align-self: start;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-display);
   letter-spacing: var(--tracking-heading);
   padding-right: 25px;
@@ -476,7 +701,7 @@ nav a:last-child {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--accent-fill);
   margin-right: 2px;
   animation: now-dot 2.4s ease-out infinite;
 }
@@ -497,7 +722,12 @@ nav a:last-child {
   margin: 22px 0;
 }
 
-.story h3 + p {
+/* Milestone titles are h2 for the heading outline but keep the h3 scale. */
+.story h2 {
+  font-size: var(--fs-h3);
+}
+
+.story h2 + p {
   font-size: var(--fs-lead);
   line-height: 1.6;
 }
@@ -505,12 +735,12 @@ nav a:last-child {
 .story .reflection {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   line-height: 1.35;
   letter-spacing: var(--tracking-heading);
-  color: var(--secondary);
-  border-left: 2px solid var(--secondary);
+  color: var(--accent);
+  border-left: 2px solid var(--accent);
   padding-left: 24px;
   margin: 34px 0;
 }
@@ -532,14 +762,14 @@ nav a:last-child {
 }
 
 .learned .eyebrow {
-  color: var(--secondary);
+  color: var(--accent);
   margin: 0 0 8px;
 }
 
 .story .learned p {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-lead);
   line-height: 1.4;
   letter-spacing: var(--tracking-heading);
@@ -616,7 +846,7 @@ details[open] summary span {
   padding: 14px 0;
   border-bottom: 1px solid var(--line);
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   line-height: 1.3;
   letter-spacing: var(--tracking-heading);
@@ -625,7 +855,7 @@ details[open] summary span {
 }
 
 .blog-posts .blog-post span {
-  color: var(--secondary);
+  color: var(--accent);
   transition: transform 0.2s ease;
 }
 
@@ -641,12 +871,12 @@ details[open] summary span {
 blockquote {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   line-height: 1.4;
   letter-spacing: var(--tracking-heading);
   margin: 28px 0;
-  color: var(--secondary);
+  color: var(--accent);
 }
 
 .yc {
@@ -661,16 +891,16 @@ blockquote {
   place-items: center;
   width: 48px;
   height: 48px;
-  background: var(--accent);
-  color: var(--primary);
-  font-family: var(--font-display);
+  background: var(--yc-orange);
+  color: #fff;
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: var(--fs-h4);
 }
 
 .yc div {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   letter-spacing: var(--tracking-heading);
 }
@@ -721,15 +951,15 @@ blockquote {
 }
 
 .milestone.current:before {
-  background: var(--accent);
-  box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--primary), 0 0 0 6px rgb(200 147 42 / 0.5);
+  background: var(--accent-fill);
+  box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--primary), 0 0 0 6px rgb(49 88 217 / 0.5);
   animation: now-pulse 2.4s ease-out infinite;
 }
 
 .milestone.current .story {
   margin-left: 65px;
   padding: 44px 48px;
-  background: var(--secondary);
+  background: var(--surface-dark);
   color: var(--on-dark);
   border-radius: 6px;
 }
@@ -752,20 +982,20 @@ blockquote {
 }
 
 .milestone.current .button {
-  background: var(--accent);
-  color: var(--primary);
+  background: var(--accent-fill);
+  color: var(--on-dark);
 }
 
 .milestone.current .button:hover {
-  background: var(--accent-hover);
+  background: var(--accent-fill-hover);
 }
 
 @keyframes now-pulse {
   0% {
-    box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--primary), 0 0 0 6px rgb(200 147 42 / 0.55);
+    box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--primary), 0 0 0 6px rgb(49 88 217 / 0.55);
   }
   100% {
-    box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--primary), 0 0 0 18px rgb(200 147 42 / 0);
+    box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--primary), 0 0 0 18px rgb(49 88 217 / 0);
   }
 }
 
@@ -794,7 +1024,7 @@ blockquote {
    Purpose
    ========================================================================== */
 .purpose {
-  background: var(--secondary);
+  background: var(--surface-dark);
   color: var(--on-dark);
   padding: 96px 0;
 }
@@ -805,7 +1035,7 @@ blockquote {
 
 .purpose p {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-display);
   line-height: 1.18;
   max-width: 930px;
@@ -827,7 +1057,7 @@ blockquote {
 
 .purpose-bottom span:first-child {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
 }
 
@@ -846,6 +1076,10 @@ blockquote {
 }
 
 .beliefs-heading {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+  align-items: end;
   margin-bottom: 64px;
 }
 
@@ -853,27 +1087,63 @@ blockquote {
   margin-bottom: 20px;
 }
 
+.beliefs-statement {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h3);
+  line-height: 1.15;
+  letter-spacing: var(--tracking-heading);
+  color: var(--text);
+  margin: 0 0 16px;
+}
+
+.beliefs-intro p:not(.beliefs-statement) {
+  font-size: var(--fs-body);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
 .belief-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px 32px;
+  border-bottom: 1px solid var(--line);
 }
 
 .belief-list li {
   border-top: 1px solid var(--line);
-  padding-top: 20px;
+}
+
+.belief-list summary {
+  display: grid;
+  grid-template-columns: 64px 1fr 24px;
+  align-items: baseline;
+  gap: 16px;
+  padding: 24px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.belief-list summary::-webkit-details-marker {
+  display: none;
+}
+
+/* The global `summary span` rules style the timeline's "+" glyph; undo them for these spans. */
+.belief-list summary span {
+  font-size: var(--fs-label);
+  line-height: inherit;
+}
+
+.belief-list details[open] summary span {
+  transform: none;
 }
 
 .belief-index {
-  display: block;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   letter-spacing: 0.14em;
   color: var(--text-secondary);
-  margin-bottom: 14px;
 }
 
 .belief-list h3 {
@@ -881,10 +1151,48 @@ blockquote {
   line-height: 1.2;
 }
 
-.belief-list p {
+.belief-list summary:hover h3 {
+  color: var(--accent);
+}
+
+/* A plus that turns into a minus when the detail is open. */
+.belief-toggle {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  justify-self: end;
+  align-self: center;
+}
+
+.belief-toggle::before,
+.belief-toggle::after {
+  content: "";
+  position: absolute;
+  background: var(--accent-fill);
+  transition: transform 0.2s;
+}
+
+.belief-toggle::before {
+  inset: 6px 0 auto;
+  height: 2px;
+}
+
+.belief-toggle::after {
+  inset: 0 6px auto;
+  width: 2px;
+  height: 14px;
+}
+
+.belief-list details[open] .belief-toggle::after {
+  transform: scaleY(0);
+}
+
+.belief-list details p {
+  max-width: 640px;
   font-size: var(--fs-body);
   line-height: var(--lh-read);
-  margin: 14px 0 0;
+  color: var(--text-secondary);
+  margin: 0 0 28px 80px;
 }
 
 .closing-cta {
@@ -899,7 +1207,7 @@ blockquote {
 
 .closing-cta p {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h3);
   letter-spacing: var(--tracking-heading);
   line-height: 1.15;
@@ -907,18 +1215,49 @@ blockquote {
 }
 
 /* ==========================================================================
-   Talks
+   Conversations teaser (home)
    ========================================================================== */
-.talks {
+.conversations {
   padding-top: 100px;
-  padding-bottom: 80px;
+  padding-bottom: 96px;
 }
 
-.talks .section-heading {
-  margin-bottom: 48px;
+.conversations-heading {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
   gap: 80px;
+  align-items: start;
 }
 
+.conversations-body p {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 0 0 20px;
+  max-width: 560px;
+}
+
+.conversations-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+  margin-top: 32px;
+}
+
+.conversations-link {
+  font-size: var(--fs-ui-sm);
+  padding-bottom: 2px;
+  border-bottom: 1px solid currentColor;
+}
+
+.conversations-link:hover {
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   Talk feature (shown on /speaking)
+   ========================================================================== */
 .talk-feature {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -964,7 +1303,7 @@ blockquote {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   letter-spacing: 0.04em;
-  color: var(--secondary);
+  color: var(--accent);
 }
 
 .talk-download {
@@ -975,14 +1314,7 @@ blockquote {
   text-underline-offset: 4px;
 }
 
-.talk-quote {
-  margin-top: 56px;
-  font-size: var(--fs-h3);
-  border-top: 1px solid var(--line);
-  padding: 32px 0 0;
-}
-
-.talks + .contact {
+.conversations + .contact {
   border-top: 1px solid var(--line);
 }
 
@@ -1007,7 +1339,7 @@ blockquote {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   letter-spacing: var(--tracking-heading);
   border-bottom: 1px solid var(--primary);
@@ -1016,7 +1348,7 @@ blockquote {
 }
 
 .email:hover {
-  color: var(--secondary);
+  color: var(--accent);
 }
 
 .contact-links {
@@ -1050,7 +1382,7 @@ footer {
   left: 0;
   width: 0;
   height: 3px;
-  background: var(--accent);
+  background: var(--accent-fill);
   z-index: 100;
 }
 
@@ -1073,7 +1405,7 @@ footer {
 .venture-root > strong {
   display: block;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h3);
   letter-spacing: var(--tracking-heading);
 }
@@ -1120,13 +1452,13 @@ footer {
 }
 
 .venture-branches a:hover {
-  background: var(--secondary);
+  background: var(--accent-fill-hover);
 }
 
 .venture-branches strong {
   display: block;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-lead);
   letter-spacing: var(--tracking-heading);
 }
@@ -1154,14 +1486,14 @@ footer {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgb(28 56 41 / 0.08);
-  color: var(--secondary);
+  background: rgb(49 88 217 / 0.08);
+  color: var(--accent);
   padding: 8px 14px;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   letter-spacing: 0.08em;
   margin: 0 0 15px;
-  border-left: 2px solid var(--secondary);
+  border-left: 2px solid var(--accent);
   transition: background 0.2s;
 }
 
@@ -1171,13 +1503,13 @@ footer {
 }
 
 .venture-origin:hover {
-  background: rgb(28 56 41 / 0.16);
+  background: rgb(49 88 217 / 0.16);
 }
 
 .company-builder:before {
   width: 15px;
   height: 15px;
-  left: calc(30% - 7px);
+  left: calc(var(--timeline-col) - 7px);
 }
 
 /* ==========================================================================
@@ -1274,7 +1606,7 @@ footer {
   display: grid;
   place-items: center;
   padding: 64px 72px 32px;
-  background: rgb(15 31 24 / 0.93);
+  background: rgb(23 32 51 / 0.93);
   color: var(--on-dark);
   animation: lightbox-in 0.2s ease-out;
 }
@@ -1310,7 +1642,7 @@ footer {
   width: 48px;
   height: 48px;
   padding: 0;
-  border: 1px solid rgb(245 240 232 / 0.4);
+  border: 1px solid rgb(247 245 239 / 0.4);
   border-radius: 50%;
   background: transparent;
   color: var(--on-dark);
@@ -1322,7 +1654,7 @@ footer {
 
 .lightbox-close:hover,
 .lightbox-nav:hover {
-  background: var(--secondary);
+  background: var(--accent-fill-hover);
 }
 
 .lightbox-close {
@@ -1353,23 +1685,418 @@ footer {
 }
 
 /* ==========================================================================
+   Speaking page
+   ========================================================================== */
+.speaking-intro {
+  padding-top: 96px;
+  padding-bottom: 72px;
+}
+
+.speaking-intro-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.speaking-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 45% 55%;
+  border-radius: 14px;
+}
+
+.speaking-intro h1 {
+  font-size: var(--fs-display);
+  margin: 4px 0 40px;
+}
+
+.speaking-intro p {
+  max-width: 640px;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 0 0 36px;
+}
+
+.speaking-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+}
+
+.speaking-link {
+  font-size: var(--fs-ui-sm);
+  padding-bottom: 2px;
+  border-bottom: 1px solid currentColor;
+}
+
+.speaking-link:hover {
+  color: var(--accent);
+}
+
+.speaking-topics,
+.speaking-featured,
+.speaking-teaching,
+.speaking-writing,
+.speaking-bio {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.speaking-topics h2,
+.speaking-featured h2,
+.speaking-teaching h2,
+.speaking-writing h2,
+.speaking-bio h2 {
+  margin-bottom: 40px;
+}
+
+.speaking-topics ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 32px;
+}
+
+.speaking-topics li {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+
+.speaking-topics h3 {
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+}
+
+.speaking-topics p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 14px 0 0;
+}
+
+.speaking-teaching-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.speaking-teaching-grid p {
+  max-width: 480px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+  letter-spacing: var(--tracking-heading);
+  margin: 0;
+}
+
+.speaking-teaching .gallery {
+  max-width: none;
+  margin: 0;
+}
+
+/* The heading already leaves 40px, so the intro sits closer to it than to the filters. */
+.speaking-writing h2 {
+  margin-bottom: 20px;
+}
+
+.speaking-writing-intro {
+  max-width: 62ch;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 0 0 40px;
+}
+
+/* The section's own padding closes the page; the grid's bottom margin was meant for a standalone page. */
+.speaking-writing .essays-grid {
+  margin-bottom: 0;
+}
+
+.speaking-bio {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0 56px;
+  align-items: start;
+}
+
+.speaking-bio h2 {
+  margin-bottom: 0;
+}
+
+.speaking-bio p {
+  max-width: 62ch;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  margin: 0 0 24px;
+}
+
+.page-closing {
+  --accent: var(--accent-on-dark);
+  --focus: var(--accent);
+  background: var(--primary);
+  color: var(--on-dark);
+  padding: 96px 0;
+  margin-top: 32px;
+}
+
+.page-closing em {
+  color: var(--accent);
+}
+
+.page-closing h2 {
+  margin-bottom: 20px;
+}
+
+.page-closing p {
+  max-width: 560px;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--on-dark-secondary);
+  margin: 0 0 32px;
+}
+
+/* ==========================================================================
+   Work together page
+   ========================================================================== */
+.work-intro {
+  padding-top: 96px;
+  padding-bottom: 72px;
+}
+
+.work-intro h1 {
+  font-size: var(--fs-display);
+  margin: 4px 0 28px;
+}
+
+.work-intro p {
+  max-width: 640px;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 0 0 36px;
+}
+
+.work-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+}
+
+.work-link {
+  display: inline-block;
+  font-size: var(--fs-ui-sm);
+  padding-bottom: 2px;
+  border-bottom: 1px solid currentColor;
+}
+
+.work-link:hover {
+  color: var(--accent);
+}
+
+.work-offers,
+.work-gingga {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.work-offers h2 {
+  margin-bottom: 40px;
+}
+
+.work-offers ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.work-offers li {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 16px 80px;
+  align-items: start;
+  padding: 36px 0;
+  border-top: 1px solid var(--line);
+}
+
+.work-offers h3 {
+  font-size: var(--fs-h3);
+  line-height: 1.15;
+}
+
+.work-offers p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 4px 0 16px;
+}
+
+.work-offers li p:last-child {
+  margin-bottom: 0;
+}
+
+.work-approach {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.work-approach p {
+  max-width: 760px;
+  margin: 0;
+  padding-left: 28px;
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+  letter-spacing: var(--tracking-heading);
+}
+
+.work-gingga {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 0 80px;
+  align-items: start;
+}
+
+.work-gingga h2 {
+  font-size: var(--fs-h3);
+}
+
+.work-gingga p {
+  max-width: 560px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 4px 0 16px;
+}
+
+/* ==========================================================================
+   Header on narrower desktops and tablets
+   With wordmark, six links and the language switcher, one row no longer fits:
+   wordmark and switcher share the first row, the main nav takes the second.
+   ========================================================================== */
+@media (max-width: 1100px) {
+  header {
+    flex-wrap: wrap;
+    row-gap: 16px;
+  }
+
+  header .wordmark {
+    order: 1;
+  }
+
+  header .lang-switch {
+    order: 2;
+    margin-left: 0;
+  }
+
+  header .site-nav {
+    order: 3;
+    flex: 1 0 100%;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+  }
+
+  header .site-nav a {
+    white-space: nowrap;
+  }
+}
+
+/* ==========================================================================
    Tablet
    ========================================================================== */
 @media (max-width: 1000px) {
-  .credibility-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
 
   .arc {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .belief-list {
-    grid-template-columns: repeat(2, 1fr);
+  .beliefs-heading {
+    gap: 48px;
   }
 
   .section-heading {
     gap: 48px;
+  }
+}
+
+/* Tablet: the two- and three-column desktop layouts leave 20 to 30 characters per line
+   (comfortable reading is 45 to 75), so they collapse to one column and text keeps a measure. */
+@media (max-width: 1000px) {
+  :root {
+    --fs-display: clamp(2.75rem, 0.9rem + 6vw, 3.25rem);
+  }
+
+  .intro-inner,
+  .experience-inner,
+  .conversations-heading,
+  .beliefs-heading,
+  .speaking-intro-body,
+  .speaking-topics ul,
+  .speaking-teaching-grid,
+  .speaking-bio,
+  .work-gingga,
+  .talk-feature,
+  .contact,
+  .section-heading {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .idea-list li,
+  .work-offers li {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .experience-story p,
+  .idea-list p,
+  .work-offers p,
+  .speaking-topics p,
+  .section-heading p,
+  .intro p {
+    max-width: 62ch;
+  }
+
+  .talk-cover {
+    max-width: 560px;
+  }
+
+  .story h2 + p {
+    font-size: 1.125rem;
+  }
+
+  .timeline {
+    --timeline-col: 22%;
+  }
+
+  .story {
+    padding-left: 40px;
+  }
+
+  .year {
+    font-size: var(--fs-h2);
+  }
+
+  .year {
+    padding-right: 12px;
+  }
+
+  .year.words {
+    font-size: var(--fs-h4);
+    white-space: nowrap;
   }
 }
 
@@ -1395,12 +2122,15 @@ footer {
   }
 
   nav {
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 8px 20px;
     font-size: var(--fs-ui-sm);
   }
 
-  nav a:first-child {
-    display: none;
+  .lang-switch {
+    gap: 2px;
+    margin-left: -8px; /* offsets the link padding so the labels align with the wordmark edge */
+    font-size: var(--fs-label);
   }
 
   .wrap {
@@ -1424,17 +2154,178 @@ footer {
   }
 
   .hero-media::after {
-    background: linear-gradient(0deg, var(--primary) 0%, rgb(15 31 24 / 0.55) 40%, rgb(15 31 24 / 0.1) 100%);
+    background: linear-gradient(0deg, var(--primary) 0%, rgb(23 32 51 / 0.55) 40%, rgb(23 32 51 / 0.1) 100%);
   }
 
   .hero-inner {
     padding: 8px 24px 56px;
   }
 
-  .hero-lead {
-    font-size: var(--fs-body);
-    line-height: var(--lh-read);
+  .hero-byline {
     margin-bottom: 32px;
+  }
+
+  .intro {
+    padding: 56px 0 48px;
+  }
+
+  .intro-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .intro .eyebrow {
+    margin-top: 0;
+  }
+
+  .intro p {
+    font-size: var(--fs-body);
+  }
+
+  .ideas {
+    padding: 64px 0 56px;
+  }
+
+  .ideas-heading {
+    margin-bottom: 32px;
+  }
+
+  .idea-list li {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 28px 0;
+  }
+
+  .idea-list p {
+    margin-top: 0;
+  }
+
+  .ideas-closing {
+    margin-top: 32px;
+  }
+
+  .ideas-closing p {
+    font-size: var(--fs-body);
+  }
+
+  .ideas-closing .cta-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .experience {
+    padding: 64px 0;
+  }
+
+  .experience-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .experience-story p {
+    font-size: var(--fs-body);
+  }
+
+  .experience-story .cta-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .experience-figures {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 48px;
+    padding-top: 32px;
+  }
+
+  .speaking-intro {
+    padding-top: 56px;
+    padding-bottom: 40px;
+  }
+
+  .speaking-intro-body {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .speaking-topics,
+  .speaking-featured,
+  .speaking-teaching,
+  .speaking-writing,
+  .speaking-bio {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .speaking-topics h2,
+  .speaking-featured h2,
+  .speaking-teaching h2 {
+    margin-bottom: 28px;
+  }
+
+  .speaking-writing h2 {
+    margin-bottom: 16px;
+  }
+
+  .speaking-writing-intro {
+    margin-bottom: 28px;
+  }
+
+  .speaking-topics ul,
+  .speaking-teaching-grid,
+  .speaking-bio {
+    grid-template-columns: 1fr;
+  }
+
+  .speaking-teaching-grid {
+    gap: 28px;
+  }
+
+  .speaking-bio h2 {
+    margin-bottom: 24px;
+  }
+
+  .page-closing {
+    padding: 64px 0;
+  }
+
+  .work-intro {
+    padding-top: 56px;
+    padding-bottom: 40px;
+  }
+
+  .work-offers,
+  .work-gingga {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .work-offers h2 {
+    margin-bottom: 28px;
+  }
+
+  .work-offers li,
+  .work-gingga {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .work-offers li {
+    padding: 28px 0;
+  }
+
+  .work-gingga h2 {
+    margin-bottom: 8px;
+  }
+
+  .work-approach p {
+    padding-left: 20px;
+  }
+
+  .work-actions .cta-primary,
+  .speaking-actions .cta-primary,
+  .page-closing .cta-primary {
+    width: 100%;
+    justify-content: center;
   }
 
   .hero-actions {
@@ -1446,15 +2337,7 @@ footer {
     justify-content: center;
   }
 
-  .credibility-list {
-    grid-template-columns: repeat(2, 1fr);
-    padding-top: 28px;
-    padding-bottom: 28px;
-  }
 
-  .credibility-list li:last-child {
-    grid-column: span 2;
-  }
 
   .section-heading {
     grid-template-columns: 1fr;
@@ -1546,12 +2429,23 @@ footer {
   }
 
   .beliefs-heading {
+    grid-template-columns: 1fr;
+    gap: 24px;
     margin-bottom: 40px;
   }
 
-  .belief-list {
-    grid-template-columns: 1fr;
-    gap: 32px;
+  .belief-list summary {
+    grid-template-columns: 36px 1fr 20px;
+    gap: 12px;
+    padding: 20px 0;
+  }
+
+  .belief-list h3 {
+    font-size: var(--fs-lead);
+  }
+
+  .belief-list details p {
+    margin-left: 48px;
   }
 
   .closing-cta {
@@ -1559,23 +2453,28 @@ footer {
     padding-top: 32px;
   }
 
-  .talks {
-    padding-top: 72px;
-    padding-bottom: 40px;
+  .conversations {
+    padding-top: 64px;
+    padding-bottom: 56px;
   }
 
-  .talks .section-heading {
-    gap: 20px;
-    margin-bottom: 32px;
+  .conversations-heading {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .conversations-body p {
+    font-size: var(--fs-body);
+  }
+
+  .conversations-actions .cta-primary {
+    width: 100%;
+    justify-content: center;
   }
 
   .talk-feature {
     grid-template-columns: 1fr;
     gap: 28px;
-  }
-
-  .talk-quote {
-    margin-top: 40px;
   }
 
   .contact {
@@ -1642,70 +2541,8 @@ footer {
 }
 
 /* ==========================================================================
-   Essays hub and article (scoped: essays-*, essay-*)
+   Essay browser (on the speaking page) and article (scoped: essays-*, essay-*)
    ========================================================================== */
-.essays-newsletter {
-  --focus: var(--accent);
-}
-
-.essays {
-  padding-top: 72px;
-  padding-bottom: 96px;
-}
-
-.essays-intro {
-  max-width: 760px;
-  margin-bottom: 64px;
-}
-
-.essays-intro h1 {
-  font-size: var(--fs-display);
-  margin-bottom: 24px;
-}
-
-.essays-intro p {
-  font-size: var(--fs-lead);
-  line-height: var(--lh-read);
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-.essays-start {
-  position: relative;
-  padding: 40px 0;
-  margin-bottom: 64px;
-  border-top: 2px solid var(--primary);
-  border-bottom: 1px solid var(--line);
-}
-
-.essays-start .eyebrow {
-  color: var(--primary);
-  font-weight: 700;
-}
-
-.essays-start h2 {
-  max-width: 820px;
-  margin-bottom: 20px;
-}
-
-.essays-start h2 a:hover {
-  text-decoration: underline;
-  text-underline-offset: 6px;
-}
-
-.essays-start h2 a::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-
-.essays-start p {
-  max-width: 680px;
-  font-size: var(--fs-lead);
-  line-height: var(--lh-read);
-  margin: 0 0 20px;
-}
-
 .essay-meta {
   display: flex;
   flex-wrap: wrap;
@@ -1771,7 +2608,7 @@ footer {
   display: flex;
   flex-direction: column;
   border-top: 2px solid var(--primary);
-  background: rgb(26 26 26 / 0.03);
+  background: rgb(23 32 51 / 0.03);
 }
 
 .essay-card-image {
@@ -1808,68 +2645,6 @@ footer {
   margin-top: auto;
 }
 
-.essays-newsletter {
-  background: var(--primary);
-  color: var(--on-dark);
-  padding: 56px 6%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-.essays-newsletter h2 {
-  font-size: var(--fs-h3);
-}
-
-.essays-newsletter p {
-  max-width: 560px;
-  font-size: var(--fs-body);
-  line-height: var(--lh-read);
-  color: var(--on-dark-secondary);
-  margin: 0;
-}
-
-.essays-newsletter form {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 12px;
-}
-
-.essays-newsletter label {
-  flex-basis: 100%;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: 0.14em;
-  color: var(--on-dark-secondary);
-}
-
-.essays-newsletter input {
-  flex: 1 1 260px;
-  font: inherit;
-  padding: 14px 16px;
-  border: 1px solid rgb(245 240 232 / 0.55);
-  border-radius: 2px;
-  background: transparent;
-  color: var(--on-dark);
-}
-
-.essays-newsletter button {
-  font: inherit;
-  font-weight: 500;
-  padding: 14px 26px;
-  border: 0;
-  border-radius: 2px;
-  background: var(--accent);
-  color: var(--primary);
-  cursor: pointer;
-}
-
-.essays-newsletter button:hover {
-  background: var(--accent-hover);
-}
-
 /* Article: reading-optimised column */
 .essay {
   max-width: 680px;
@@ -1900,6 +2675,44 @@ footer {
   font-size: var(--fs-h1);
   line-height: 1.15;
   margin-bottom: 20px;
+}
+
+/* Chip that marks an AI translation. Bordered text on cream: the words are the signal, not the colour. */
+.essay-ai-badge {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 16px;
+  padding: 2px 10px;
+  border: 1px solid var(--primary);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  line-height: var(--lh-ui);
+  color: var(--primary);
+}
+
+.essay-translation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+  margin: 20px 0 0;
+  font-size: var(--fs-ui-sm);
+  color: var(--text);
+}
+
+.essay-translation p {
+  margin: 0;
+}
+
+.essay-translation .essay-ai-badge {
+  margin-bottom: 0;
+}
+
+.essay-translation a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .essay-body {
@@ -1973,7 +2786,7 @@ footer {
   padding: 18px 0;
   font-family: var(--font-display);
   font-size: var(--fs-lead);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.3;
 }
 
@@ -2000,11 +2813,6 @@ footer {
 }
 
 @media (max-width: 760px) {
-  .essays {
-    padding-top: 48px;
-    padding-bottom: 64px;
-  }
-
   .essays-grid {
     grid-template-columns: 1fr;
     margin-bottom: 64px;
@@ -2012,10 +2820,6 @@ footer {
 
   .essay {
     padding-top: 40px;
-  }
-
-  .essays-newsletter {
-    padding: 40px 24px;
   }
 }
 

@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { getMedia } from "@/data/media";
 import type { GalleryImage } from "@/data/types";
+import type { Locale } from "@/i18n/config";
 import { bentoShapes } from "@/lib/bento";
 
 const FOCUSABLE = "button:not([disabled])";
@@ -10,10 +12,12 @@ const FOCUSABLE = "button:not([disabled])";
 function Lightbox({
   images,
   index,
+  lang,
   onChange,
   onClose,
 }: {
   images: readonly GalleryImage[];
+  lang: Locale;
   index: number;
   onChange: (next: number) => void;
   onClose: () => void;
@@ -22,6 +26,7 @@ function Lightbox({
   const closeRef = useRef<HTMLButtonElement>(null);
   const count = images.length;
   const image = images[index];
+  const labels = getMedia(lang).gallery;
 
   const step = useCallback((delta: number) => onChange((index + delta + count) % count), [index, count, onChange]);
 
@@ -65,16 +70,16 @@ function Lightbox({
       className="lightbox"
       role="dialog"
       aria-modal="true"
-      aria-label="Photo viewer"
+      aria-label={labels.viewer}
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <button ref={closeRef} type="button" className="lightbox-close" aria-label="Close photo viewer" onClick={onClose}>
+      <button ref={closeRef} type="button" className="lightbox-close" aria-label={labels.close} onClick={onClose}>
         <span aria-hidden="true">×</span>
       </button>
       {count > 1 && (
-        <button type="button" className="lightbox-nav lightbox-prev" aria-label="Previous photo" onClick={() => step(-1)}>
+        <button type="button" className="lightbox-nav lightbox-prev" aria-label={labels.previous} onClick={() => step(-1)}>
           <span aria-hidden="true">←</span>
         </button>
       )}
@@ -84,7 +89,7 @@ function Lightbox({
         <figcaption>{image.alt}</figcaption>
       </figure>
       {count > 1 && (
-        <button type="button" className="lightbox-nav lightbox-next" aria-label="Next photo" onClick={() => step(1)}>
+        <button type="button" className="lightbox-nav lightbox-next" aria-label={labels.next} onClick={() => step(1)}>
           <span aria-hidden="true">→</span>
         </button>
       )}
@@ -93,7 +98,7 @@ function Lightbox({
   );
 }
 
-export function Gallery({ images }: { images: readonly GalleryImage[] }) {
+export function Gallery({ images, lang }: { images: readonly GalleryImage[]; lang: Locale }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const single = images.length === 1;
@@ -134,7 +139,7 @@ export function Gallery({ images }: { images: readonly GalleryImage[] }) {
           </button>
         ))}
       </div>
-      {isOpen && <Lightbox images={images} index={openIndex} onChange={setOpenIndex} onClose={close} />}
+      {isOpen && <Lightbox images={images} lang={lang} index={openIndex} onChange={setOpenIndex} onClose={close} />}
     </>
   );
 }

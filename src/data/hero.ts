@@ -1,15 +1,42 @@
-export const HERO = {
-  eyebrow: "COLOMBIAN ROOTS. LONDON CHAPTER.",
-  headlineLines: ["Builder.", "Founder."],
-  headlineEmphasis: "YC alumnus.",
-  subheadline:
-    "Former CTO at HoyTrabajas.com (YC W22) & FLUVIP (Latin American Influencer Marketing Leader)",
-  photo: {
-    src: "/images/hero-cambridge-talk.jpg",
-    alt: "Vladimir Guzmán presenting at Clare Hall, Cambridge",
-    width: 2000,
-    height: 1500,
+import type { Locale } from "@/i18n/config";
+import { getWhatsappLink } from "./site";
+
+export type HeroContent = {
+  eyebrow: string;
+  headlineLines: string[];
+  headlineEmphasis: string;
+  byline: { name: string; roles: string };
+  photo: { src: string; alt: string; width: number; height: number };
+  primaryCta: { label: string; href: string };
+  secondaryCta: { label: string; href: string };
+};
+
+// Locale-neutral values are defined once; only text differs per locale.
+const PHOTO = { src: "/images/hero-cambridge-talk.jpg", width: 2000, height: 1500 };
+const PRIMARY_HREF = "/speaking#writing";
+const NAME = "Vladimir Guzmán";
+
+const HERO: Record<Locale, HeroContent> = {
+  en: {
+    eyebrow: "COLOMBIAN ROOTS. LONDON CHAPTER.",
+    headlineLines: ["Question the obvious."],
+    headlineEmphasis: "Build what matters.",
+    byline: { name: NAME, roles: "Entrepreneur · Technology Builder · Speaker" },
+    photo: { ...PHOTO, alt: "Vladimir Guzmán presenting at Clare Hall, Cambridge" },
+    primaryCta: { label: "Explore my thinking", href: PRIMARY_HREF },
+    secondaryCta: { label: "Invite me to speak", href: getWhatsappLink("en") },
   },
-  primaryCta: { label: "Read my essays", href: "/essays" },
-  secondaryCta: { label: "Work with me", href: "#contact" },
-} as const;
+  es: {
+    eyebrow: "RAÍCES COLOMBIANAS. CAPÍTULO LONDRES.",
+    headlineLines: ["Cuestiona lo establecido."],
+    headlineEmphasis: "Construye lo que importa.",
+    byline: { name: NAME, roles: "Emprendedor · Líder tecnológico · Conferencista" },
+    photo: { ...PHOTO, alt: "Vladimir Guzmán presentando en Clare Hall, Cambridge" },
+    primaryCta: { label: "Explora mis ideas", href: PRIMARY_HREF },
+    secondaryCta: { label: "Invítame a conversar", href: getWhatsappLink("es") },
+  },
+};
+
+export function getHero(lang: Locale): HeroContent {
+  return HERO[lang];
+}

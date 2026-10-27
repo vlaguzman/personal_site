@@ -1,10 +1,13 @@
 import { Fragment } from "react";
 import Link from "next/link";
-import { ESSAYS } from "@/data/essays";
+import { ESSAYS, getEssays } from "@/data/essays";
+import { getJourneyUi } from "@/data/journey-ui";
 import type { Block, Milestone as MilestoneData } from "@/data/types";
+import { localePath, type Locale } from "@/i18n/config";
 import { Gallery } from "./Gallery";
+import { VideoEmbed } from "./VideoEmbed";
 
-function BlockView({ block }: { block: Block }) {
+function BlockView({ block, lang }: { block: Block; lang: Locale }) {
   switch (block.kind) {
     case "paragraph":
       return <p className={block.variant}>{block.text}</p>;
@@ -48,7 +51,7 @@ function BlockView({ block }: { block: Block }) {
       );
     case "ventureTree":
       return (
-        <div className="venture-tree" aria-label={block.ariaLabel}>
+        <div className="venture-tree" role="group" aria-label={block.ariaLabel}>
           <div className="venture-root">
             <span className="eyebrow">{block.root.eyebrow}</span>
             <strong>{block.root.name}</strong>
@@ -86,40 +89,26 @@ function BlockView({ block }: { block: Block }) {
         </div>
       );
     case "gallery":
-      return <Gallery images={block.images} />;
+      return <Gallery lang={lang} images={block.images} />;
     case "posts":
       return (
         <div className="blog-posts">
           <span className="eyebrow">{block.label}</span>
           {block.items.map((post) => {
-            const essay = ESSAYS.find((e) => e.title === post.title);
+            // The post is the Spanish original: it is only the key to the essay of this locale.
+            const original = ESSAYS.find((e) => e.title === post.title);
+            const essay = original && getEssays(lang).find((e) => e.slug === original.slug);
             if (!essay) throw new Error(`Timeline post "${post.title}" has no matching essay`);
             return (
-              <Link key={essay.slug} href={`/essays/${essay.slug}`} className="blog-post" lang={essay.lang}>
-                {post.title} <span aria-hidden="true">→</span>
+              <Link key={essay.slug} href={localePath(lang, `/essays/${essay.slug}`)} className="blog-post" lang={essay.lang}>
+                {essay.title} <span aria-hidden="true">→</span>
               </Link>
             );
           })}
         </div>
       );
     case "video":
-      return (
-        <figure className="video">
-          <iframe
-            className="video-embed"
-            src={`https://www.youtube-nocookie.com/embed/${block.youtubeId}`}
-            title={block.title}
-            loading="lazy"
-            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
-          <figcaption>
-            <a href={`https://www.youtube.com/watch?v=${block.youtubeId}`} target="_blank" rel="noopener noreferrer">
-              Watch on YouTube <span aria-hidden="true">↗</span>
-            </a>
-          </figcaption>
-        </figure>
-      );
+      return <VideoEmbed lang={lang} youtubeId={block.youtubeId} title={block.title} />;
     case "button":
       return (
         <a className="button" href={block.href} target="_blank" rel="noopener noreferrer">
@@ -129,16 +118,17 @@ function BlockView({ block }: { block: Block }) {
   }
 }
 
-function Learned({ text }: { text: string }) {
+function Learned({ text, lang }: { text: string; lang: Locale }) {
+  const { learnedLabel } = getJourneyUi(lang);
   return (
-    <aside className="learned" aria-label="What I learned">
-      <span className="eyebrow">What I learned</span>
+    <div className="learned">
+      <span className="eyebrow">{learnedLabel}</span>
       <p>{text}</p>
-    </aside>
+    </div>
   );
 }
 
-export function Milestone({ milestone }: { milestone: MilestoneData }) {
+export function Milestone({ milestone, lang }: { milestone: MilestoneData; lang: Locale }) {
   const { id, year, yearIsRange, period, eyebrow, titleLines, titleEmphasis, current, companyBuilder, learned, blocks } =
     milestone;
   // The lesson closes the story, ahead of any photos and blog posts.
@@ -159,9 +149,9 @@ export function Milestone({ milestone }: { milestone: MilestoneData }) {
         </span>
       </div>
       <div className="story">
-        {blocks[0]?.kind === "origin" && <BlockView block={blocks[0]} />}
+        {blocks[0]?.kind === "origin" && <BlockView block={blocks[0]} lang={lang} />}
         <span className="eyebrow">{eyebrow}</span>
-        <h3>
+        <h2>
           {titleLines.map((line, i) => (
             <Fragment key={line}>
               {i > 0 && <br />}
@@ -174,17 +164,17 @@ export function Milestone({ milestone }: { milestone: MilestoneData }) {
               <em>{titleEmphasis}</em>
             </>
           )}
-        </h3>
+        </h2>
         {blocks.map((block, i) => {
           if (blocks[0]?.kind === "origin" && i === 0) return null;
           return (
             <Fragment key={i}>
-              {i === learnedAt && learned && <Learned text={learned} />}
-              <BlockView block={block} />
+              {i === learnedAt && learned && <Learned text={learned} lang={lang} />}
+              <BlockView block={block} lang={lang} />
             </Fragment>
           );
         })}
-        {learned && learnedAt === blocks.length && <Learned text={learned} />}
+        {learned && learnedAt === blocks.length && <Learned text={learned} lang={lang} />}
       </div>
     </article>
   );
