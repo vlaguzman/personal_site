@@ -30,13 +30,13 @@ export default async function Home({ params }: Props) {
       <Header lang={lang} />
       <main>
         <Hero lang={lang} />
-        <Intro />
+        <Intro lang={lang} />
         <Ideas lang={lang} />
         <Experience lang={lang} />
-        <Beliefs />
-        <Purpose />
+        <Beliefs lang={lang} />
+        <Purpose lang={lang} />
         <Conversations lang={lang} />
-        <Contact />
+        <Contact lang={lang} />
       </main>
       <Footer lang={lang} />
       <ReadingProgress />

@@ -26,7 +26,7 @@ describe.each(LOCALES)("internal links on the %s site", (lang) => {
     const { container } = render(await pages[name]!(lang));
     // The language switcher deliberately links to the other locale, so it is checked separately below.
     const hrefs = [...container.querySelectorAll("a[href]")]
-      .filter((a) => !a.closest("nav[aria-label='Language']"))
+      .filter((a) => !a.closest("nav.lang-switch"))
       .map((a) => a.getAttribute("href") ?? "");
     expect(hrefs.length).toBeGreaterThan(0);
 
@@ -41,7 +41,7 @@ describe.each(LOCALES)("internal links on the %s site", (lang) => {
 
   it.each(Object.keys(pages))("the language switcher on %s targets the equivalent page", async (name) => {
     const { container } = render(await pages[name]!(lang));
-    const nav = container.querySelector("nav[aria-label='Language']")!;
+    const nav = container.querySelector("nav.lang-switch")!;
     const [en, es] = [...nav.querySelectorAll("a")].map((a) => a.getAttribute("href"));
     expect(en).toMatch(/^\/en(\/|$)/);
     expect(es).toMatch(/^\/es(\/|$)/);

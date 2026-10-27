@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { getChrome } from "@/data/chrome";
 import { NAV_LINKS } from "@/data/site";
 import { Header } from "./Header";
 
@@ -15,9 +16,19 @@ describe("Header", () => {
     render(<Header lang="en" />);
     const nav = screen.getByRole("navigation", { name: "Main navigation" });
     expect(nav.querySelectorAll("a")).toHaveLength(NAV_LINKS.length);
-    for (const { href, label } of NAV_LINKS) {
+    for (const { href, label } of getChrome("en").nav) {
       const expected = href.startsWith("#") ? href : `/en${href}`;
       expect(screen.getByRole("link", { name: new RegExp(label) })).toHaveAttribute("href", expected);
+    }
+  });
+
+  it("lists the nav links in the same order and with the same hrefs in both languages", () => {
+    for (const lang of ["en", "es"] as const) {
+      render(<Header lang={lang} />);
+      const nav = screen.getByRole("navigation", { name: getChrome(lang).navLabel });
+      const hrefs = [...nav.querySelectorAll("a")].map((a) => a.getAttribute("href"));
+      expect(hrefs).toEqual(NAV_LINKS.map(({ href }) => (href.startsWith("#") ? href : `/${lang}${href}`)));
+      cleanup();
     }
   });
 
@@ -29,16 +40,24 @@ describe("Header", () => {
 
   it("prefixes every route link with the active locale", () => {
     render(<Header lang="es" />);
-    expect(screen.getByRole("link", { name: "Speaking" })).toHaveAttribute("href", "/es/speaking");
-    expect(screen.getByRole("link", { name: "Work together" })).toHaveAttribute("href", "/es/work-together");
-    expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("href", "/es/essays");
-    expect(screen.getByRole("link", { name: /The journey/ })).toHaveAttribute("href", "/es/journey");
-    expect(screen.getByRole("link", { name: "Now" })).toHaveAttribute("href", "/es/journey#now");
+    expect(screen.getByRole("link", { name: "Charlas" })).toHaveAttribute("href", "/es/speaking");
+    expect(screen.getByRole("link", { name: "Trabajemos juntos" })).toHaveAttribute("href", "/es/work-together");
+    expect(screen.getByRole("link", { name: "Ensayos" })).toHaveAttribute("href", "/es/essays");
+    expect(screen.getByRole("link", { name: /Mi trayectoria/ })).toHaveAttribute("href", "/es/journey");
+    expect(screen.getByRole("link", { name: "Ahora" })).toHaveAttribute("href", "/es/journey#now");
   });
 
   it("keeps in-page anchors on the home page", () => {
     render(<Header lang="es" />);
-    expect(screen.getByRole("link", { name: /Let’s connect/ })).toHaveAttribute("href", "#contact");
+    expect(screen.getByRole("link", { name: /Conectemos/ })).toHaveAttribute("href", "#contact");
+  });
+
+  it("translates the wordmark subtitle and the navigation labels", () => {
+    render(<Header lang="es" />);
+    expect(screen.getByRole("link", { name: /Vladimir Guzmán/ })).toHaveTextContent("EMPRENDEDOR Y CONSTRUCTOR");
+    expect(screen.getByRole("navigation", { name: "Navegación principal" })).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Idioma" })).toBeInTheDocument();
+    expect(screen.queryByRole("navigation", { name: "Main navigation" })).toBeNull();
   });
 
   describe("on a sub-page", () => {
@@ -53,7 +72,7 @@ describe("Header", () => {
     it("keeps the Spanish locale in home anchors", () => {
       render(<Header lang="es" currentPath="/speaking" />);
       expect(screen.getByRole("link", { name: /Vladimir Guzmán/ })).toHaveAttribute("href", "/es#home");
-      expect(screen.getByRole("link", { name: /Let’s connect/ })).toHaveAttribute("href", "/es#contact");
+      expect(screen.getByRole("link", { name: /Conectemos/ })).toHaveAttribute("href", "/es#contact");
     });
 
     it("marks the journey page as current when on it", () => {
@@ -95,12 +114,18 @@ describe("Header", () => {
       render(<Header lang="es" currentPath="/essays" path="/essays/some-slug" />);
       expect(screen.getByRole("link", { name: "English" })).toHaveAttribute("href", "/en/essays/some-slug");
       expect(screen.getByRole("link", { name: "Español" })).toHaveAttribute("href", "/es/essays/some-slug");
-      expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("aria-current", "page");
+      expect(screen.getByRole("link", { name: "Ensayos" })).toHaveAttribute("aria-current", "page");
     });
 
     it("flags the active language", () => {
       render(<Header lang="es" />);
       expect(screen.getByRole("link", { name: "Español" })).toHaveAttribute("aria-current", "true");
     });
+  });
+
+  it.each(["en", "es"] as const)("styles the main nav through a class, never through its translated label (%s)", (lang) => {
+    render(<Header lang={lang} />);
+    const nav = screen.getByRole("navigation", { name: lang === "en" ? "Main navigation" : "Navegación principal" });
+    expect(nav).toHaveClass("site-nav");
   });
 });

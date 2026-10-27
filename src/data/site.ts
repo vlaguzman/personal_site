@@ -1,20 +1,39 @@
+import type { Locale } from "@/i18n/config";
+
 export const SITE = {
-  title: "Vladimir Guzmán | A builder’s journey",
-  description:
-    "Vladimir Guzmán. Colombian entrepreneur, software engineer and founder of Gingga. A journey through technology, entrepreneurship and community.",
   themeColor: "#0F1F18",
   email: "guzman.vla@gmail.com",
   calendly: "https://calendly.com/guzman-vla/ideas",
   linkedin: "https://www.linkedin.com/in/vlaguzman/",
 } as const;
 
+export type SiteMeta = { title: string; description: string };
+
+const SITE_META: Record<Locale, SiteMeta> = {
+  en: {
+    title: "Vladimir Guzmán | A builder’s journey",
+    description:
+      "Vladimir Guzmán. Colombian entrepreneur, software engineer and founder of Gingga. A journey through technology, entrepreneurship and community.",
+  },
+  es: {
+    title: "Vladimir Guzmán | El camino de un constructor",
+    description:
+      "Vladimir Guzmán. Emprendedor colombiano, ingeniero de software y fundador de Gingga. Un recorrido por la tecnología, el emprendimiento y la comunidad.",
+  },
+};
+
+export function getSiteMeta(lang: Locale): SiteMeta {
+  return SITE_META[lang];
+}
+
+/** Main navigation targets, in display order. Labels come from `getChrome(lang).nav`. */
 export const NAV_LINKS = [
-  { href: "/journey", label: "The journey" },
-  { href: "/journey#now", label: "Now" },
-  { href: "/speaking", label: "Speaking" },
-  { href: "/essays", label: "Essays" },
-  { href: "/work-together", label: "Work together" },
-  { href: "#contact", label: "Let’s connect" },
+  { href: "/journey" },
+  { href: "/journey#now" },
+  { href: "/speaking" },
+  { href: "/essays" },
+  { href: "/work-together" },
+  { href: "#contact" },
 ] as const;
 
 export const FOUNDER_PROFILE_PDF = "/docs/founder-profile.pdf";

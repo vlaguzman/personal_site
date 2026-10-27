@@ -2000,14 +2000,14 @@ footer {
     margin-left: 0;
   }
 
-  header nav[aria-label="Main navigation"] {
+  header .site-nav {
     order: 3;
     flex: 1 0 100%;
     flex-wrap: wrap;
     gap: 8px 28px;
   }
 
-  header nav[aria-label="Main navigation"] a {
+  header .site-nav a {
     white-space: nowrap;
   }
 }

@@ -1,4 +1,4 @@
-import { HERO } from "./hero";
+import { getHero } from "./hero";
 import { milestones } from "./milestones";
 import { SITE } from "./site";
 import type { Fact, GalleryImage } from "./types";
@@ -9,7 +9,7 @@ export const SPEAKING = {
   headlineEmphasis: "Start better conversations.",
   intro:
     "I bring firsthand experience from entrepreneurship, technology leadership and AI to conversations about how businesses grow, how people adapt and how we create opportunities that matter.",
-  photo: HERO.photo,
+  photo: getHero("en").photo,
   primaryCta: { label: "Invite me to speak", href: SITE.calendly },
   secondaryCta: { label: "See the Cambridge talk", href: "#cambridge" },
   topics: [

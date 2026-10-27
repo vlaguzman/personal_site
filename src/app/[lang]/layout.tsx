@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import { notFound } from "next/navigation";
-import { SITE } from "@/data/site";
+import { getSiteMeta, SITE } from "@/data/site";
 import { hasLocale, LOCALES } from "@/i18n/config";
 import "../globals.css";
 
@@ -34,10 +34,12 @@ export function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
 }
 
-export const metadata: Metadata = {
-  title: SITE.title,
-  description: SITE.description,
-};
+export async function generateMetadata({ params }: Pick<LayoutProps<"/[lang]">, "params">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  const { title, description } = getSiteMeta(lang);
+  return { title, description };
+}
 
 export const viewport: Viewport = {
   width: "device-width",

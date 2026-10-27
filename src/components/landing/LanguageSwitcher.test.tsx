@@ -48,4 +48,11 @@ describe("LanguageSwitcher", () => {
     expect(es).toHaveAttribute("lang", "es");
     expect(es).toHaveAttribute("hreflang", "es");
   });
+
+  it("translates the navigation label but keeps each language name in its own language", () => {
+    render(<LanguageSwitcher lang="es" path="/" />);
+    expect(screen.getByRole("navigation", { name: "Idioma" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "English" })).toHaveTextContent("EN");
+    expect(screen.getByRole("link", { name: "Español" })).toHaveTextContent("ES");
+  });
 });

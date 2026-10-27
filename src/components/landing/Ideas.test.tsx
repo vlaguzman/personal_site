@@ -27,11 +27,34 @@ describe("Ideas", () => {
     expect(cta).toHaveAttribute("href", "/en/essays");
     expect(cta).toHaveClass("cta-primary");
   });
+
+  it("emphasises the last word of the heading", () => {
+    const { container } = render(<Ideas lang="en" />);
+    expect(container.querySelector("h2 em")).toHaveTextContent("challenging");
+  });
 });
 
 describe("Ideas with the Spanish locale", () => {
-  it("prefixes the essays link with /es", () => {
+  it("is headed 'Ideas que vale la pena cuestionar' with the emphasis on the verb", () => {
+    const { container } = render(<Ideas lang="es" />);
+    expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent("Ideas que vale la pena cuestionar");
+    expect(container.querySelector("h2 em")).toHaveTextContent("cuestionar");
+    expect(screen.getByText("CÓMO PIENSO")).toBeInTheDocument();
+  });
+
+  it("lists the three ideas in Spanish under a Spanish label", () => {
     render(<Ideas lang="es" />);
-    expect(screen.getByRole("link", { name: /Explore more ideas/ })).toHaveAttribute("href", "/es/essays");
+    const items = within(screen.getByRole("list", { name: "Ideas que vale la pena cuestionar" })).getAllByRole("listitem");
+    expect(items).toHaveLength(3);
+    expect(within(items[0]).getByRole("heading", { level: 3 })).toHaveTextContent(
+      "No todos los negocios necesitan inteligencia artificial.",
+    );
+    expect(within(items[1]).getByText(/El capital abre puertas/)).toBeInTheDocument();
+  });
+
+  it("closes in Spanish and prefixes the essays link with /es", () => {
+    render(<Ideas lang="es" />);
+    expect(screen.getByText(/No pretendo tener todas las respuestas/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Explora más ideas/ })).toHaveAttribute("href", "/es/essays");
   });
 });

@@ -1,23 +1,25 @@
-import { BELIEFS, BELIEFS_INTRO } from "@/data/beliefs";
+import { getBeliefs } from "@/data/beliefs";
+import { localePath, type Locale } from "@/i18n/config";
 
-export function Beliefs() {
+export function Beliefs({ lang }: { lang: Locale }) {
+  const beliefs = getBeliefs(lang);
   return (
     <section id="beliefs" className="beliefs">
       <div className="wrap">
         <div className="beliefs-heading">
           <div>
-            <span className="eyebrow">PRINCIPLES</span>
+            <span className="eyebrow">{beliefs.eyebrow}</span>
             <h2>
-              What I <em>believe</em>
+              {beliefs.titleLead} <em>{beliefs.titleEmphasis}</em>
             </h2>
           </div>
           <div className="beliefs-intro">
-            <p className="beliefs-statement">{BELIEFS_INTRO.statement}</p>
-            <p>{BELIEFS_INTRO.text}</p>
+            <p className="beliefs-statement">{beliefs.intro.statement}</p>
+            <p>{beliefs.intro.text}</p>
           </div>
         </div>
         <ol className="belief-list">
-          {BELIEFS.map((belief, i) => (
+          {beliefs.items.map((belief, i) => (
             <li key={belief.title}>
               <details name="beliefs">
                 <summary>
@@ -33,9 +35,9 @@ export function Beliefs() {
           ))}
         </ol>
         <div className="closing-cta">
-          <p>If this resonates,</p>
-          <a className="cta-primary" href="#contact">
-            Let’s talk <span aria-hidden="true">→</span>
+          <p>{beliefs.closing.lead}</p>
+          <a className="cta-primary" href={localePath(lang, beliefs.closing.cta.href)}>
+            {beliefs.closing.cta.label} <span aria-hidden="true">→</span>
           </a>
         </div>
       </div>

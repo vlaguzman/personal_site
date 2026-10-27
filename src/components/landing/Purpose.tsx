@@ -1,14 +1,19 @@
-export function Purpose() {
+import { getPurpose } from "@/data/purpose";
+import type { Locale } from "@/i18n/config";
+
+export function Purpose({ lang }: { lang: Locale }) {
+  const purpose = getPurpose(lang);
   return (
     <section className="purpose">
       <div className="wrap">
-        <span className="eyebrow">WHAT CONNECTS IT ALL</span>
+        <span className="eyebrow">{purpose.eyebrow}</span>
         <p>
-          “My purpose is to help entrepreneurs <em>make a living from their passion.</em>”
+          “{purpose.quoteLead}
+          <em>{purpose.quoteEmphasis}</em>”
         </p>
         <div className="purpose-bottom">
-          <span>Vladimir Guzmán</span>
-          <span>TECHNOLOGY + EDUCATION + PRACTICAL SUPPORT</span>
+          <span>{purpose.name}</span>
+          <span>{purpose.tagline}</span>
         </div>
       </div>
     </section>

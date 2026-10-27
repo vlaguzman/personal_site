@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getChrome } from "@/data/chrome";
 import { LOCALES, localePath, type Locale } from "@/i18n/config";
 
 /** Short label shown in the header and the language's name in its own language. */
@@ -16,7 +17,7 @@ type Props = {
 
 export function LanguageSwitcher({ lang, path }: Props) {
   return (
-    <nav className="lang-switch" aria-label="Language">
+    <nav className="lang-switch" aria-label={getChrome(lang).languageLabel}>
       {LOCALES.map((target) => (
         <Link
           key={target}

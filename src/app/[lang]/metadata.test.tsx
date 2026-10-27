@@ -44,6 +44,27 @@ describe("root layout", () => {
   });
 });
 
+describe("layout metadata", () => {
+  it("defaults the title and description to the site meta of the route locale", async () => {
+    expect(await layoutModule.generateMetadata(params({ lang: "en" }))).toEqual({
+      title: "Vladimir Guzmán | A builder’s journey",
+      description: expect.stringMatching(/founder of Gingga/),
+    });
+    expect(await layoutModule.generateMetadata(params({ lang: "es" }))).toEqual({
+      title: "Vladimir Guzmán | El camino de un constructor",
+      description: expect.stringMatching(/fundador de Gingga/),
+    });
+  });
+
+  it("keeps the viewport and theme colour", () => {
+    expect(layoutModule.viewport).toMatchObject({ width: "device-width", themeColor: "#0F1F18" });
+  });
+
+  it("returns no metadata for an unsupported locale", async () => {
+    expect(await layoutModule.generateMetadata(params({ lang: "fr" }))).toEqual({});
+  });
+});
+
 describe("page metadata", () => {
   const cases = [
     ["/journey", journey.generateMetadata, journey],

@@ -1,30 +1,29 @@
+import { getContact } from "@/data/contact";
 import { FOUNDER_PROFILE_PDF, SITE } from "@/data/site";
+import type { Locale } from "@/i18n/config";
 
-export function Contact() {
+export function Contact({ lang }: { lang: Locale }) {
+  const contact = getContact(lang);
   return (
     <section id="contact" className="contact wrap">
       <div>
-        <span className="eyebrow">THE NEXT CONVERSATION</span>
+        <span className="eyebrow">{contact.eyebrow}</span>
         <h2>
-          What are
-          <br />
-          <em>you building?</em>
+          {contact.titleLead} <br />
+          <em>{contact.titleEmphasis}</em>
         </h2>
       </div>
       <div>
-        <p>
-          I’m open to thoughtful conversations about entrepreneurship, strategic technology and partnerships that help
-          businesses move forward.
-        </p>
+        <p>{contact.text}</p>
         <a className="email" href={SITE.calendly} target="_blank" rel="noopener noreferrer">
-          Book a conversation <span>↗</span>
+          {contact.booking.label} <span>↗</span>
         </a>
         <div className="contact-links">
           <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer">
-            LinkedIn ↗
+            {contact.linkedin.label} ↗
           </a>
           <a href={FOUNDER_PROFILE_PDF} download="founder-profile.pdf">
-            Download founder profile ↓
+            {contact.profile.label} ↓
           </a>
         </div>
       </div>

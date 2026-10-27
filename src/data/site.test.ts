@@ -2,12 +2,27 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { milestones } from "./milestones";
-import { FOUNDER_PROFILE_PDF, NAV_LINKS, SITE, TALK } from "./site";
+import { FOUNDER_PROFILE_PDF, getSiteMeta, NAV_LINKS, SITE, TALK } from "./site";
 
 describe("site data", () => {
-  it("exposes the page metadata", () => {
-    expect(SITE.title).toBe("Vladimir Guzmán | A builder’s journey");
-    expect(SITE.description).toMatch(/founder of Gingga/);
+  it("exposes the page metadata in English", () => {
+    expect(getSiteMeta("en")).toEqual({
+      title: "Vladimir Guzmán | A builder’s journey",
+      description:
+        "Vladimir Guzmán. Colombian entrepreneur, software engineer and founder of Gingga. A journey through technology, entrepreneurship and community.",
+    });
+  });
+
+  it("exposes the page metadata in Spanish", () => {
+    expect(getSiteMeta("es")).toEqual({
+      title: "Vladimir Guzmán | El camino de un constructor",
+      description:
+        "Vladimir Guzmán. Emprendedor colombiano, ingeniero de software y fundador de Gingga. Un recorrido por la tecnología, el emprendimiento y la comunidad.",
+    });
+  });
+
+  it("keeps only locale-neutral values in SITE", () => {
+    expect(Object.keys(SITE).sort()).toEqual(["calendly", "email", "linkedin", "themeColor"]);
   });
 
   it("links the journey page, its Now section, speaking, the essays hub, work together and contact in order", () => {

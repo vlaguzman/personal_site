@@ -40,9 +40,17 @@ describe("Footer", () => {
 
   it("prefixes every route with the Spanish locale on the Spanish site", () => {
     render(<Footer lang="es" />);
-    expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("href", "/es/essays");
-    expect(screen.getByRole("link", { name: "Journey" })).toHaveAttribute("href", "/es/journey");
-    expect(screen.getByRole("link", { name: "Speaking" })).toHaveAttribute("href", "/es/speaking");
-    expect(screen.getByRole("link", { name: "Work together" })).toHaveAttribute("href", "/es/work-together");
+    expect(screen.getByRole("link", { name: "Ensayos" })).toHaveAttribute("href", "/es/essays");
+    expect(screen.getByRole("link", { name: "Trayectoria" })).toHaveAttribute("href", "/es/journey");
+    expect(screen.getByRole("link", { name: "Charlas" })).toHaveAttribute("href", "/es/speaking");
+    expect(screen.getByRole("link", { name: "Trabajemos juntos" })).toHaveAttribute("href", "/es/work-together");
+  });
+
+  it("translates the tagline, the copyright year and the back-to-top link", () => {
+    render(<Footer lang="es" year={2031} />);
+    expect(screen.getByText("© 2031 Vladimir Guzmán")).toBeInTheDocument();
+    expect(screen.getByText("Emprendedor colombiano. Radicado en Londres.")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Volver arriba ↑" })).toHaveAttribute("href", "#home");
+    expect(screen.queryByText(/Colombian entrepreneur/)).toBeNull();
   });
 });

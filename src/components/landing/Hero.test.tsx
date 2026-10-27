@@ -43,9 +43,37 @@ describe("Hero", () => {
 });
 
 describe("Hero with the Spanish locale", () => {
+  it("renders the brand statement in Spanish", () => {
+    const { container } = render(<Hero lang="es" />);
+    expect(container.querySelector("section#home")).not.toBeNull();
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Cuestiona lo establecido.Construye lo que importa.");
+    expect(screen.getByText("RAÍCES COLOMBIANAS. CAPÍTULO LONDRES.")).toBeInTheDocument();
+  });
+
+  it("states his name and roles in Spanish", () => {
+    render(<Hero lang="es" />);
+    expect(screen.getByText("Vladimir Guzmán")).toBeInTheDocument();
+    expect(screen.getByText("Emprendedor · Líder tecnológico · Conferencista")).toBeInTheDocument();
+  });
+
+  it("describes the photo in Spanish", () => {
+    render(<Hero lang="es" />);
+    const img = screen.getByRole("img", { name: "Vladimir Guzmán presentando en Clare Hall, Cambridge" });
+    expect(img.getAttribute("src")).toContain("hero-cambridge-talk.jpg");
+  });
+
   it("prefixes the essays link with /es and keeps the in-page contact anchor", () => {
     render(<Hero lang="es" />);
-    expect(screen.getByRole("link", { name: /Explore my thinking/ })).toHaveAttribute("href", "/es/essays");
-    expect(screen.getByRole("link", { name: /Invite me to speak/ })).toHaveAttribute("href", "#contact");
+    const primary = screen.getByRole("link", { name: /Explora mis ideas/ });
+    expect(primary).toHaveAttribute("href", "/es/essays");
+    expect(primary).toHaveClass("cta-primary");
+    const secondary = screen.getByRole("link", { name: /Invítame a conversar/ });
+    expect(secondary).toHaveAttribute("href", "#contact");
+    expect(secondary).toHaveClass("cta-secondary");
+  });
+
+  it("does not use consultant language", () => {
+    const { container } = render(<Hero lang="es" />);
+    expect(container.textContent).not.toMatch(/consultor|experto|consultant|expert/i);
   });
 });

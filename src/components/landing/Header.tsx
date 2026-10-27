@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NAV_LINKS } from "@/data/site";
+import { getChrome } from "@/data/chrome";
 import { localePath, type Locale } from "@/i18n/config";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
@@ -13,15 +13,16 @@ type Props = {
 
 export function Header({ lang, currentPath, path }: Props) {
   // On a sub-page, in-page anchors must lead back to the home page.
+  const chrome = getChrome(lang);
   const resolve = (href: string) => (currentPath && href.startsWith("#") ? `/${href}` : href);
 
   return (
     <header>
       <HeaderLink className="wordmark" lang={lang} href={resolve("#home")}>
-        Vladimir Guzmán<span>ENTREPRENEUR &amp; BUILDER</span>
+        Vladimir Guzmán<span>{chrome.wordmarkSubtitle}</span>
       </HeaderLink>
-      <nav aria-label="Main navigation">
-        {NAV_LINKS.map(({ href, label }) => (
+      <nav className="site-nav" aria-label={chrome.navLabel}>
+        {chrome.nav.map(({ href, label }) => (
           <HeaderLink key={href} lang={lang} href={resolve(href)} current={href === currentPath}>
             {label}
             {href === "#contact" && (
