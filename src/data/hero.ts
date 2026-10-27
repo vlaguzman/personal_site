@@ -6,10 +6,6 @@ export const HERO = {
     name: "Vladimir Guzmán",
     roles: "Entrepreneur · Technology Builder · Speaker",
   },
-  lead: [
-    "I’ve built businesses, led technology teams, experienced failure and started again.",
-    "From opening a restaurant in Colombia to building a Y Combinator-backed company, I’ve learned that the most valuable ideas often begin by questioning what everyone else takes for granted.",
-  ],
   photo: {
     src: "/images/hero-cambridge-talk.jpg",
     alt: "Vladimir Guzmán presenting at Clare Hall, Cambridge",

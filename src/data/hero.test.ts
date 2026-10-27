@@ -14,11 +14,8 @@ describe("hero data", () => {
     });
   });
 
-  it("introduces him through failure, restarting and the YC story", () => {
-    expect(HERO.lead).toEqual([
-      "I’ve built businesses, led technology teams, experienced failure and started again.",
-      "From opening a restaurant in Colombia to building a Y Combinator-backed company, I’ve learned that the most valuable ideas often begin by questioning what everyone else takes for granted.",
-    ]);
+  it("keeps the hero to the message, with no intro paragraphs", () => {
+    expect("lead" in HERO).toBe(false);
   });
 
   it("points the primary CTA at the essays hub and the secondary at contact", () => {

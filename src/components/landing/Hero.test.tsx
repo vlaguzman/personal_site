@@ -15,10 +15,9 @@ describe("Hero", () => {
     expect(screen.getByText("Entrepreneur · Technology Builder · Speaker")).toBeInTheDocument();
   });
 
-  it("introduces him through failure, restarting and the YC story", () => {
+  it("keeps the hero to the message, leaving the intro story to its own section", () => {
     render(<Hero />);
-    expect(screen.getByText(/experienced failure and started again/)).toBeInTheDocument();
-    expect(screen.getByText(/restaurant in Colombia to building a Y Combinator-backed company/)).toBeInTheDocument();
+    expect(screen.queryByText(/experienced failure and started again/)).not.toBeInTheDocument();
   });
 
   it("shows the Cambridge talk photo with a meaningful alt text", () => {

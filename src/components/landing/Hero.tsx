@@ -31,11 +31,6 @@ export function Hero() {
           <strong>{HERO.byline.name}</strong>
           <span>{HERO.byline.roles}</span>
         </p>
-        <div className="hero-lead">
-          {HERO.lead.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-        </div>
         <div className="hero-actions">
           <a className="cta-primary" href={HERO.primaryCta.href}>
             {HERO.primaryCta.label} <span aria-hidden="true">→</span>

@@ -279,7 +279,7 @@ nav a:last-child {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin: 0 0 24px;
+  margin: 0 0 40px;
 }
 
 .hero-byline strong {
@@ -293,25 +293,49 @@ nav a:last-child {
   letter-spacing: 0.04em;
 }
 
-.hero-lead {
-  font-size: var(--fs-lead);
-  line-height: 1.6;
-  color: var(--on-dark-secondary);
-  margin: 0 0 40px;
-}
-
-.hero-lead p {
-  margin: 0 0 16px;
-}
-
-.hero-lead p:last-child {
-  margin-bottom: 0;
-}
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+}
+
+/* ==========================================================================
+   Intro
+   ========================================================================== */
+.intro {
+  padding: 96px 0 88px;
+}
+
+.intro-inner {
+  display: grid;
+  grid-template-columns: 1fr 2.4fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.intro .eyebrow {
+  margin: 12px 0 0;
+  padding-top: 16px;
+  border-top: 2px solid var(--accent);
+  max-width: 220px;
+}
+
+.intro-body {
+  max-width: 760px;
+}
+
+.intro h2 {
+  font-size: var(--fs-h1);
+  line-height: 1.18;
+  margin-bottom: 32px;
+}
+
+.intro p {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 /* ==========================================================================
@@ -1457,10 +1481,25 @@ footer {
     padding: 8px 24px 56px;
   }
 
-  .hero-lead {
-    font-size: var(--fs-body);
-    line-height: var(--lh-read);
+  .hero-byline {
     margin-bottom: 32px;
+  }
+
+  .intro {
+    padding: 56px 0 48px;
+  }
+
+  .intro-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .intro .eyebrow {
+    margin-top: 0;
+  }
+
+  .intro p {
+    font-size: var(--fs-body);
   }
 
   .hero-actions {
