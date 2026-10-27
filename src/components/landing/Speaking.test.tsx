@@ -38,10 +38,56 @@ describe("Speaking", () => {
   it("says he has taught, with the photo where he appears and none of the Consulate figures", () => {
     const { container } = render(<Speaking lang="en" />);
     expect(screen.getByRole("heading", { level: 2, name: "Teaching" })).toBeInTheDocument();
-    expect(screen.getByText(/professor of entrepreneurship and AI applied to business/)).toBeInTheDocument();
-    expect(container.querySelectorAll(".gallery-item")).toHaveLength(1);
+    expect(screen.queryByText(/taught across three lines|He dado formación/)).not.toBeInTheDocument();
+    expect(container.querySelectorAll(".speaking-teaching-grid:not(.speaking-community) .gallery-item")).toHaveLength(1);
     expect(container.querySelector("iframe")).toBeNull();
     expect(container.textContent).not.toMatch(/270\+|NPS|87\.1/);
+  });
+
+  it("lists only the classes inside Teaching, ending with marketing with AI", () => {
+    const { container } = render(<Speaking lang="en" />);
+    const section = container.querySelector(".speaking-teaching-grid:not(.speaking-community)") as HTMLElement;
+    expect(within(section).getAllByRole("list")).toHaveLength(1);
+    const talks = within(section).getByRole("list", { name: "I had the opportunity to work with the Colombian community and technology through classes such as:" });
+    const items = within(talks).getAllByRole("listitem");
+    expect(items).toHaveLength(5);
+    expect(items[4]).toHaveTextContent("Marketing with AI");
+    expect(within(talks).getByText(/Finding Your IKIGAI/)).toBeInTheDocument();
+  });
+
+  it("shows the talks in Spanish", () => {
+    const { container } = render(<Speaking lang="es" />);
+    const section = container.querySelector(".speaking-teaching-grid:not(.speaking-community)") as HTMLElement;
+    expect(within(section).getAllByRole("list")).toHaveLength(1);
+    expect(
+      within(section).getByRole("list", { name: "Tuve la oportunidad de trabajar con la comunidad colombiana y la tecnología en clases como:" }),
+    ).toBeInTheDocument();
+  });
+
+  it("tells the 2024 English programme with The Giving Lab, its classes and photos", () => {
+    const { container } = render(<Speaking lang="en" />);
+    const block = container.querySelector(".speaking-community") as HTMLElement;
+    expect(within(block).getByRole("heading", { level: 3, name: /co-led an English programme/ })).toBeInTheDocument();
+    const classes = within(block).getByRole("list");
+    expect(within(classes).getAllByRole("listitem").map((li) => li.textContent)).toEqual([
+      "English for work",
+      "English from zero",
+      "English for older adults",
+      "Soft skills development",
+    ]);
+    const link = within(block).getByRole("link", { name: /Visit The Giving Lab/ });
+    expect(link).toHaveAttribute("href", "https://opencollective.com/thegivinglab");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(block.querySelectorAll(".gallery-item")).toHaveLength(2);
+  });
+
+  it("tells the English programme in Spanish", () => {
+    const { container } = render(<Speaking lang="es" />);
+    const block = container.querySelector(".speaking-community") as HTMLElement;
+    expect(within(block).getByRole("heading", { level: 3, name: /colideré un programa de inglés/ })).toBeInTheDocument();
+    expect(within(block).getByRole("link", { name: /Conocer The Giving Lab/ })).toBeInTheDocument();
+    expect(within(block).getAllByRole("listitem")).toHaveLength(4);
   });
 
   it("shows a Writing section with the intro and every essay as a translated card", () => {
@@ -61,7 +107,7 @@ describe("Speaking", () => {
         `/en/essays/${ESSAYS[i]!.slug}`,
       );
     }
-    for (const card of cards) expect(within(card as HTMLElement).getByText("Translated with AI")).toBeVisible();
+    expect(within(section).queryByText("Translated with AI")).not.toBeInTheDocument();
     expect(within(section).getByRole("group", { name: "Filter by topic" })).toBeInTheDocument();
   });
 

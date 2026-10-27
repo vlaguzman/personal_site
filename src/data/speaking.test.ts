@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { getWhatsappLink } from "./site";
-import { getSpeaking, getTeaching } from "./speaking";
+import { getCommunityProgram, getSpeaking, getTeaching } from "./speaking";
 
 describe("getSpeaking in English", () => {
   const speaking = getSpeaking("en");
@@ -99,29 +99,98 @@ describe.each(["en", "es"] as const)("getSpeaking bio in %s", (lang) => {
 });
 
 describe("getTeaching", () => {
-  it("says he has taught entrepreneurship and AI applied to business", () => {
-    expect(getTeaching("en").text).toBe("I have been a professor of entrepreneurship and AI applied to business.");
-    expect(getTeaching("es").text).toBe("He sido profesor de emprendimiento e IA aplicada a los negocios.");
+  it("leaves out the intro sentence and the three-line summary", () => {
+    for (const lang of ["en", "es"] as const) {
+      const teaching = getTeaching(lang) as Record<string, unknown>;
+      expect(teaching.text).toBeUndefined();
+      expect(teaching.areas).toBeUndefined();
+      expect(teaching.areasLabel).toBeUndefined();
+    }
   });
 
-  it.each(["en", "es"] as const)("shows the portrait of him speaking at the Consulate (%s)", (lang) => {
+  it("lists the classes taught to the Colombian community, ending with marketing with AI", () => {
+    expect(getTeaching("en").talksLabel).toBe("I had the opportunity to work with the Colombian community and technology through classes such as:");
+    expect(getTeaching("en").talks).toEqual([
+      "Purpose-Driven Entrepreneurship: Finding Your IKIGAI",
+      "Business Model Design: Business Model Canvas",
+      "Problem Discovery and Validation: From Problems to Business Opportunities",
+      "MVP Testing and Customer Feedback: Validating Ideas Through Real-World Experiments",
+      "Marketing with AI",
+    ]);
+    expect(getTeaching("es").talksLabel).toBe("Tuve la oportunidad de trabajar con la comunidad colombiana y la tecnología en clases como:");
+    expect(getTeaching("es").talks).toEqual([
+      "Emprendimiento con propósito: encontrando tu IKIGAI",
+      "Diseño de modelos de negocio: Business Model Canvas",
+      "Descubrimiento y validación de problemas: de los problemas a las oportunidades de negocio",
+      "Pruebas de MVP y feedback de clientes: validar ideas con experimentos reales",
+      "Marketing con IA",
+    ]);
+  });
+
+  it.each(["en", "es"] as const)("shows the portrait of him speaking with a microphone (%s)", (lang) => {
     const { images } = getTeaching(lang);
-    expect(images.map((i) => i.src)).toEqual(["/images/speaking/consulate-speaker.jpg"]);
+    expect(images.map((i) => i.src)).toEqual(["/images/speaking/speaker-microphone.jpg"]);
     expect(existsSync(`public${images[0].src}`)).toBe(true);
   });
 
   it("describes the photo in each language", () => {
-    expect(getTeaching("en").images[0].alt).toBe(
-      "Vladimir Guzmán speaking into a microphone at a Colombian Consulate event in London",
-    );
-    expect(getTeaching("es").images[0].alt).toBe(
-      "Vladimir Guzmán hablando con un micrófono en un evento del Consulado de Colombia en Londres",
-    );
+    expect(getTeaching("en").images[0].alt).toBe("Vladimir Guzmán speaking into a microphone at an event");
+    expect(getTeaching("es").images[0].alt).toBe("Vladimir Guzmán hablando con un micrófono en un evento");
   });
 
   it("leaves the video and the Consulate figures to the journey", () => {
     const teaching = getTeaching("en") as Record<string, unknown>;
     expect(teaching.video).toBeUndefined();
     expect(teaching.facts).toBeUndefined();
+  });
+});
+
+describe("getCommunityProgram", () => {
+  it("tells the 2024 English programme for the Latino community in English", () => {
+    const program = getCommunityProgram("en");
+    expect(program.title).toBe("In 2024 I co-led an English programme for the Latino community");
+    expect(program.intro).toBe(
+      "Run by The Giving Lab and focused on the challenges that Latino migrants face in London. The classes included:",
+    );
+    expect(program.classes).toEqual([
+      "English for work",
+      "English from zero",
+      "English for older adults",
+      "Soft skills development",
+    ]);
+    expect(program.link.label).toBe("Visit The Giving Lab");
+  });
+
+  it("tells it in Spanish", () => {
+    const program = getCommunityProgram("es");
+    expect(program.title).toBe("En 2024 colideré un programa de inglés para la comunidad latina");
+    expect(program.intro).toBe(
+      "Impulsado por The Giving Lab y enfocado en los retos que enfrenta el público migrante latino en Londres. Las clases incluyeron:",
+    );
+    expect(program.classes).toEqual([
+      "Inglés para el trabajo",
+      "Inglés desde cero",
+      "Inglés para personas mayores",
+      "Desarrollo de habilidades blandas",
+    ]);
+    expect(program.link.label).toBe("Conocer The Giving Lab");
+  });
+
+  it("links to The Giving Lab on Open Collective in both languages", () => {
+    for (const lang of ["en", "es"] as const) {
+      expect(getCommunityProgram(lang).link.href).toBe("https://opencollective.com/thegivinglab");
+    }
+  });
+
+  it.each(["en", "es"] as const)("shows the two photos of the programme (%s)", (lang) => {
+    const { images } = getCommunityProgram(lang);
+    expect(images.map((i) => i.src)).toEqual([
+      "/images/speaking/giving-lab-spanglish.jpg",
+      "/images/speaking/giving-lab-class.jpg",
+    ]);
+    for (const image of images) {
+      expect(existsSync(`public${image.src}`)).toBe(true);
+      expect(image.alt.length).toBeGreaterThan(0);
+    }
   });
 });

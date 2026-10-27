@@ -1293,22 +1293,13 @@ blockquote {
   margin: 16px 0;
 }
 
-.talk-topics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  list-style: none;
-  padding: 0;
-  margin: 22px 0;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: 0.04em;
-  color: var(--accent);
+.talk-description .button {
+  margin-top: 22px;
 }
 
 .talk-download {
   display: inline-block;
-  margin: 16px 0 0 18px;
+  margin: 22px 0 0 18px;
   font-size: var(--fs-ui-sm);
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -1789,14 +1780,38 @@ footer {
   align-items: center;
 }
 
-.speaking-teaching-grid p {
-  max-width: 480px;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: var(--fs-h3);
-  line-height: 1.25;
-  letter-spacing: var(--tracking-heading);
+.speaking-teaching-talks {
+  list-style: none;
   margin: 0;
+  padding: 0;
+}
+
+.speaking-teaching-copy h3 {
+  font-size: var(--fs-lead);
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+
+.speaking-teaching-talks li {
+  border-top: 1px solid var(--line);
+  padding: 10px 0;
+  color: var(--text-secondary);
+  line-height: var(--lh-read);
+}
+
+.speaking-teaching-copy > p {
+  margin: 0 0 16px;
+  color: var(--text-secondary);
+  line-height: var(--lh-read);
+}
+
+.speaking-community {
+  margin-top: 72px;
+}
+
+.speaking-community .speaking-link {
+  display: inline-block;
+  margin-top: 24px;
 }
 
 .speaking-teaching .gallery {

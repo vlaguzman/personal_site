@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getEssays } from "@/data/essays";
 import { FOUNDER_PROFILE_PDF } from "@/data/site";
-import { getSpeaking, getTeaching } from "@/data/speaking";
+import { getCommunityProgram, getSpeaking, getTeaching } from "@/data/speaking";
 import type { Locale } from "@/i18n/config";
 import { EssayBrowser } from "./EssayBrowser";
 import { Gallery } from "./Gallery";
@@ -18,6 +18,7 @@ function InviteLink({ className, cta }: { className: string; cta: { label: strin
 export function Speaking({ lang }: { lang: Locale }) {
   const speaking = getSpeaking(lang);
   const teaching = getTeaching(lang);
+  const program = getCommunityProgram(lang);
 
   return (
     <>
@@ -74,8 +75,30 @@ export function Speaking({ lang }: { lang: Locale }) {
       <section className="speaking-teaching wrap" aria-labelledby="speaking-teaching-title">
         <h2 id="speaking-teaching-title">{speaking.sections.teaching}</h2>
         <div className="speaking-teaching-grid">
-          <p>{teaching.text}</p>
+          <div className="speaking-teaching-copy">
+            <h3 id="speaking-teaching-talks-title">{teaching.talksLabel}</h3>
+            <ul className="speaking-teaching-talks" aria-labelledby="speaking-teaching-talks-title">
+              {teaching.talks.map((talk) => (
+                <li key={talk}>{talk}</li>
+              ))}
+            </ul>
+          </div>
           <Gallery lang={lang} images={teaching.images} />
+        </div>
+        <div className="speaking-teaching-grid speaking-community">
+          <div className="speaking-teaching-copy">
+            <h3 id="speaking-community-title">{program.title}</h3>
+            <p>{program.intro}</p>
+            <ul className="speaking-teaching-talks" aria-labelledby="speaking-community-title">
+              {program.classes.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <a className="speaking-link" href={program.link.href} target="_blank" rel="noopener noreferrer">
+              {program.link.label} <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <Gallery lang={lang} images={program.images} />
         </div>
       </section>
 

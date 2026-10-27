@@ -11,8 +11,6 @@ export type TalkContent = {
   titleLines: string[];
   venue: string;
   description: string;
-  themesLabel: string;
-  themes: string[];
   /** Accessible name of the cover image link. */
   coverLinkLabel: string;
   viewSlides: string;
@@ -21,7 +19,7 @@ export type TalkContent = {
 
 type TalkText = Pick<
   TalkContent,
-  "eyebrow" | "description" | "themesLabel" | "themes" | "coverLinkLabel" | "viewSlides" | "download"
+  "eyebrow" | "description" | "coverLinkLabel" | "viewSlides" | "download"
 >;
 
 // Locale-neutral values are defined once; only text differs per locale.
@@ -33,8 +31,6 @@ const TALK_TEXT: Record<Locale, TalkText> = {
     eyebrow: "CAMBRIDGE · 2026 · CONFERENCE TALK",
     description:
       "From opening a restaurant to building technology businesses, I explore how learning and adaptation can change a person’s path, and why AI makes recognising overlooked talent more urgent.",
-    themesLabel: "Talk themes",
-    themes: ["Entrepreneurship", "AI & adaptation", "Human potential"],
     coverLinkLabel: "Open the Cambridge talk slides as a PDF",
     viewSlides: "View slides",
     download: "Download PDF",
@@ -43,8 +39,6 @@ const TALK_TEXT: Record<Locale, TalkText> = {
     eyebrow: "CAMBRIDGE · 2026 · CHARLA EN CONFERENCIA",
     description:
       "Desde abrir un restaurante hasta construir negocios de tecnología, exploro cómo el aprendizaje y la adaptación pueden cambiar el camino de una persona, y por qué la IA hace más urgente reconocer el talento que pasa desapercibido.",
-    themesLabel: "Temas de la charla",
-    themes: ["Emprendimiento", "IA y adaptación", "Potencial humano"],
     coverLinkLabel: "Abrir las diapositivas de la charla de Cambridge en PDF",
     viewSlides: "Ver diapositivas (en inglés)",
     download: "Descargar PDF",

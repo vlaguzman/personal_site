@@ -29,11 +29,6 @@ export function TalkFeature({ id, lang }: { id?: string; lang: Locale }) {
         </h3>
         <p className="talk-venue">{talk.venue}</p>
         <p>{talk.description}</p>
-        <ul className="talk-topics" aria-label={talk.themesLabel}>
-          {talk.themes.map((theme) => (
-            <li key={theme}>{theme}</li>
-          ))}
-        </ul>
         <a className="button" href={talk.pdf} target="_blank" rel="noopener noreferrer">
           {talk.viewSlides} <span aria-hidden="true">↗</span>
         </a>
