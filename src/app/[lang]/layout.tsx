@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { notFound } from "next/navigation";
 import { SITE } from "@/data/site";
-import "./globals.css";
+import { hasLocale, LOCALES } from "@/i18n/config";
+import "../globals.css";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -25,6 +27,13 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+// Only the supported locales exist; any other first segment is a 404.
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return LOCALES.map((lang) => ({ lang }));
+}
+
 export const metadata: Metadata = {
   title: SITE.title,
   description: SITE.description,
@@ -36,9 +45,12 @@ export const viewport: Viewport = {
   themeColor: SITE.themeColor,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang={lang} className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <body>{children}</body>
     </html>
   );

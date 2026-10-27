@@ -4,19 +4,19 @@ import { Experience } from "./Experience";
 
 describe("Experience", () => {
   it("is a section headed 'Built through experience'", () => {
-    const { container } = render(<Experience />);
+    const { container } = render(<Experience lang="en" />);
     expect(container.querySelector("section#experience")).not.toBeNull();
     expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent("Built through experience");
   });
 
   it("tells the story in two paragraphs", () => {
-    render(<Experience />);
+    render(<Experience lang="en" />);
     expect(screen.getByText(/I’ve spent \d+ years working across entrepreneurship/)).toBeInTheDocument();
     expect(screen.getByText(/From early ventures that failed to companies that raised millions/)).toBeInTheDocument();
   });
 
   it("lists the roles with their context", () => {
-    render(<Experience />);
+    render(<Experience lang="en" />);
     const list = screen.getByRole("list", { name: "Experience" });
     const items = within(list).getAllByRole("listitem");
     expect(items).toHaveLength(5);
@@ -26,14 +26,14 @@ describe("Experience", () => {
   });
 
   it("links to the journey page", () => {
-    render(<Experience />);
+    render(<Experience lang="en" />);
     const cta = screen.getByRole("link", { name: /Explore my journey/ });
-    expect(cta).toHaveAttribute("href", "/journey");
+    expect(cta).toHaveAttribute("href", "/en/journey");
     expect(cta).toHaveClass("cta-secondary");
   });
 
   it("shows the track-record figures with their labels", () => {
-    render(<Experience />);
+    render(<Experience lang="en" />);
     const list = screen.getByRole("list", { name: "Track record" });
     const items = within(list).getAllByRole("listitem");
     expect(items).toHaveLength(4);
@@ -43,7 +43,7 @@ describe("Experience", () => {
   });
 
   it("links the money raised to the press that reported it, opening in a new tab", () => {
-    render(<Experience />);
+    render(<Experience lang="en" />);
     const forbes = screen.getByRole("link", { name: /Forbes Colombia/ });
     expect(forbes).toHaveAttribute(
       "href",
@@ -52,5 +52,12 @@ describe("Experience", () => {
     expect(forbes).toHaveAttribute("target", "_blank");
     expect(forbes).toHaveAttribute("rel", expect.stringContaining("noopener"));
     expect(screen.getByRole("link", { name: /LatamList/ })).toHaveAttribute("target", "_blank");
+  });
+});
+
+describe("Experience with the Spanish locale", () => {
+  it("prefixes the journey link with /es", () => {
+    render(<Experience lang="es" />);
+    expect(screen.getByRole("link", { name: /Explore my journey/ })).toHaveAttribute("href", "/es/journey");
   });
 });

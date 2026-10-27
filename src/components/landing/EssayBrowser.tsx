@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import type { Essay, Topic } from "@/data/types";
+import type { Locale } from "@/i18n/config";
 import { topicsInUse } from "@/lib/essays";
 import { EssayCard } from "./EssayCard";
 
-export function EssayBrowser({ essays }: { essays: readonly Essay[] }) {
+export function EssayBrowser({ essays, lang }: { essays: readonly Essay[]; lang: Locale }) {
   const [topic, setTopic] = useState<Topic | null>(null);
   const topics = topicsInUse(essays);
   const visible = topic ? essays.filter((e) => e.topic === topic) : essays;
@@ -26,7 +27,7 @@ export function EssayBrowser({ essays }: { essays: readonly Essay[] }) {
       </p>
       <div className="essays-grid">
         {visible.map((essay) => (
-          <EssayCard key={essay.slug} essay={essay} />
+          <EssayCard key={essay.slug} essay={essay} lang={lang} />
         ))}
       </div>
     </div>

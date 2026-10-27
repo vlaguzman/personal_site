@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getExperience } from "@/data/experience";
+import { localePath, type Locale } from "@/i18n/config";
 
-export function Experience() {
+export function Experience({ lang }: { lang: Locale }) {
   const experience = getExperience();
   return (
     <section id="experience" className="experience">
@@ -14,7 +15,7 @@ export function Experience() {
           {experience.paragraphs.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
-          <Link className="cta-secondary" href={experience.cta.href}>
+          <Link className="cta-secondary" href={localePath(lang, experience.cta.href)}>
             {experience.cta.label} <span aria-hidden="true">→</span>
           </Link>
         </div>

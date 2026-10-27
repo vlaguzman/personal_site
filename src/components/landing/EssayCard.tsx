@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Essay } from "@/data/types";
+import { localePath, type Locale } from "@/i18n/config";
 import { readingTimeMinutes } from "@/lib/essays";
 
-export function EssayCard({ essay }: { essay: Essay }) {
+export function EssayCard({ essay, lang }: { essay: Essay; lang: Locale }) {
   return (
     <article className="essay-card">
       {essay.image && (
@@ -22,7 +23,7 @@ export function EssayCard({ essay }: { essay: Essay }) {
           {essay.lang === "es" && " · IN SPANISH"}
         </span>
         <h3 lang={essay.lang}>
-          <Link href={`/essays/${essay.slug}`} lang={essay.lang}>
+          <Link href={localePath(lang, `/essays/${essay.slug}`)} lang={essay.lang}>
             {essay.title}
           </Link>
         </h3>

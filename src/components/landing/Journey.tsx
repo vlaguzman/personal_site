@@ -1,9 +1,10 @@
 import { ARC } from "@/data/arc";
+import type { Locale } from "@/i18n/config";
 import { milestones } from "@/data/milestones";
 import { Milestone } from "./Milestone";
 import { ScrollReveal } from "./ScrollReveal";
 
-export function Journey() {
+export function Journey({ lang }: { lang: Locale }) {
   return (
     <section id="journey" className="journey wrap">
       <div className="section-heading">
@@ -33,7 +34,7 @@ export function Journey() {
       </ol>
       <div className="timeline">
         {[...milestones].reverse().map((m) => (
-          <Milestone key={m.id} milestone={m} />
+          <Milestone key={m.id} lang={lang} milestone={m} />
         ))}
       </div>
       <ScrollReveal selector="#journey .milestone, #journey .arc li" />

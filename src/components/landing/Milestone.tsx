@@ -2,10 +2,11 @@ import { Fragment } from "react";
 import Link from "next/link";
 import { ESSAYS } from "@/data/essays";
 import type { Block, Milestone as MilestoneData } from "@/data/types";
+import { localePath, type Locale } from "@/i18n/config";
 import { Gallery } from "./Gallery";
 import { VideoEmbed } from "./VideoEmbed";
 
-function BlockView({ block }: { block: Block }) {
+function BlockView({ block, lang }: { block: Block; lang: Locale }) {
   switch (block.kind) {
     case "paragraph":
       return <p className={block.variant}>{block.text}</p>;
@@ -96,7 +97,7 @@ function BlockView({ block }: { block: Block }) {
             const essay = ESSAYS.find((e) => e.title === post.title);
             if (!essay) throw new Error(`Timeline post "${post.title}" has no matching essay`);
             return (
-              <Link key={essay.slug} href={`/essays/${essay.slug}`} className="blog-post" lang={essay.lang}>
+              <Link key={essay.slug} href={localePath(lang, `/essays/${essay.slug}`)} className="blog-post" lang={essay.lang}>
                 {post.title} <span aria-hidden="true">→</span>
               </Link>
             );
@@ -123,7 +124,7 @@ function Learned({ text }: { text: string }) {
   );
 }
 
-export function Milestone({ milestone }: { milestone: MilestoneData }) {
+export function Milestone({ milestone, lang }: { milestone: MilestoneData; lang: Locale }) {
   const { id, year, yearIsRange, period, eyebrow, titleLines, titleEmphasis, current, companyBuilder, learned, blocks } =
     milestone;
   // The lesson closes the story, ahead of any photos and blog posts.
@@ -144,7 +145,7 @@ export function Milestone({ milestone }: { milestone: MilestoneData }) {
         </span>
       </div>
       <div className="story">
-        {blocks[0]?.kind === "origin" && <BlockView block={blocks[0]} />}
+        {blocks[0]?.kind === "origin" && <BlockView block={blocks[0]} lang={lang} />}
         <span className="eyebrow">{eyebrow}</span>
         <h2>
           {titleLines.map((line, i) => (
@@ -165,7 +166,7 @@ export function Milestone({ milestone }: { milestone: MilestoneData }) {
           return (
             <Fragment key={i}>
               {i === learnedAt && learned && <Learned text={learned} />}
-              <BlockView block={block} />
+              <BlockView block={block} lang={lang} />
             </Fragment>
           );
         })}

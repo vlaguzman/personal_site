@@ -1,15 +1,16 @@
 import Link from "next/link";
 import type { Essay } from "@/data/types";
+import { localePath, type Locale } from "@/i18n/config";
 import { readingTimeMinutes } from "@/lib/essays";
 import { ShareLinks } from "./ShareLinks";
 
-type Props = { essay: Essay; related: readonly Essay[] };
+type Props = { essay: Essay; related: readonly Essay[]; lang: Locale };
 
-export function EssayArticle({ essay, related }: Props) {
+export function EssayArticle({ essay, related, lang }: Props) {
   return (
     <>
       <article className="essay" lang={essay.lang}>
-        <Link className="essay-back" href="/essays" lang="en">
+        <Link className="essay-back" href={localePath(lang, "/essays")} lang="en">
           <span aria-hidden="true">←</span> All essays
         </Link>
         <div className="essay-header">
@@ -36,7 +37,7 @@ export function EssayArticle({ essay, related }: Props) {
           <ul>
             {related.map((r) => (
               <li key={r.slug}>
-                <Link href={`/essays/${r.slug}`}>
+                <Link href={localePath(lang, `/essays/${r.slug}`)}>
                   <span lang={r.lang}>{r.title}</span>
                   <span className="essay-meta"> · {readingTimeMinutes(r.sections)} min</span>
                 </Link>

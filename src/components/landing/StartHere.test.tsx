@@ -13,11 +13,18 @@ const essay: Essay = {
 
 describe("StartHere", () => {
   it("highlights the essay with a Start here label, reading time, excerpt and link", () => {
-    render(<StartHere essay={essay} />);
+    render(<StartHere lang="en" essay={essay} />);
     expect(screen.getByText("Start here")).toBeInTheDocument();
     const link = screen.getByRole("link", { name: /Primero lee esto/ });
-    expect(link).toHaveAttribute("href", "/essays/primero");
+    expect(link).toHaveAttribute("href", "/en/essays/primero");
     expect(screen.getByText("1 min read")).toBeInTheDocument();
     expect(screen.getByText(/Un párrafo inicial\./)).toHaveAttribute("lang", "es");
+  });
+});
+
+describe("StartHere with the Spanish locale", () => {
+  it("prefixes the essay link with /es", () => {
+    render(<StartHere lang="es" essay={essay} />);
+    expect(screen.getByRole("link", { name: /Primero lee esto/ })).toHaveAttribute("href", "/es/essays/primero");
   });
 });

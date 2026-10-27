@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { IDEAS } from "@/data/ideas";
+import { localePath, type Locale } from "@/i18n/config";
 
-export function Ideas() {
+export function Ideas({ lang }: { lang: Locale }) {
   return (
     <section id="ideas" className="ideas">
       <div className="wrap">
@@ -21,7 +22,7 @@ export function Ideas() {
         </ul>
         <div className="ideas-closing">
           <p>{IDEAS.closing}</p>
-          <Link className="cta-primary" href={IDEAS.cta.href}>
+          <Link className="cta-primary" href={localePath(lang, IDEAS.cta.href)}>
             {IDEAS.cta.label} <span aria-hidden="true">→</span>
           </Link>
         </div>

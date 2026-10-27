@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { Fragment } from "react";
 import { HERO } from "@/data/hero";
+import { localePath, type Locale } from "@/i18n/config";
 
-export function Hero() {
+export function Hero({ lang }: { lang: Locale }) {
   return (
     <section id="home" className="hero">
       <div className="hero-media">
@@ -32,10 +33,10 @@ export function Hero() {
           <span>{HERO.byline.roles}</span>
         </p>
         <div className="hero-actions">
-          <a className="cta-primary" href={HERO.primaryCta.href}>
+          <a className="cta-primary" href={localePath(lang, HERO.primaryCta.href)}>
             {HERO.primaryCta.label} <span aria-hidden="true">→</span>
           </a>
-          <a className="cta-secondary" href={HERO.secondaryCta.href}>
+          <a className="cta-secondary" href={localePath(lang, HERO.secondaryCta.href)}>
             {HERO.secondaryCta.label}
           </a>
         </div>

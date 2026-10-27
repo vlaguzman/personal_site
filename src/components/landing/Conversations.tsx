@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { CONVERSATIONS } from "@/data/conversations";
+import { localePath, type Locale } from "@/i18n/config";
 
-export function Conversations() {
+export function Conversations({ lang }: { lang: Locale }) {
   return (
     <section id="conversations" className="conversations wrap">
       <div className="conversations-heading">
@@ -18,10 +19,10 @@ export function Conversations() {
             <p key={paragraph}>{paragraph}</p>
           ))}
           <div className="conversations-actions">
-            <Link className="cta-primary" href={CONVERSATIONS.primaryCta.href}>
+            <Link className="cta-primary" href={localePath(lang, CONVERSATIONS.primaryCta.href)}>
               {CONVERSATIONS.primaryCta.label} <span aria-hidden="true">→</span>
             </Link>
-            <a className="conversations-link" href={CONVERSATIONS.secondaryCta.href}>
+            <a className="conversations-link" href={localePath(lang, CONVERSATIONS.secondaryCta.href)}>
               {CONVERSATIONS.secondaryCta.label}
             </a>
           </div>

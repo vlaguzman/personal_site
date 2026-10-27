@@ -21,7 +21,7 @@ const related: Essay[] = [
 
 describe("EssayArticle", () => {
   it("renders title, topic, reading time and the body with its headings", () => {
-    render(<EssayArticle essay={fixture} related={related} />);
+    render(<EssayArticle lang="en" essay={fixture} related={related} />);
     expect(screen.getByRole("heading", { level: 1, name: "Fixture essay" })).toBeInTheDocument();
     expect(screen.getByText("Product")).toBeInTheDocument();
     expect(screen.getByText("2 min read")).toBeInTheDocument();
@@ -30,16 +30,16 @@ describe("EssayArticle", () => {
   });
 
   it("marks the language of the content and notes when it is not English", () => {
-    const { container, rerender } = render(<EssayArticle essay={fixture} related={[]} />);
+    const { container, rerender } = render(<EssayArticle lang="en" essay={fixture} related={[]} />);
     expect(container.querySelector("article")).toHaveAttribute("lang", "en");
     expect(screen.queryByText(/Written in Spanish/)).not.toBeInTheDocument();
-    rerender(<EssayArticle essay={{ ...fixture, lang: "es" }} related={[]} />);
+    rerender(<EssayArticle lang="en" essay={{ ...fixture, lang: "es" }} related={[]} />);
     expect(container.querySelector("article")).toHaveAttribute("lang", "es");
     expect(screen.getByText(/Written in Spanish/)).toBeInTheDocument();
   });
 
   it("offers share links to X and LinkedIn that open safely in a new tab", () => {
-    render(<EssayArticle essay={fixture} related={[]} />);
+    render(<EssayArticle lang="en" essay={fixture} related={[]} />);
     const x = screen.getByRole("link", { name: /Share on X/ });
     const li = screen.getByRole("link", { name: /Share on LinkedIn/ });
     expect(x.getAttribute("href")).toMatch(/^https:\/\/twitter\.com\/intent\/tweet\?text=Fixture%20essay/);
@@ -51,19 +51,27 @@ describe("EssayArticle", () => {
   });
 
   it("ends with related reading linking to internal essays", () => {
-    render(<EssayArticle essay={fixture} related={related} />);
+    render(<EssayArticle lang="en" essay={fixture} related={related} />);
     const region = screen.getByRole("region", { name: "Related reading" });
-    expect(within(region).getByRole("link", { name: /Related one/ })).toHaveAttribute("href", "/essays/r1");
+    expect(within(region).getByRole("link", { name: /Related one/ })).toHaveAttribute("href", "/en/essays/r1");
     expect(within(region).getAllByRole("link")).toHaveLength(2);
   });
 
   it("omits related reading when there is nothing related", () => {
-    render(<EssayArticle essay={fixture} related={[]} />);
+    render(<EssayArticle lang="en" essay={fixture} related={[]} />);
     expect(screen.queryByRole("region", { name: "Related reading" })).not.toBeInTheDocument();
   });
 
   it("links back to the essays hub", () => {
-    render(<EssayArticle essay={fixture} related={[]} />);
-    expect(screen.getByRole("link", { name: /All essays/ })).toHaveAttribute("href", "/essays");
+    render(<EssayArticle lang="en" essay={fixture} related={[]} />);
+    expect(screen.getByRole("link", { name: /All essays/ })).toHaveAttribute("href", "/en/essays");
+  });
+});
+
+describe("EssayArticle with the Spanish locale", () => {
+  it("prefixes the back link and the related essays with /es", () => {
+    render(<EssayArticle lang="es" essay={fixture} related={related} />);
+    expect(screen.getByRole("link", { name: /All essays/ })).toHaveAttribute("href", "/es/essays");
+    expect(screen.getByRole("link", { name: /Related one/ })).toHaveAttribute("href", "/es/essays/r1");
   });
 });

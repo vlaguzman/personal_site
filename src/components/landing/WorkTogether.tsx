@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getGinggaUrl, WORK } from "@/data/work";
+import { localePath, type Locale } from "@/i18n/config";
 
 function BookLink({ className }: { className: string }) {
   return (
@@ -9,7 +10,7 @@ function BookLink({ className }: { className: string }) {
   );
 }
 
-export function WorkTogether() {
+export function WorkTogether({ lang }: { lang: Locale }) {
   return (
     <>
       <section className="work-intro wrap">
@@ -26,7 +27,7 @@ export function WorkTogether() {
         <p>{WORK.intro}</p>
         <div className="work-actions">
           <BookLink className="cta-primary" />
-          <Link className="work-link" href={WORK.secondaryCta.href}>
+          <Link className="work-link" href={localePath(lang, WORK.secondaryCta.href)}>
             {WORK.secondaryCta.label} <span aria-hidden="true">→</span>
           </Link>
         </div>
@@ -41,7 +42,7 @@ export function WorkTogether() {
               <div>
                 <p>{offer.text}</p>
                 {"link" in offer && (
-                  <Link className="work-link" href={offer.link.href}>
+                  <Link className="work-link" href={localePath(lang, offer.link.href)}>
                     {offer.link.label} <span aria-hidden="true">→</span>
                   </Link>
                 )}

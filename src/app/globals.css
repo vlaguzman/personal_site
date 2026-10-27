@@ -205,6 +205,8 @@ nav a:last-child {
   font-weight: 700;
   font-size: 1.4rem;
   letter-spacing: var(--tracking-heading);
+  /* With three header children, absorb the free space so the main nav and the language switcher sit together on the right. */
+  margin-right: auto;
 }
 
 .wordmark span {
@@ -215,6 +217,31 @@ nav a:last-child {
   letter-spacing: 0.14em;
   margin-top: 6px;
   color: var(--on-dark-secondary);
+}
+
+/* Language switcher: a second <nav> in the header, so it must undo the bare `nav` rules above. */
+.lang-switch {
+  flex-shrink: 0;
+  gap: 2px;
+  margin-left: 28px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+}
+
+.lang-switch a {
+  padding: 6px 8px;
+  color: var(--on-dark-secondary);
+}
+
+.lang-switch a:last-child {
+  border-bottom: 0;
+  padding-bottom: 6px;
+}
+
+.lang-switch a:hover,
+.lang-switch a[aria-current="true"] {
+  color: var(--accent);
 }
 
 /* ==========================================================================
@@ -1954,6 +1981,38 @@ footer {
 }
 
 /* ==========================================================================
+   Header on narrower desktops and tablets
+   With wordmark, six links and the language switcher, one row no longer fits:
+   wordmark and switcher share the first row, the main nav takes the second.
+   ========================================================================== */
+@media (max-width: 1100px) {
+  header {
+    flex-wrap: wrap;
+    row-gap: 16px;
+  }
+
+  header .wordmark {
+    order: 1;
+  }
+
+  header .lang-switch {
+    order: 2;
+    margin-left: 0;
+  }
+
+  header nav[aria-label="Main navigation"] {
+    order: 3;
+    flex: 1 0 100%;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+  }
+
+  header nav[aria-label="Main navigation"] a {
+    white-space: nowrap;
+  }
+}
+
+/* ==========================================================================
    Tablet
    ========================================================================== */
 @media (max-width: 1000px) {
@@ -1996,6 +2055,12 @@ footer {
     flex-wrap: wrap;
     gap: 8px 20px;
     font-size: var(--fs-ui-sm);
+  }
+
+  .lang-switch {
+    gap: 2px;
+    margin-left: -8px; /* offsets the link padding so the labels align with the wordmark edge */
+    font-size: var(--fs-label);
   }
 
   .wrap {
