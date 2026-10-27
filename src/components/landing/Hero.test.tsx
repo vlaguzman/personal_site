@@ -3,15 +3,22 @@ import { describe, expect, it } from "vitest";
 import { Hero } from "./Hero";
 
 describe("Hero", () => {
-  it("renders the builder headline and the home anchor", () => {
+  it("renders the brand statement and the home anchor", () => {
     const { container } = render(<Hero />);
     expect(container.querySelector("section#home")).not.toBeNull();
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Builder.Founder.YC alumnus.");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Question the obvious.Build what matters.");
   });
 
-  it("introduces him by his former CTO roles", () => {
+  it("states his name and roles", () => {
     render(<Hero />);
-    expect(screen.getByText(/Former CTO at HoyTrabajas\.com \(YC W22\) & FLUVIP/)).toBeInTheDocument();
+    expect(screen.getByText("Vladimir Guzmán")).toBeInTheDocument();
+    expect(screen.getByText("Entrepreneur · Technology Builder · Speaker")).toBeInTheDocument();
+  });
+
+  it("introduces him through failure, restarting and the YC story", () => {
+    render(<Hero />);
+    expect(screen.getByText(/experienced failure and started again/)).toBeInTheDocument();
+    expect(screen.getByText(/restaurant in Colombia to building a Y Combinator-backed company/)).toBeInTheDocument();
   });
 
   it("shows the Cambridge talk photo with a meaningful alt text", () => {
@@ -22,10 +29,10 @@ describe("Hero", () => {
 
   it("has a primary CTA to the essays hub and a secondary CTA to contact", () => {
     render(<Hero />);
-    const primary = screen.getByRole("link", { name: /Read my essays/ });
+    const primary = screen.getByRole("link", { name: /Explore my thinking/ });
     expect(primary).toHaveAttribute("href", "/essays");
     expect(primary).toHaveClass("cta-primary");
-    const secondary = screen.getByRole("link", { name: /Work with me/ });
+    const secondary = screen.getByRole("link", { name: /Invite me to speak/ });
     expect(secondary).toHaveAttribute("href", "#contact");
     expect(secondary).toHaveClass("cta-secondary");
   });

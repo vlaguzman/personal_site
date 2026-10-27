@@ -275,11 +275,37 @@ nav a:last-child {
   color: var(--accent);
 }
 
+.hero-byline {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 0 24px;
+}
+
+.hero-byline strong {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.hero-byline span {
+  color: var(--accent);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
 .hero-lead {
   font-size: var(--fs-lead);
   line-height: 1.6;
   color: var(--on-dark-secondary);
   margin: 0 0 40px;
+}
+
+.hero-lead p {
+  margin: 0 0 16px;
+}
+
+.hero-lead p:last-child {
+  margin-bottom: 0;
 }
 
 .hero-actions {
