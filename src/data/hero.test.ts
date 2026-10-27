@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getHero } from "./hero";
+import { SITE } from "./site";
 
 describe("hero data", () => {
   it("leads with the brand statement in each language", () => {
@@ -32,9 +33,9 @@ describe("hero data", () => {
 
   it("points the primary CTA at the writing section of the speaking page and the secondary at contact", () => {
     expect(getHero("en").primaryCta).toEqual({ label: "Explore my thinking", href: "/speaking#writing" });
-    expect(getHero("en").secondaryCta).toEqual({ label: "Invite me to speak", href: "#contact" });
+    expect(getHero("en").secondaryCta).toEqual({ label: "Invite me to speak", href: SITE.whatsapp });
     expect(getHero("es").primaryCta).toEqual({ label: "Explora mis ideas", href: "/speaking#writing" });
-    expect(getHero("es").secondaryCta).toEqual({ label: "Invítame a conversar", href: "#contact" });
+    expect(getHero("es").secondaryCta).toEqual({ label: "Invítame a conversar", href: SITE.whatsapp });
   });
 
   it("uses a photo that exists in public/ with a meaningful alt in each language", async () => {

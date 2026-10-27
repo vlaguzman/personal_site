@@ -6,6 +6,8 @@ export const SITE = {
   themeColor: "#172033",
   email: "guzman.vla@gmail.com",
   calendly: "https://calendly.com/guzman-vla/ideas",
+  /** Direct line for invitations (talks, events, conversations). */
+  whatsapp: "https://api.whatsapp.com/send/?phone=447551273933",
   linkedin: "https://www.linkedin.com/in/vlaguzman/",
 } as const;
 

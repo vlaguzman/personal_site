@@ -37,7 +37,7 @@ export function Hero({ lang }: { lang: Locale }) {
           <a className="cta-primary" href={localePath(lang, hero.primaryCta.href)}>
             {hero.primaryCta.label} <span aria-hidden="true">→</span>
           </a>
-          <a className="cta-secondary" href={localePath(lang, hero.secondaryCta.href)}>
+          <a className="cta-secondary" href={localePath(lang, hero.secondaryCta.href)} target="_blank" rel="noopener noreferrer">
             {hero.secondaryCta.label}
           </a>
         </div>

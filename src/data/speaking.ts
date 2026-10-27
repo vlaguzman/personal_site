@@ -25,7 +25,7 @@ export type SpeakingContent = {
 type CommunityText = { eyebrow: string; title: string; text: string };
 
 // Locale-neutral values are defined once; only text differs per locale.
-const INVITE_HREF = SITE.calendly;
+const INVITE_HREF = SITE.whatsapp;
 const CAMBRIDGE_HREF = "#cambridge";
 
 const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {

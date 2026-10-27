@@ -22,7 +22,7 @@ describe("site data", () => {
   });
 
   it("keeps only locale-neutral values in SITE", () => {
-    expect(Object.keys(SITE).sort()).toEqual(["calendly", "email", "linkedin", "themeColor", "url"]);
+    expect(Object.keys(SITE).sort()).toEqual(["calendly", "email", "linkedin", "themeColor", "url", "whatsapp"]);
   });
 
   it("links the journey page, its Now section, speaking and writing, work together and contact in order", () => {

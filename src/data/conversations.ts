@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/config";
+import { SITE } from "./site";
 
 export type ConversationsContent = {
   eyebrow: string;
@@ -13,7 +14,7 @@ export type ConversationsContent = {
 };
 
 const PRIMARY_HREF = "/speaking";
-const SECONDARY_HREF = "#contact";
+const SECONDARY_HREF = SITE.whatsapp;
 
 const CONVERSATIONS: Record<Locale, ConversationsContent> = {
   en: {

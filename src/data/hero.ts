@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/config";
+import { SITE } from "./site";
 
 export type HeroContent = {
   eyebrow: string;
@@ -13,7 +14,7 @@ export type HeroContent = {
 // Locale-neutral values are defined once; only text differs per locale.
 const PHOTO = { src: "/images/hero-cambridge-talk.jpg", width: 2000, height: 1500 };
 const PRIMARY_HREF = "/speaking#writing";
-const SECONDARY_HREF = "#contact";
+const SECONDARY_HREF = SITE.whatsapp;
 const NAME = "Vladimir Guzmán";
 
 const HERO: Record<Locale, HeroContent> = {

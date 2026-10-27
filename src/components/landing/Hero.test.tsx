@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Hero } from "./Hero";
+import { SITE } from "@/data/site";
 
 describe("Hero", () => {
   it("renders the brand statement and the home anchor", () => {
@@ -32,7 +33,7 @@ describe("Hero", () => {
     expect(primary).toHaveAttribute("href", "/en/speaking#writing");
     expect(primary).toHaveClass("cta-primary");
     const secondary = screen.getByRole("link", { name: /Invite me to speak/ });
-    expect(secondary).toHaveAttribute("href", "#contact");
+    expect(secondary).toHaveAttribute("href", SITE.whatsapp);
     expect(secondary).toHaveClass("cta-secondary");
   });
 
@@ -62,18 +63,26 @@ describe("Hero with the Spanish locale", () => {
     expect(img.getAttribute("src")).toContain("hero-cambridge-talk.jpg");
   });
 
-  it("prefixes the writing link with /es and keeps the in-page contact anchor", () => {
+  it("prefixes the writing link with /es and sends the invitation to WhatsApp", () => {
     render(<Hero lang="es" />);
     const primary = screen.getByRole("link", { name: /Explora mis ideas/ });
     expect(primary).toHaveAttribute("href", "/es/speaking#writing");
     expect(primary).toHaveClass("cta-primary");
     const secondary = screen.getByRole("link", { name: /Invítame a conversar/ });
-    expect(secondary).toHaveAttribute("href", "#contact");
+    expect(secondary).toHaveAttribute("href", SITE.whatsapp);
     expect(secondary).toHaveClass("cta-secondary");
   });
 
   it("does not use consultant language", () => {
     const { container } = render(<Hero lang="es" />);
     expect(container.textContent).not.toMatch(/consultor|experto|consultant|expert/i);
+  });
+
+  it.each(["en", "es"] as const)("opens the invitation on WhatsApp in a new tab, safely (%s)", (lang) => {
+    render(<Hero lang={lang} />);
+    const invite = document.querySelector(".cta-secondary")!;
+    expect(invite).toHaveAttribute("href", "https://api.whatsapp.com/send/?phone=447551273933");
+    expect(invite).toHaveAttribute("target", "_blank");
+    expect(invite).toHaveAttribute("rel", expect.stringContaining("noopener"));
   });
 });

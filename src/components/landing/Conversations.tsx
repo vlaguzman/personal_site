@@ -29,7 +29,12 @@ export function Conversations({ lang }: { lang: Locale }) {
             <Link className="cta-primary" href={localePath(lang, conversations.primaryCta.href)}>
               {conversations.primaryCta.label} <span aria-hidden="true">→</span>
             </Link>
-            <a className="conversations-link" href={localePath(lang, conversations.secondaryCta.href)}>
+            <a
+              className="conversations-link"
+              href={localePath(lang, conversations.secondaryCta.href)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {conversations.secondaryCta.label}
             </a>
           </div>

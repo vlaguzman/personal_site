@@ -9,7 +9,7 @@ describe("getSpeaking in English", () => {
   it("invites people to book a conversation", () => {
     expect(speaking.headlineLines).toEqual(["Challenge assumptions."]);
     expect(speaking.headlineEmphasis).toBe("Start better conversations.");
-    expect(speaking.primaryCta).toEqual({ label: "Invite me to speak", href: SITE.calendly });
+    expect(speaking.primaryCta).toEqual({ label: "Invite me to speak", href: SITE.whatsapp });
     expect(speaking.secondaryCta).toEqual({ label: "See the Cambridge talk", href: "#cambridge" });
   });
 
@@ -60,7 +60,7 @@ describe("getSpeaking in Spanish", () => {
     expect(speaking.eyebrow).toBe("CHARLAS");
     expect(speaking.headlineLines).toEqual(["Cuestiona los supuestos."]);
     expect(speaking.headlineEmphasis).toBe("Empieza mejores conversaciones.");
-    expect(speaking.primaryCta).toEqual({ label: "Invítame a hablar", href: SITE.calendly });
+    expect(speaking.primaryCta).toEqual({ label: "Invítame a hablar", href: SITE.whatsapp });
     expect(speaking.secondaryCta).toEqual({ label: "Conoce la charla de Cambridge", href: "#cambridge" });
   });
 

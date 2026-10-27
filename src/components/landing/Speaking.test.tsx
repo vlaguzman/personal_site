@@ -9,7 +9,7 @@ describe("Speaking", () => {
     render(<Speaking lang="en" />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Challenge assumptions.Start better conversations.");
     const cta = screen.getAllByRole("link", { name: /Invite me to speak/ })[0];
-    expect(cta).toHaveAttribute("href", SITE.calendly);
+    expect(cta).toHaveAttribute("href", SITE.whatsapp);
     expect(cta).toHaveAttribute("target", "_blank");
     expect(cta).toHaveAttribute("rel", expect.stringContaining("noopener"));
     expect(cta).toHaveClass("cta-primary");
@@ -105,7 +105,7 @@ describe("Speaking in Spanish", () => {
       "Cuestiona los supuestos.Empieza mejores conversaciones.",
     );
     const cta = screen.getAllByRole("link", { name: /Invítame a hablar/ })[0];
-    expect(cta).toHaveAttribute("href", SITE.calendly);
+    expect(cta).toHaveAttribute("href", SITE.whatsapp);
     expect(cta).toHaveAttribute("target", "_blank");
     expect(cta).toHaveAttribute("rel", expect.stringContaining("noopener"));
   });
