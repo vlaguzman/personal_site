@@ -86,7 +86,6 @@ function Lightbox({
       <figure className="lightbox-figure">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={image.src} alt={image.alt} />
-        <figcaption>{image.alt}</figcaption>
       </figure>
       {count > 1 && (
         <button type="button" className="lightbox-nav lightbox-next" aria-label={labels.next} onClick={() => step(1)}>
