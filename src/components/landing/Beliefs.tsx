@@ -1,14 +1,20 @@
-import { BELIEFS } from "@/data/beliefs";
+import { BELIEFS, BELIEFS_INTRO } from "@/data/beliefs";
 
 export function Beliefs() {
   return (
     <section id="beliefs" className="beliefs">
       <div className="wrap">
         <div className="beliefs-heading">
-          <span className="eyebrow">03 / PRINCIPLES</span>
-          <h2>
-            What I <em>believe</em>
-          </h2>
+          <div>
+            <span className="eyebrow">03 / PRINCIPLES</span>
+            <h2>
+              What I <em>believe</em>
+            </h2>
+          </div>
+          <div className="beliefs-intro">
+            <p className="beliefs-statement">{BELIEFS_INTRO.statement}</p>
+            <p>{BELIEFS_INTRO.text}</p>
+          </div>
         </div>
         <ol className="belief-list">
           {BELIEFS.map((belief, i) => (
