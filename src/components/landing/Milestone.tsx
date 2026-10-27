@@ -128,6 +128,15 @@ function Learned({ text, lang }: { text: string; lang: Locale }) {
   );
 }
 
+type VideoBlock = Extract<MilestoneData["blocks"][number], { kind: "video" }>;
+
+/** The videos that follow each other starting at `start`. */
+function videoRunAt(blocks: MilestoneData["blocks"], start: number): VideoBlock[] {
+  const run: VideoBlock[] = [];
+  for (let i = start; blocks[i]?.kind === "video"; i++) run.push(blocks[i] as VideoBlock);
+  return run;
+}
+
 export function Milestone({ milestone, lang }: { milestone: MilestoneData; lang: Locale }) {
   const { id, year, yearIsRange, period, eyebrow, titleLines, titleEmphasis, current, companyBuilder, learned, blocks } =
     milestone;
@@ -167,10 +176,21 @@ export function Milestone({ milestone, lang }: { milestone: MilestoneData; lang:
         </h2>
         {blocks.map((block, i) => {
           if (blocks[0]?.kind === "origin" && i === 0) return null;
+          // Consecutive videos share one row; every video after the first of a run is drawn by that first one.
+          if (block.kind === "video" && blocks[i - 1]?.kind === "video") return null;
+          const run = block.kind === "video" ? videoRunAt(blocks, i) : [];
           return (
             <Fragment key={i}>
               {i === learnedAt && learned && <Learned text={learned} lang={lang} />}
-              <BlockView block={block} lang={lang} />
+              {run.length > 1 ? (
+                <div className="video-row">
+                  {run.map((video) => (
+                    <BlockView key={video.youtubeId} block={video} lang={lang} />
+                  ))}
+                </div>
+              ) : (
+                <BlockView block={block} lang={lang} />
+              )}
             </Fragment>
           );
         })}

@@ -45,6 +45,15 @@ describe("Journey", () => {
     ]);
   });
 
+  it("shows the two Conectando Mentes videos side by side in one row, and leaves a lone video alone", () => {
+    const { container } = render(<Journey lang="en" />);
+    const row = container.querySelector("#year2011 .video-row") as HTMLElement;
+    expect(row.querySelectorAll("figure.video")).toHaveLength(2);
+    expect(container.querySelectorAll("#year2011 .video-row")).toHaveLength(1);
+    expect(container.querySelector("#year2023-community figure.video")).not.toBeNull();
+    expect(container.querySelector("#year2023-community .video-row")).toBeNull();
+  });
+
   it("titles every milestone with an h2, never skipping a heading level", () => {
     const { container } = render(<Journey lang="en" />);
     expect(container.querySelectorAll("article.milestone > .story > h2")).toHaveLength(milestones.length);
