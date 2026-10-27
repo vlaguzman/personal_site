@@ -9,7 +9,6 @@ describe("getChrome", () => {
     expect(chrome.languageLabel).toBe("Language");
     expect(chrome.nav).toEqual([
       { href: "/journey", label: "The journey" },
-      { href: "/journey#now", label: "Now" },
       { href: "/speaking", label: "Speaking & writing" },
       { href: "/work-together", label: "Work together" },
       { href: "#contact", label: "Let’s connect" },
@@ -23,7 +22,6 @@ describe("getChrome", () => {
     expect(chrome.languageLabel).toBe("Idioma");
     expect(chrome.nav).toEqual([
       { href: "/journey", label: "Mi trayectoria" },
-      { href: "/journey#now", label: "Ahora" },
       { href: "/speaking", label: "Charlas y escritos" },
       { href: "/work-together", label: "Trabajemos juntos" },
       { href: "#contact", label: "Conectemos" },

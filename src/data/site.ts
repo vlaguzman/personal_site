@@ -33,7 +33,6 @@ export function getSiteMeta(lang: Locale): SiteMeta {
 /** Main navigation targets, in display order. Labels come from `getChrome(lang).nav`. */
 export const NAV_LINKS = [
   { href: "/journey" },
-  { href: "/journey#now" },
   { href: "/speaking" },
   { href: "/work-together" },
   { href: "#contact" },

@@ -27,7 +27,6 @@ const CHROME: Record<Locale, ChromeText> = {
     languageLabel: "Language",
     navLabels: {
       "/journey": "The journey",
-      "/journey#now": "Now",
       "/speaking": "Speaking & writing",
       "/work-together": "Work together",
       "#contact": "Let’s connect",
@@ -44,7 +43,6 @@ const CHROME: Record<Locale, ChromeText> = {
     languageLabel: "Idioma",
     navLabels: {
       "/journey": "Mi trayectoria",
-      "/journey#now": "Ahora",
       "/speaking": "Charlas y escritos",
       "/work-together": "Trabajemos juntos",
       "#contact": "Conectemos",
