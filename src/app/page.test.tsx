@@ -9,9 +9,14 @@ describe("Home page", () => {
     expect(container.querySelectorAll("article.milestone")).toHaveLength(0);
   });
 
+  it("keeps the Cambridge talk off the home page; it lives at /speaking", () => {
+    const { container } = render(<Home />);
+    expect(container.querySelector(".talk-feature")).toBeNull();
+  });
+
   it("orders the sections so the dark ones never touch", () => {
     const { container } = render(<Home />);
     const order = [...container.querySelectorAll("main > *")].map((el) => el.id || el.className.split(" ")[0]);
-    expect(order).toEqual(["home", "intro", "ideas", "experience", "beliefs", "purpose", "talks", "contact"]);
+    expect(order).toEqual(["home", "intro", "ideas", "experience", "beliefs", "purpose", "conversations", "contact"]);
   });
 });

@@ -1177,18 +1177,49 @@ blockquote {
 }
 
 /* ==========================================================================
-   Talks
+   Conversations teaser (home)
    ========================================================================== */
-.talks {
+.conversations {
   padding-top: 100px;
-  padding-bottom: 80px;
+  padding-bottom: 96px;
 }
 
-.talks .section-heading {
-  margin-bottom: 48px;
+.conversations-heading {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
   gap: 80px;
+  align-items: start;
 }
 
+.conversations-body p {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-read);
+  color: var(--text-secondary);
+  margin: 0 0 20px;
+  max-width: 560px;
+}
+
+.conversations-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+  margin-top: 32px;
+}
+
+.conversations-link {
+  font-size: var(--fs-ui-sm);
+  padding-bottom: 2px;
+  border-bottom: 1px solid currentColor;
+}
+
+.conversations-link:hover {
+  color: var(--secondary);
+}
+
+/* ==========================================================================
+   Talk feature (shown on /speaking)
+   ========================================================================== */
 .talk-feature {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1245,14 +1276,7 @@ blockquote {
   text-underline-offset: 4px;
 }
 
-.talk-quote {
-  margin-top: 56px;
-  font-size: var(--fs-h3);
-  border-top: 1px solid var(--line);
-  padding: 32px 0 0;
-}
-
-.talks + .contact {
+.conversations + .contact {
   border-top: 1px solid var(--line);
 }
 
@@ -2134,23 +2158,28 @@ footer {
     padding-top: 32px;
   }
 
-  .talks {
-    padding-top: 72px;
-    padding-bottom: 40px;
+  .conversations {
+    padding-top: 64px;
+    padding-bottom: 56px;
   }
 
-  .talks .section-heading {
-    gap: 20px;
-    margin-bottom: 32px;
+  .conversations-heading {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .conversations-body p {
+    font-size: var(--fs-body);
+  }
+
+  .conversations-actions .cta-primary {
+    width: 100%;
+    justify-content: center;
   }
 
   .talk-feature {
     grid-template-columns: 1fr;
     gap: 28px;
-  }
-
-  .talk-quote {
-    margin-top: 40px;
   }
 
   .contact {

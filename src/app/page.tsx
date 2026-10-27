@@ -1,5 +1,6 @@
 import { Beliefs } from "@/components/landing/Beliefs";
 import { Contact } from "@/components/landing/Contact";
+import { Conversations } from "@/components/landing/Conversations";
 import { Experience } from "@/components/landing/Experience";
 import { Footer } from "@/components/landing/Footer";
 import { Header } from "@/components/landing/Header";
@@ -8,7 +9,6 @@ import { Ideas } from "@/components/landing/Ideas";
 import { Intro } from "@/components/landing/Intro";
 import { Purpose } from "@/components/landing/Purpose";
 import { ReadingProgress } from "@/components/landing/ReadingProgress";
-import { Talks } from "@/components/landing/Talks";
 
 export default function Home() {
   return (
@@ -21,7 +21,7 @@ export default function Home() {
         <Experience />
         <Beliefs />
         <Purpose />
-        <Talks />
+        <Conversations />
         <Contact />
       </main>
       <Footer />

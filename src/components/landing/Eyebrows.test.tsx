@@ -2,15 +2,16 @@ import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Beliefs } from "./Beliefs";
 import { Contact } from "./Contact";
+import { Conversations } from "./Conversations";
 import { Experience } from "./Experience";
 import { Hero } from "./Hero";
 import { Ideas } from "./Ideas";
 import { Intro } from "./Intro";
 import { Journey } from "./Journey";
 import { Purpose } from "./Purpose";
-import { Talks } from "./Talks";
 
-const sections = { Beliefs, Contact, Experience, Hero, Ideas, Intro, Journey, Purpose, Talks };
+
+const sections = { Beliefs, Contact, Conversations, Experience, Hero, Ideas, Intro, Journey, Purpose };
 
 describe("section eyebrows", () => {
   it.each(Object.entries(sections))("%s has no ordinal number, so sections can be reordered freely", (_name, Section) => {
@@ -23,7 +24,7 @@ describe("section eyebrows", () => {
     const text = (Section: () => React.ReactElement) => render(<Section />).container.querySelector(".eyebrow")?.textContent;
     expect(text(Purpose)).toBe("WHAT CONNECTS IT ALL");
     expect(text(Beliefs)).toBe("PRINCIPLES");
-    expect(text(Talks)).toBe("TALKS & EVENTS");
+    expect(text(Conversations)).toBe("SPEAKING & WRITING");
     expect(text(Contact)).toBe("THE NEXT CONVERSATION");
   });
 });
