@@ -16,8 +16,8 @@ export function Contact() {
           I’m open to thoughtful conversations about entrepreneurship, strategic technology and partnerships that help
           businesses move forward.
         </p>
-        <a className="email" href={`mailto:${SITE.email}`}>
-          {SITE.email} <span>↗</span>
+        <a className="email" href={SITE.calendly} target="_blank" rel="noopener noreferrer">
+          Book a conversation <span>↗</span>
         </a>
         <div className="contact-links">
           <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer">
