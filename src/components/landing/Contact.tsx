@@ -4,7 +4,7 @@ export function Contact() {
   return (
     <section id="contact" className="contact wrap">
       <div>
-        <span className="eyebrow">05 / THE NEXT CONVERSATION</span>
+        <span className="eyebrow">THE NEXT CONVERSATION</span>
         <h2>
           What are
           <br />

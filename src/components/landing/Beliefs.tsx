@@ -6,7 +6,7 @@ export function Beliefs() {
       <div className="wrap">
         <div className="beliefs-heading">
           <div>
-            <span className="eyebrow">03 / PRINCIPLES</span>
+            <span className="eyebrow">PRINCIPLES</span>
             <h2>
               What I <em>believe</em>
             </h2>
