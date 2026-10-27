@@ -88,7 +88,7 @@ function BlockView({ block, lang }: { block: Block; lang: Locale }) {
         </div>
       );
     case "gallery":
-      return <Gallery images={block.images} />;
+      return <Gallery lang={lang} images={block.images} />;
     case "posts":
       return (
         <div className="blog-posts">
@@ -105,7 +105,7 @@ function BlockView({ block, lang }: { block: Block; lang: Locale }) {
         </div>
       );
     case "video":
-      return <VideoEmbed youtubeId={block.youtubeId} title={block.title} />;
+      return <VideoEmbed lang={lang} youtubeId={block.youtubeId} title={block.title} />;
     case "button":
       return (
         <a className="button" href={block.href} target="_blank" rel="noopener noreferrer">

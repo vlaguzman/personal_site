@@ -38,13 +38,13 @@ export const NAV_LINKS = [
 
 export const FOUNDER_PROFILE_PDF = "/docs/founder-profile.pdf";
 
+/** Locale-neutral parts of the Cambridge talk. The slides are in English, so the cover alt text is too. */
 export const TALK = {
   pdf: "/docs/unlocking-human-potential-cambridge-2026.pdf",
   pdfName: "unlocking-human-potential-cambridge-2026.pdf",
   cover: "/images/cambridge-talk-cover.png",
   coverAlt:
     "Unlocking Human Potential in the Age of AI, Vladimir Guzmán Mendoza. Clare Hall Cambridge and Hero Amazonia. Conference 2026.",
-  themes: ["Entrepreneurship", "AI & adaptation", "Human potential"],
 } as const;
 
 /**

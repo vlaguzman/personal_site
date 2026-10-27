@@ -1,50 +1,52 @@
 import Image from "next/image";
 import { FOUNDER_PROFILE_PDF } from "@/data/site";
-import { getConsulateEngagement, SPEAKING } from "@/data/speaking";
+import { getConsulateEngagement, getSpeaking } from "@/data/speaking";
+import type { Locale } from "@/i18n/config";
 import { Gallery } from "./Gallery";
 import { TalkFeature } from "./TalkFeature";
 import { VideoEmbed } from "./VideoEmbed";
 
-function InviteLink({ className }: { className: string }) {
+function InviteLink({ className, cta }: { className: string; cta: { label: string; href: string } }) {
   return (
-    <a className={className} href={SPEAKING.primaryCta.href} target="_blank" rel="noopener noreferrer">
-      {SPEAKING.primaryCta.label} <span aria-hidden="true">→</span>
+    <a className={className} href={cta.href} target="_blank" rel="noopener noreferrer">
+      {cta.label} <span aria-hidden="true">→</span>
     </a>
   );
 }
 
-export function Speaking() {
-  const engagement = getConsulateEngagement();
+export function Speaking({ lang }: { lang: Locale }) {
+  const speaking = getSpeaking(lang);
+  const engagement = getConsulateEngagement(lang);
 
   return (
     <>
       <section className="speaking-intro wrap">
-        <span className="eyebrow">{SPEAKING.eyebrow}</span>
+        <span className="eyebrow">{speaking.eyebrow}</span>
         <h1>
-          {SPEAKING.headlineLines.map((line) => (
+          {speaking.headlineLines.map((line) => (
             <span key={line}>
               {line}
               <br />
             </span>
           ))}
-          <em>{SPEAKING.headlineEmphasis}</em>
+          <em>{speaking.headlineEmphasis}</em>
         </h1>
         <div className="speaking-intro-body">
           <div>
-            <p>{SPEAKING.intro}</p>
+            <p>{speaking.intro}</p>
             <div className="speaking-actions">
-              <InviteLink className="cta-primary" />
-              <a className="speaking-link" href={SPEAKING.secondaryCta.href}>
-                {SPEAKING.secondaryCta.label} <span aria-hidden="true">↓</span>
+              <InviteLink className="cta-primary" cta={speaking.primaryCta} />
+              <a className="speaking-link" href={speaking.secondaryCta.href}>
+                {speaking.secondaryCta.label} <span aria-hidden="true">↓</span>
               </a>
             </div>
           </div>
           <Image
             className="speaking-photo"
-            src={SPEAKING.photo.src}
-            alt={SPEAKING.photo.alt}
-            width={SPEAKING.photo.width}
-            height={SPEAKING.photo.height}
+            src={speaking.photo.src}
+            alt={speaking.photo.alt}
+            width={speaking.photo.width}
+            height={speaking.photo.height}
             sizes="(max-width: 760px) 100vw, 45vw"
             priority
           />
@@ -52,9 +54,9 @@ export function Speaking() {
       </section>
 
       <section className="speaking-topics wrap" aria-labelledby="speaking-topics-title">
-        <h2 id="speaking-topics-title">What I speak about</h2>
-        <ul aria-label="Speaking topics">
-          {SPEAKING.topics.map((topic) => (
+        <h2 id="speaking-topics-title">{speaking.sections.topics}</h2>
+        <ul aria-label={speaking.topicsLabel}>
+          {speaking.topics.map((topic) => (
             <li key={topic.title}>
               <h3>{topic.title}</h3>
               <p>{topic.text}</p>
@@ -64,12 +66,12 @@ export function Speaking() {
       </section>
 
       <section className="speaking-featured wrap" aria-labelledby="speaking-featured-title">
-        <h2 id="speaking-featured-title">Featured talk</h2>
-        <TalkFeature id="cambridge" />
+        <h2 id="speaking-featured-title">{speaking.sections.featured}</h2>
+        <TalkFeature lang={lang} id="cambridge" />
       </section>
 
       <section className="speaking-community wrap" aria-labelledby="speaking-community-title">
-        <h2 id="speaking-community-title">In the community</h2>
+        <h2 id="speaking-community-title">{speaking.sections.community}</h2>
         <div className="speaking-community-grid">
           <div>
             <span className="eyebrow">{engagement.eyebrow}</span>
@@ -84,17 +86,17 @@ export function Speaking() {
               ))}
             </dl>
           </div>
-          <VideoEmbed youtubeId={engagement.video.youtubeId} title={engagement.video.title} />
+          <VideoEmbed lang={lang} youtubeId={engagement.video.youtubeId} title={engagement.video.title} />
         </div>
-        <Gallery images={engagement.images} />
+        <Gallery lang={lang} images={engagement.images} />
       </section>
 
       <section className="speaking-bio wrap" aria-labelledby="speaking-bio-title">
-        <h2 id="speaking-bio-title">About Vladimir</h2>
+        <h2 id="speaking-bio-title">{speaking.sections.bio}</h2>
         <div>
-          <p>{SPEAKING.bio}</p>
+          <p>{speaking.bio}</p>
           <a className="speaking-link" href={FOUNDER_PROFILE_PDF} download="founder-profile.pdf">
-            Download founder profile ↓
+            {speaking.founderProfileLabel} ↓
           </a>
         </div>
       </section>
@@ -102,10 +104,10 @@ export function Speaking() {
       <section className="page-closing">
         <div className="wrap">
           <h2>
-            Start the <em>conversation.</em>
+            {speaking.closing.titleLead} <em>{speaking.closing.titleEmphasis}</em>
           </h2>
-          <p>{SPEAKING.closing}</p>
-          <InviteLink className="cta-primary" />
+          <p>{speaking.closing.text}</p>
+          <InviteLink className="cta-primary" cta={speaking.primaryCta} />
         </div>
       </section>
     </>

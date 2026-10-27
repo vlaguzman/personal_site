@@ -12,7 +12,7 @@ const open = (name: string) => fireEvent.click(screen.getByRole("button", { name
 
 describe("Gallery", () => {
   it("renders every image inside a button, lazily loaded, as a bento grid", () => {
-    const { container } = render(<Gallery images={images} />);
+    const { container } = render(<Gallery lang="en" images={images} />);
     expect(container.querySelector(".gallery")).not.toHaveClass("single");
     const imgs = container.querySelectorAll(".gallery img");
     expect(imgs).toHaveLength(3);
@@ -25,12 +25,12 @@ describe("Gallery", () => {
   });
 
   it("marks a lone image as single", () => {
-    const { container } = render(<Gallery images={[images[0]]} />);
+    const { container } = render(<Gallery lang="en" images={[images[0]]} />);
     expect(container.querySelector(".gallery")).toHaveClass("single");
   });
 
   it("opens an accessible modal lightbox and moves focus into it", () => {
-    render(<Gallery images={images} />);
+    render(<Gallery lang="en" images={images} />);
     open("Second photo");
     const dialog = screen.getByRole("dialog");
     expect(dialog).toHaveAttribute("aria-modal", "true");
@@ -40,7 +40,7 @@ describe("Gallery", () => {
   });
 
   it("closes on Escape and returns focus to the trigger", () => {
-    render(<Gallery images={images} />);
+    render(<Gallery lang="en" images={images} />);
     const trigger = screen.getByRole("button", { name: "Third photo" });
     trigger.focus();
     fireEvent.click(trigger);
@@ -50,7 +50,7 @@ describe("Gallery", () => {
   });
 
   it("closes with the close button and when clicking the backdrop", () => {
-    render(<Gallery images={images} />);
+    render(<Gallery lang="en" images={images} />);
     open("First photo");
     fireEvent.click(screen.getByRole("button", { name: "Close photo viewer" }));
     expect(screen.queryByRole("dialog")).toBeNull();
@@ -60,7 +60,7 @@ describe("Gallery", () => {
   });
 
   it("traps Tab inside the dialog", () => {
-    render(<Gallery images={images} />);
+    render(<Gallery lang="en" images={images} />);
     open("First photo");
     const dialog = screen.getByRole("dialog");
     const focusable = dialog.querySelectorAll<HTMLElement>("button");
@@ -75,7 +75,7 @@ describe("Gallery", () => {
   });
 
   it("navigates with the arrow keys and wraps around", () => {
-    render(<Gallery images={images} />);
+    render(<Gallery lang="en" images={images} />);
     open("First photo");
     fireEvent.keyDown(document, { key: "ArrowRight" });
     expect(screen.getByRole("dialog").querySelector("img")).toHaveAttribute("src", "/images/journey/b.jpg");
@@ -85,15 +85,24 @@ describe("Gallery", () => {
   });
 
   it("locks page scroll while open and restores it on close", () => {
-    render(<Gallery images={images} />);
+    render(<Gallery lang="en" images={images} />);
     open("First photo");
     expect(document.body.style.overflow).toBe("hidden");
     fireEvent.keyDown(document, { key: "Escape" });
     expect(document.body.style.overflow).toBe("");
   });
 
+  it("labels the viewer and its controls in Spanish", () => {
+    render(<Gallery lang="es" images={images} />);
+    open("First photo");
+    expect(screen.getByRole("dialog", { name: "Visor de fotos" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Cerrar visor de fotos" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Foto anterior" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Foto siguiente" })).toBeInTheDocument();
+  });
+
   it("hides navigation buttons for a single image", () => {
-    render(<Gallery images={[images[0]]} />);
+    render(<Gallery lang="en" images={[images[0]]} />);
     open("First photo");
     expect(screen.queryByRole("button", { name: "Next photo" })).toBeNull();
   });

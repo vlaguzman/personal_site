@@ -1,27 +1,33 @@
+import { getEssaysUi } from "@/data/essays-ui";
+import type { Locale } from "@/i18n/config";
+
 type Props = {
   /** Form endpoint of a real newsletter service. While null, a mailto call to action is shown. */
   endpoint: string | null;
   email: string;
+  lang: Locale;
 };
 
-export function NewsletterSignup({ endpoint, email }: Props) {
+export function NewsletterSignup({ endpoint, email, lang }: Props) {
+  const { newsletter } = getEssaysUi(lang);
+
   return (
     <section className="essays-newsletter" aria-labelledby="essays-newsletter-title">
-      <h2 id="essays-newsletter-title">New essays, when they’re ready</h2>
+      <h2 id="essays-newsletter-title">{newsletter.title}</h2>
       {endpoint ? (
         <form action={endpoint} method="post">
-          <label htmlFor="newsletter-email">Email address</label>
+          <label htmlFor="newsletter-email">{newsletter.emailLabel}</label>
           <input id="newsletter-email" name="email" type="email" autoComplete="email" required />
-          <button type="submit">Subscribe</button>
+          <button type="submit">{newsletter.subscribe}</button>
         </form>
       ) : (
         <>
-          <p>There is no mailing list yet. Email me and I’ll note you down for the next essay.</p>
+          <p>{newsletter.noList}</p>
           <a
             className="cta-primary"
-            href={`mailto:${email}?subject=${encodeURIComponent("Notify me about new essays")}`}
+            href={`mailto:${email}?subject=${encodeURIComponent(newsletter.mailtoSubject)}`}
           >
-            Email me to be notified <span aria-hidden="true">→</span>
+            {newsletter.mailtoLabel} <span aria-hidden="true">→</span>
           </a>
         </>
       )}

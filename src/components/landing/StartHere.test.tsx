@@ -22,9 +22,25 @@ describe("StartHere", () => {
   });
 });
 
+describe("StartHere in English", () => {
+  it("shows the topic and notes that the essay is in Spanish", () => {
+    render(<StartHere lang="en" essay={essay} />);
+    expect(screen.getByText("Startups")).toBeInTheDocument();
+    expect(screen.getByText("In Spanish")).toBeInTheDocument();
+  });
+});
+
 describe("StartHere with the Spanish locale", () => {
   it("prefixes the essay link with /es", () => {
     render(<StartHere lang="es" essay={essay} />);
     expect(screen.getByRole("link", { name: /Primero lee esto/ })).toHaveAttribute("href", "/es/essays/primero");
+  });
+
+  it("translates the label and the meta, and drops the redundant language notice", () => {
+    render(<StartHere lang="es" essay={{ ...essay, topic: "Product" }} />);
+    expect(screen.getByText("Empieza aquí")).toBeInTheDocument();
+    expect(screen.getByText("Producto")).toBeInTheDocument();
+    expect(screen.getByText("1 min de lectura")).toBeInTheDocument();
+    expect(screen.queryByText(/En español/)).not.toBeInTheDocument();
   });
 });

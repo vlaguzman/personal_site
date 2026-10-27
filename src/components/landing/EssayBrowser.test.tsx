@@ -71,4 +71,34 @@ describe("EssayBrowser with the Spanish locale", () => {
     render(<EssayBrowser lang="es" essays={essays} />);
     expect(screen.getByRole("link", { name: "Título uno" })).toHaveAttribute("href", "/es/essays/uno");
   });
+
+  it("translates the filters, the count, the reading time and the card labels", () => {
+    const { container } = render(<EssayBrowser lang="es" essays={essays} />);
+    const group = screen.getByRole("group", { name: "Filtrar por tema" });
+    expect(within(group).getAllByRole("button").map((b) => b.textContent)).toEqual(["Todos", "Startups", "Estrategia"]);
+    expect(screen.getByRole("status")).toHaveTextContent("Mostrando 4 de 4 ensayos");
+    expect(screen.getAllByText("2 min de lectura")).toHaveLength(4);
+    const eyebrows = [...container.querySelectorAll(".essay-card .eyebrow")].map((el) => el.textContent);
+    expect(eyebrows).toEqual(["STARTUPS", "ESTRATEGIA", "ENSAYO", "STARTUPS"]);
+  });
+
+  it("filters by the English topic key while showing the Spanish label", () => {
+    render(<EssayBrowser lang="es" essays={essays} />);
+    fireEvent.click(screen.getByRole("button", { name: "Estrategia" }));
+    expect(screen.getByRole("button", { name: "Estrategia" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("status")).toHaveTextContent("Mostrando 1 de 4 ensayos");
+    expect(screen.getByRole("link", { name: "Título dos" })).toBeInTheDocument();
+  });
+});
+
+describe("EssayBrowser language notice", () => {
+  it("marks essays in another language than the page", () => {
+    const { container } = render(<EssayBrowser lang="en" essays={[e("uno", "Startups")]} />);
+    expect(container.querySelector(".essay-card .eyebrow")).toHaveTextContent("STARTUPS · IN SPANISH");
+  });
+
+  it("does not repeat the language on a page already in that language", () => {
+    const { container } = render(<EssayBrowser lang="es" essays={[e("uno", "Startups")]} />);
+    expect(container.querySelector(".essay-card .eyebrow")).toHaveTextContent(/^STARTUPS$/);
+  });
 });

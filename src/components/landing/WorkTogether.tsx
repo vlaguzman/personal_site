@@ -1,47 +1,49 @@
 import Link from "next/link";
-import { getGinggaUrl, WORK } from "@/data/work";
+import { getGinggaUrl, getWork } from "@/data/work";
 import { localePath, type Locale } from "@/i18n/config";
 
-function BookLink({ className }: { className: string }) {
+function BookLink({ className, cta }: { className: string; cta: { label: string; href: string } }) {
   return (
-    <a className={className} href={WORK.cta.href} target="_blank" rel="noopener noreferrer">
-      {WORK.cta.label} <span aria-hidden="true">→</span>
+    <a className={className} href={cta.href} target="_blank" rel="noopener noreferrer">
+      {cta.label} <span aria-hidden="true">→</span>
     </a>
   );
 }
 
 export function WorkTogether({ lang }: { lang: Locale }) {
+  const work = getWork(lang);
+
   return (
     <>
       <section className="work-intro wrap">
-        <span className="eyebrow">{WORK.eyebrow}</span>
+        <span className="eyebrow">{work.eyebrow}</span>
         <h1>
-          {WORK.headlineLines.map((line) => (
+          {work.headlineLines.map((line) => (
             <span key={line}>
               {line}
               <br />
             </span>
           ))}
-          <em>{WORK.headlineEmphasis}</em>
+          <em>{work.headlineEmphasis}</em>
         </h1>
-        <p>{WORK.intro}</p>
+        <p>{work.intro}</p>
         <div className="work-actions">
-          <BookLink className="cta-primary" />
-          <Link className="work-link" href={localePath(lang, WORK.secondaryCta.href)}>
-            {WORK.secondaryCta.label} <span aria-hidden="true">→</span>
+          <BookLink className="cta-primary" cta={work.cta} />
+          <Link className="work-link" href={localePath(lang, work.secondaryCta.href)}>
+            {work.secondaryCta.label} <span aria-hidden="true">→</span>
           </Link>
         </div>
       </section>
 
       <section className="work-offers wrap" aria-labelledby="work-offers-title">
-        <h2 id="work-offers-title">How I can help</h2>
-        <ul aria-label="Ways to work together">
-          {WORK.offers.map((offer) => (
+        <h2 id="work-offers-title">{work.offersTitle}</h2>
+        <ul aria-label={work.offersLabel}>
+          {work.offers.map((offer) => (
             <li key={offer.title}>
               <h3>{offer.title}</h3>
               <div>
                 <p>{offer.text}</p>
-                {"link" in offer && (
+                {offer.link && (
                   <Link className="work-link" href={localePath(lang, offer.link.href)}>
                     {offer.link.label} <span aria-hidden="true">→</span>
                   </Link>
@@ -53,15 +55,15 @@ export function WorkTogether({ lang }: { lang: Locale }) {
       </section>
 
       <section className="work-approach wrap">
-        <p>{WORK.approach}</p>
+        <p>{work.approach}</p>
       </section>
 
       <section className="work-gingga wrap" aria-labelledby="work-gingga-title">
-        <h2 id="work-gingga-title">{WORK.gingga.title}</h2>
+        <h2 id="work-gingga-title">{work.gingga.title}</h2>
         <div>
-          <p>{WORK.gingga.text}</p>
+          <p>{work.gingga.text}</p>
           <a className="work-link" href={getGinggaUrl()} target="_blank" rel="noopener noreferrer">
-            {WORK.gingga.linkLabel} <span aria-hidden="true">↗</span>
+            {work.gingga.linkLabel} <span aria-hidden="true">↗</span>
           </a>
         </div>
       </section>
@@ -69,10 +71,10 @@ export function WorkTogether({ lang }: { lang: Locale }) {
       <section className="page-closing">
         <div className="wrap">
           <h2>
-            Start with the <em>decision.</em>
+            {work.closing.titleLead} <em>{work.closing.titleEmphasis}</em>
           </h2>
-          <p>{WORK.closing.text}</p>
-          <BookLink className="cta-primary" />
+          <p>{work.closing.text}</p>
+          <BookLink className="cta-primary" cta={work.cta} />
         </div>
       </section>
     </>

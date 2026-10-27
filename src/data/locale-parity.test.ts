@@ -3,12 +3,17 @@ import { getBeliefs } from "./beliefs";
 import { getChrome } from "./chrome";
 import { getContact } from "./contact";
 import { getConversations } from "./conversations";
+import { getEssaysUi } from "./essays-ui";
 import { getExperience } from "./experience";
 import { getHero } from "./hero";
 import { getIdeas } from "./ideas";
 import { getIntro } from "./intro";
+import { getMedia } from "./media";
 import { getPurpose } from "./purpose";
 import { getSiteMeta } from "./site";
+import { getConsulateEngagement, getSpeaking } from "./speaking";
+import { getTalk } from "./talk";
+import { getWork } from "./work";
 
 /** Recursive shape: object keys (sorted), array lengths and element shapes, primitive types. */
 function shape(value: unknown): unknown {
@@ -42,6 +47,12 @@ const getters = {
   contact: getContact,
   chrome: getChrome,
   siteMeta: getSiteMeta,
+  speaking: getSpeaking,
+  consulateEngagement: getConsulateEngagement,
+  talk: getTalk,
+  media: getMedia,
+  work: getWork,
+  essaysUi: getEssaysUi,
 };
 
 describe("locale content parity", () => {

@@ -82,6 +82,26 @@ describe("page metadata", () => {
     }
   });
 
+  it("localises the title and description of speaking, work together and the essays hub", async () => {
+    const titles = {
+      "/speaking": ["Speaking | Vladimir Guzmán", "Charlas | Vladimir Guzmán"],
+      "/work-together": ["Work together | Vladimir Guzmán", "Trabajemos juntos | Vladimir Guzmán"],
+      "/essays": ["Essays | Vladimir Guzmán", "Ensayos | Vladimir Guzmán"],
+    } as const;
+    const generators = {
+      "/speaking": speaking.generateMetadata,
+      "/work-together": workTogether.generateMetadata,
+      "/essays": essays.generateMetadata,
+    } as const;
+    for (const [path, [en, es]] of Object.entries(titles) as [keyof typeof titles, readonly [string, string]][]) {
+      const metaEn = await generators[path](params({ lang: "en" }));
+      const metaEs = await generators[path](params({ lang: "es" }));
+      expect(metaEn.title).toBe(en);
+      expect(metaEs.title).toBe(es);
+      expect(metaEs.description).not.toBe(metaEn.description);
+    }
+  });
+
   it("home keeps the layout title and declares locale alternates", async () => {
     const metadata = await home.generateMetadata(params({ lang: "es" }));
     expect(metadata.title).toBeUndefined();

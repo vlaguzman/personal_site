@@ -58,17 +58,52 @@ describe("WorkTogether", () => {
   });
 });
 
-describe("WorkTogether links", () => {
+describe("WorkTogether in Spanish", () => {
   it("prefixes the internal links with the active locale", () => {
     render(<WorkTogether lang="es" />);
-    expect(screen.getByRole("link", { name: /See speaking/ })).toHaveAttribute("href", "/es/speaking");
-    expect(screen.getByRole("link", { name: /See the experience behind it/ })).toHaveAttribute("href", "/es/journey");
+    expect(screen.getByRole("link", { name: /Conoce las charlas/ })).toHaveAttribute("href", "/es/speaking");
+    expect(screen.getByRole("link", { name: /Conoce la experiencia detrás/ })).toHaveAttribute("href", "/es/journey");
   });
 
-  it("leaves the external booking and Gingga links untouched", () => {
+  it("leaves the external booking and Gingga links untouched and opens them safely", () => {
     render(<WorkTogether lang="es" />);
-    for (const link of screen.getAllByRole("link", { name: /Book a conversation/ })) {
+    const bookings = screen.getAllByRole("link", { name: /Agenda una conversación/ });
+    expect(bookings).toHaveLength(2);
+    for (const link of bookings) {
       expect(link).toHaveAttribute("href", SITE.calendly);
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", expect.stringContaining("noopener"));
     }
+    const gingga = screen.getByRole("link", { name: /Visitar Gingga/ });
+    expect(gingga).toHaveAttribute("href", "https://gingga.com/");
+    expect(gingga).toHaveAttribute("target", "_blank");
+  });
+
+  it("translates the title, the offers, the Gingga notice and the closing", () => {
+    render(<WorkTogether lang="es" />);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Pensamiento independiente.Experiencia práctica.");
+    const list = screen.getByRole("list", { name: "Formas de trabajar juntos" });
+    expect(within(list).getAllByRole("listitem")).toHaveLength(3);
+    expect(screen.getByRole("heading", { level: 2, name: "Cómo puedo ayudar" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "¿Buscas Gingga?" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Empieza por la decisión." })).toBeInTheDocument();
+  });
+
+  it("never skips a heading level and keeps ids unique", () => {
+    const { container } = render(<WorkTogether lang="es" />);
+    const levels = [...container.querySelectorAll("h1, h2, h3, h4")].map((h) => Number(h.tagName[1]));
+    expect(levels[0]).toBe(1);
+    levels.forEach((level, i) => {
+      if (i > 0) expect(level, `heading #${i}`).toBeLessThanOrEqual(levels[i - 1] + 1);
+    });
+    const ids = [...container.querySelectorAll("[id]")].map((el) => el.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+});
+
+describe("WorkTogether links in English", () => {
+  it("prefixes the internal links with the active locale", () => {
+    render(<WorkTogether lang="en" />);
+    expect(screen.getByRole("link", { name: /See the experience behind it/ })).toHaveAttribute("href", "/en/journey");
   });
 });

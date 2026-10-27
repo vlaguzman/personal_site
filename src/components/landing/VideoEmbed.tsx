@@ -1,4 +1,7 @@
-export function VideoEmbed({ youtubeId, title }: { youtubeId: string; title: string }) {
+import { getMedia } from "@/data/media";
+import type { Locale } from "@/i18n/config";
+
+export function VideoEmbed({ youtubeId, title, lang }: { youtubeId: string; title: string; lang: Locale }) {
   return (
     <figure className="video">
       <iframe
@@ -11,7 +14,7 @@ export function VideoEmbed({ youtubeId, title }: { youtubeId: string; title: str
       />
       <figcaption>
         <a href={`https://www.youtube.com/watch?v=${youtubeId}`} target="_blank" rel="noopener noreferrer">
-          Watch on YouTube <span aria-hidden="true">↗</span>
+          {getMedia(lang).watchOnYoutube} <span aria-hidden="true">↗</span>
         </a>
       </figcaption>
     </figure>

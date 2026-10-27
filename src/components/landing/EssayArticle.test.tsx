@@ -71,7 +71,37 @@ describe("EssayArticle", () => {
 describe("EssayArticle with the Spanish locale", () => {
   it("prefixes the back link and the related essays with /es", () => {
     render(<EssayArticle lang="es" essay={fixture} related={related} />);
-    expect(screen.getByRole("link", { name: /All essays/ })).toHaveAttribute("href", "/es/essays");
+    expect(screen.getByRole("link", { name: /Todos los ensayos/ })).toHaveAttribute("href", "/es/essays");
     expect(screen.getByRole("link", { name: /Related one/ })).toHaveAttribute("href", "/es/essays/r1");
+  });
+
+  it("translates the chrome around the essay while keeping its own language", () => {
+    const { container } = render(<EssayArticle lang="es" essay={{ ...fixture, lang: "es", topic: "Strategy" }} related={related} />);
+    expect(container.querySelector("article")).toHaveAttribute("lang", "es");
+    expect(screen.getByText("Estrategia")).toBeInTheDocument();
+    expect(screen.getByText("2 min de lectura")).toBeInTheDocument();
+    expect(screen.getByText("COMPARTIR")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Compartir en X/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Compartir en LinkedIn/ })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Lecturas relacionadas" })).toBeInTheDocument();
+    expect(screen.getAllByText(/· 1 min$/)).toHaveLength(2);
+  });
+
+  it("drops the written-in notice when the essay is already in the page language", () => {
+    render(<EssayArticle lang="es" essay={{ ...fixture, lang: "es" }} related={[]} />);
+    expect(screen.queryByText(/Escrito en/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Written in/)).not.toBeInTheDocument();
+  });
+
+  it("notes the language of an English essay read in Spanish", () => {
+    render(<EssayArticle lang="es" essay={fixture} related={[]} />);
+    expect(screen.getByText("Escrito en inglés")).toBeInTheDocument();
+  });
+
+  it("marks the interface text with the page language, not the essay language", () => {
+    const { container } = render(<EssayArticle lang="es" essay={{ ...fixture, lang: "en" }} related={[]} />);
+    expect(container.querySelector(".essay-back")).toHaveAttribute("lang", "es");
+    expect(container.querySelector(".essay-meta")).toHaveAttribute("lang", "es");
+    expect(container.querySelector(".essay-share")).toHaveAttribute("lang", "es");
   });
 });
