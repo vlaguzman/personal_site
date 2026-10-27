@@ -19,11 +19,16 @@ export function Beliefs() {
         <ol className="belief-list">
           {BELIEFS.map((belief, i) => (
             <li key={belief.title}>
-              <span className="belief-index" aria-hidden="true">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3>{belief.title}</h3>
-              <p>{belief.text}</p>
+              <details name="beliefs">
+                <summary>
+                  <span className="belief-index" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3>{belief.title}</h3>
+                  <span className="belief-toggle" aria-hidden="true" />
+                </summary>
+                <p>{belief.text}</p>
+              </details>
             </li>
           ))}
         </ol>

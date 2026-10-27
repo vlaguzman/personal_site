@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { BELIEFS, BELIEFS_INTRO } from "./beliefs";
+import { IDEAS } from "./ideas";
 
 describe("BELIEFS", () => {
-  it("has six convictions", () => {
-    expect(BELIEFS).toHaveLength(6);
+  it("has five convictions", () => {
+    expect(BELIEFS).toHaveLength(5);
     expect(BELIEFS.map((b) => b.title)).toEqual([
       "Success should mean more than money.",
       "Nobody builds anything meaningful alone.",
-      "Talent is everywhere. Opportunity is not.",
       "Technology should expand human potential, not replace human purpose.",
       "Integrity is tested when it becomes inconvenient.",
       "Build a life worth living, not just a business worth selling.",
@@ -17,6 +17,12 @@ describe("BELIEFS", () => {
       expect(b.text.length).toBeGreaterThan(0);
       expect(b.text.length, b.title).toBeLessThanOrEqual(220);
     }
+  });
+
+  it("does not repeat a claim already made in the ideas section", () => {
+    const claims = IDEAS.items.map((i) => i.claim.toLowerCase());
+    for (const b of BELIEFS) expect(claims, b.title).not.toContain(b.title.toLowerCase());
+    expect(BELIEFS.map((b) => b.title)).not.toContain("Talent is everywhere. Opportunity is not.");
   });
 
   it("has unique titles", () => {

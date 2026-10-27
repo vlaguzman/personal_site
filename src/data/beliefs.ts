@@ -15,10 +15,6 @@ export const BELIEFS: Belief[] = [
     text: "Entrepreneurship may begin with individual initiative, but lasting progress depends on relationships, collaboration and generosity.",
   },
   {
-    title: "Talent is everywhere. Opportunity is not.",
-    text: "Many people have the ability to build something extraordinary but lack exposure, networks, education or the confidence to start.",
-  },
-  {
     title: "Technology should expand human potential, not replace human purpose.",
     text: "AI and automation are powerful tools, but adopting technology without asking what it improves is not innovation.",
   },

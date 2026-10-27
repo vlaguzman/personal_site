@@ -1053,23 +1053,42 @@ blockquote {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px 32px;
+  border-bottom: 1px solid var(--line);
 }
 
 .belief-list li {
   border-top: 1px solid var(--line);
-  padding-top: 20px;
+}
+
+.belief-list summary {
+  display: grid;
+  grid-template-columns: 64px 1fr 24px;
+  align-items: baseline;
+  gap: 16px;
+  padding: 24px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.belief-list summary::-webkit-details-marker {
+  display: none;
+}
+
+/* The global `summary span` rules style the timeline's "+" glyph; undo them for these spans. */
+.belief-list summary span {
+  font-size: var(--fs-label);
+  line-height: inherit;
+}
+
+.belief-list details[open] summary span {
+  transform: none;
 }
 
 .belief-index {
-  display: block;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   letter-spacing: 0.14em;
   color: var(--text-secondary);
-  margin-bottom: 14px;
 }
 
 .belief-list h3 {
@@ -1077,10 +1096,48 @@ blockquote {
   line-height: 1.2;
 }
 
-.belief-list p {
+.belief-list summary:hover h3 {
+  color: var(--secondary);
+}
+
+/* A plus that turns into a minus when the detail is open. */
+.belief-toggle {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  justify-self: end;
+  align-self: center;
+}
+
+.belief-toggle::before,
+.belief-toggle::after {
+  content: "";
+  position: absolute;
+  background: var(--accent);
+  transition: transform 0.2s;
+}
+
+.belief-toggle::before {
+  inset: 6px 0 auto;
+  height: 2px;
+}
+
+.belief-toggle::after {
+  inset: 0 6px auto;
+  width: 2px;
+  height: 14px;
+}
+
+.belief-list details[open] .belief-toggle::after {
+  transform: scaleY(0);
+}
+
+.belief-list details p {
+  max-width: 640px;
   font-size: var(--fs-body);
   line-height: var(--lh-read);
-  margin: 14px 0 0;
+  color: var(--text-secondary);
+  margin: 0 0 28px 80px;
 }
 
 .closing-cta {
@@ -1557,10 +1614,6 @@ footer {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .belief-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .beliefs-heading {
     gap: 48px;
   }
@@ -1810,9 +1863,18 @@ footer {
     margin-bottom: 40px;
   }
 
-  .belief-list {
-    grid-template-columns: 1fr;
-    gap: 32px;
+  .belief-list summary {
+    grid-template-columns: 36px 1fr 20px;
+    gap: 12px;
+    padding: 20px 0;
+  }
+
+  .belief-list h3 {
+    font-size: var(--fs-lead);
+  }
+
+  .belief-list details p {
+    margin-left: 48px;
   }
 
   .closing-cta {

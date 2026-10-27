@@ -20,12 +20,30 @@ describe("Beliefs", () => {
     expect(screen.getByText(BELIEFS_INTRO.text)).toBeInTheDocument();
   });
 
-  it("numbers the six convictions in order", () => {
+  it("numbers the five convictions in order", () => {
     render(<Beliefs />);
     const items = screen.getAllByRole("listitem");
-    expect(items).toHaveLength(6);
+    expect(items).toHaveLength(5);
     expect(items[0]).toHaveTextContent("01");
-    expect(items[5]).toHaveTextContent("06");
+    expect(items[4]).toHaveTextContent("05");
+  });
+
+  it("shows only the titles at first, with each detail behind a closed disclosure", () => {
+    const { container } = render(<Beliefs />);
+    const disclosures = container.querySelectorAll("details");
+    expect(disclosures).toHaveLength(5);
+    for (const [i, d] of disclosures.entries()) {
+      expect(d.open).toBe(false);
+      expect(d.querySelector("summary h3")).toHaveTextContent(BELIEFS[i].title);
+      expect(d.querySelector("summary")).not.toHaveTextContent(BELIEFS[i].text);
+    }
+  });
+
+  it("opens one detail at a time", () => {
+    const { container } = render(<Beliefs />);
+    const names = new Set([...container.querySelectorAll("details")].map((d) => d.getAttribute("name")));
+    expect(names.size).toBe(1);
+    expect(names.has(null)).toBe(false);
   });
 
   it("closes with a soft CTA to the contact section", () => {
