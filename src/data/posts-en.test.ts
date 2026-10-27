@@ -63,3 +63,12 @@ describe("English translations as a set", () => {
     expect(new Set(titles).size).toBe(5);
   });
 });
+
+describe("proper nicknames", () => {
+  it("keeps Juan Ramírez's nickname in Spanish, as the author asked", async () => {
+    const { fluvipThanksEn } = await import("./posts-en");
+    const text = fluvipThanksEn.sections.map((s) => s.text).join(" ");
+    expect(text).toContain("“el gordito gustador”");
+    expect(text).not.toContain("bon vivant");
+  });
+});
