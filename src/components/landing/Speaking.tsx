@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { getEssays } from "@/data/essays";
-import { FOUNDER_PROFILE_PDF } from "@/data/site";
 import { getCommunityProgram, getSpeaking, getTeaching, getWorkshop } from "@/data/speaking";
 import type { Locale } from "@/i18n/config";
 import { EssayBrowser } from "./EssayBrowser";
@@ -114,16 +113,6 @@ export function Speaking({ lang }: { lang: Locale }) {
         <h2 id="speaking-writing-title">{speaking.sections.writing}</h2>
         <p className="speaking-writing-intro">{speaking.writingIntro}</p>
         <EssayBrowser lang={lang} essays={getEssays(lang)} />
-      </section>
-
-      <section className="speaking-bio wrap" aria-labelledby="speaking-bio-title">
-        <h2 id="speaking-bio-title">{speaking.sections.bio}</h2>
-        <div>
-          <p>{speaking.bio}</p>
-          <a className="speaking-link" href={FOUNDER_PROFILE_PDF} download="founder-profile.pdf">
-            {speaking.founderProfileLabel} ↓
-          </a>
-        </div>
       </section>
 
       <section className="page-closing">

@@ -567,6 +567,18 @@ nav a:last-child {
   margin: 0 0 5px;
 }
 
+.journey-profile {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: var(--fs-ui-sm);
+  padding-bottom: 2px;
+  border-bottom: 1px solid currentColor;
+}
+
+.journey-profile:hover {
+  color: var(--accent);
+}
+
 /* ==========================================================================
    Journey: arc and timeline
    ========================================================================== */
@@ -1733,8 +1745,7 @@ footer {
 .speaking-topics,
 .speaking-featured,
 .speaking-teaching,
-.speaking-writing,
-.speaking-bio {
+.speaking-writing {
   padding-top: 64px;
   padding-bottom: 64px;
 }
@@ -1742,8 +1753,7 @@ footer {
 .speaking-topics h2,
 .speaking-featured h2,
 .speaking-teaching h2,
-.speaking-writing h2,
-.speaking-bio h2 {
+.speaking-writing h2 {
   margin-bottom: 40px;
 }
 
@@ -1840,24 +1850,6 @@ footer {
 /* The section's own padding closes the page; the grid's bottom margin was meant for a standalone page. */
 .speaking-writing .essays-grid {
   margin-bottom: 0;
-}
-
-.speaking-bio {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 0 56px;
-  align-items: start;
-}
-
-.speaking-bio h2 {
-  margin-bottom: 0;
-}
-
-.speaking-bio p {
-  max-width: 62ch;
-  font-size: var(--fs-lead);
-  line-height: var(--lh-read);
-  margin: 0 0 24px;
 }
 
 .page-closing {
@@ -2066,7 +2058,6 @@ footer {
   .speaking-intro-body,
   .speaking-topics ul,
   .speaking-teaching-grid,
-  .speaking-bio,
   .work-gingga,
   .talk-feature,
   .contact,
@@ -2270,8 +2261,7 @@ footer {
   .speaking-topics,
   .speaking-featured,
   .speaking-teaching,
-  .speaking-writing,
-  .speaking-bio {
+  .speaking-writing {
     padding-top: 40px;
     padding-bottom: 40px;
   }
@@ -2291,17 +2281,12 @@ footer {
   }
 
   .speaking-topics ul,
-  .speaking-teaching-grid,
-  .speaking-bio {
+  .speaking-teaching-grid {
     grid-template-columns: 1fr;
   }
 
   .speaking-teaching-grid {
     gap: 28px;
-  }
-
-  .speaking-bio h2 {
-    margin-bottom: 24px;
   }
 
   .page-closing {

@@ -8,6 +8,7 @@ import {
   sellingBeerEn,
   subscriptionBoxPointsEn,
 } from "@/data/posts-en";
+import { FOUNDER_PROFILE_PDF } from "@/data/site";
 import { Journey } from "./Journey";
 import { Milestone } from "./Milestone";
 
@@ -17,6 +18,18 @@ describe("Journey", () => {
     expect(container.querySelector("section#journey")).not.toBeNull();
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Different ventures.One purpose.");
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+  });
+
+  it.each([
+    ["en", "Download founder profile"],
+    ["es", "Descargar perfil de fundador"],
+  ] as const)("offers the founder profile to download under the intro (%s)", (lang, label) => {
+    const { container } = render(<Journey lang={lang} />);
+    const link = screen.getByRole("link", { name: new RegExp(label) });
+    expect(link).toHaveAttribute("href", FOUNDER_PROFILE_PDF);
+    expect(link).toHaveAttribute("download", "founder-profile.pdf");
+    expect(container.querySelector(".section-heading")).toContainElement(link);
+    expect(screen.getAllByRole("link", { name: new RegExp(label) })).toHaveLength(1);
   });
 
   it("titles every milestone with an h2, never skipping a heading level", () => {

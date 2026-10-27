@@ -10,6 +10,7 @@ describe("getJourneyUi", () => {
     expect(ui.headlineEmphasis).toBe("One purpose.");
     expect(ui.arcLabel).toBe("The arc of the journey");
     expect(ui.learnedLabel).toBe("What I learned");
+    expect(ui.profileLabel).toBe("Download founder profile");
     expect(ui.meta.title).toBe("The journey | Vladimir Guzmán");
   });
 
@@ -19,6 +20,7 @@ describe("getJourneyUi", () => {
     expect(ui.headlineLines).toEqual(["Distintos proyectos."]);
     expect(ui.headlineEmphasis).toBe("Un solo propósito.");
     expect(ui.learnedLabel).toBe("Lo que aprendí");
+    expect(ui.profileLabel).toBe("Descargar perfil de fundador");
     expect(ui.meta.title).toBe("Mi trayectoria | Vladimir Guzmán");
   });
 

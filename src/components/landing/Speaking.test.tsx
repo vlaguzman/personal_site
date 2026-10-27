@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ESSAYS, getEssays } from "@/data/essays";
-import { FOUNDER_PROFILE_PDF, TALK, getWhatsappLink } from "@/data/site";
+import { TALK, getWhatsappLink } from "@/data/site";
 import { Speaking } from "./Speaking";
 
 describe("Speaking", () => {
@@ -125,20 +125,22 @@ describe("Speaking", () => {
     expect(within(section).getByRole("group", { name: "Filter by topic" })).toBeInTheDocument();
   });
 
-  it("places Writing after Teaching and before the bio", () => {
+  it("places Writing after Teaching", () => {
     const { container } = render(<Speaking lang="en" />);
     const ids = [...container.querySelectorAll("section[id], section[aria-labelledby]")].map(
       (s) => s.id || s.getAttribute("aria-labelledby"),
     );
-    const order = ["speaking-teaching-title", "writing", "speaking-bio-title"].map((id) => ids.indexOf(id));
+    const order = ["speaking-teaching-title", "writing"].map((id) => ids.indexOf(id));
     expect(order.every((i) => i >= 0)).toBe(true);
     expect([...order].sort((a, b) => a - b)).toEqual(order);
   });
 
-  it("offers a short bio and the founder profile to download", () => {
-    render(<Speaking lang="en" />);
-    expect(screen.getByRole("heading", { level: 2, name: /About/ })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Download founder profile/ })).toHaveAttribute("href", FOUNDER_PROFILE_PDF);
+  it("has no About section and no founder profile download; those live on the journey", () => {
+    const { container } = render(<Speaking lang="en" />);
+    expect(screen.queryByRole("heading", { level: 2, name: /About/ })).toBeNull();
+    expect(screen.queryByRole("link", { name: /Download founder profile/ })).toBeNull();
+    expect(container.querySelector(".speaking-bio")).toBeNull();
+    expect(container.textContent).not.toMatch(/Y Combinator W22/);
   });
 
   it("closes with a second invitation", () => {
@@ -170,19 +172,17 @@ describe("Speaking in Spanish", () => {
     expect(cta).toHaveAttribute("rel", expect.stringContaining("noopener"));
   });
 
-  it("translates the sections, the topics list, the talk and the bio", () => {
+  it("translates the sections, the topics list and the talk", () => {
     render(<Speaking lang="es" />);
     expect(screen.getByRole("img", { name: "Vladimir Guzmán presentando en Clare Hall, Cambridge" })).toBeInTheDocument();
-    for (const name of ["Sobre qué hablo", "Charla destacada", "Docencia", "Escritos", "Sobre Vladimir"]) {
+    for (const name of ["Sobre qué hablo", "Charla destacada", "Docencia", "Escritos"]) {
       expect(screen.getByRole("heading", { level: 2, name })).toBeInTheDocument();
     }
     expect(screen.getByRole("list", { name: "Temas de las charlas" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Ver diapositivas \(en inglés\)/ })).toHaveAttribute("href", TALK.pdf);
     expect(screen.queryByRole("link", { name: /YouTube/ })).toBeNull();
-    expect(screen.getByRole("link", { name: /Descargar perfil de fundador/ })).toHaveAttribute(
-      "href",
-      FOUNDER_PROFILE_PDF,
-    );
+    expect(screen.queryByRole("heading", { level: 2, name: "Sobre Vladimir" })).toBeNull();
+    expect(screen.queryByRole("link", { name: /Descargar perfil de fundador/ })).toBeNull();
   });
 
   it("shows the Spanish originals in the Writing section, with no translation badge", () => {

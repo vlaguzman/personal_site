@@ -11,14 +11,12 @@ export type SpeakingContent = {
   photo: HeroContent["photo"];
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
-  sections: { topics: string; featured: string; teaching: string; writing: string; bio: string };
+  sections: { topics: string; featured: string; teaching: string; writing: string };
   /** Accessible name of the topics list. */
   topicsLabel: string;
   topics: { title: string; text: string }[];
   /** Intro of the Writing section, above the essay browser. */
   writingIntro: string;
-  bio: string;
-  founderProfileLabel: string;
   closing: { titleLead: string; titleEmphasis: string; text: string };
 };
 
@@ -46,7 +44,6 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
       featured: "Featured talk",
       teaching: "Teaching",
       writing: "Writing",
-      bio: "About Vladimir",
     },
     topicsLabel: "Speaking topics",
     topics: [
@@ -65,8 +62,6 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
     ],
     writingIntro:
       "Notes on startups, strategy and building companies, written after the fact from my own ventures. The originals are in Spanish, the language I wrote them in; each one also has an English translation, made with AI.",
-    bio: "Vladimir Guzmán is a Colombian entrepreneur and technology builder based in London. He is the co-founder and former CTO of HoyTrabajas (Y Combinator W22), a former technology leader at FLUVIP, and is now building Gingga, AI solutions for entrepreneurs.",
-    founderProfileLabel: "Download founder profile",
     closing: {
       titleLead: "Start the",
       titleEmphasis: "conversation.",
@@ -91,7 +86,6 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
       featured: "Charla destacada",
       teaching: "Docencia",
       writing: "Escritos",
-      bio: "Sobre Vladimir",
     },
     topicsLabel: "Temas de las charlas",
     topics: [
@@ -110,8 +104,6 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
     ],
     writingIntro:
       "Notas sobre startups, estrategia y cómo construir empresas, escritas en retrospectiva a partir de mis propios proyectos. Están en su idioma original, el español; cada una tiene también una traducción al inglés hecha con IA.",
-    bio: "Vladimir Guzmán es un emprendedor colombiano y constructor de tecnología radicado en Londres. Es cofundador y ex-CTO de HoyTrabajas (Y Combinator W22), exlíder tecnológico de FLUVIP y hoy construye Gingga, soluciones con inteligencia artificial para emprendedores.",
-    founderProfileLabel: "Descargar perfil de fundador",
     closing: {
       titleLead: "Empieza la",
       titleEmphasis: "conversación.",

@@ -33,7 +33,6 @@ describe("getSpeaking in English", () => {
       featured: "Featured talk",
       teaching: "Teaching",
       writing: "Writing",
-      bio: "About Vladimir",
     });
     expect(speaking.closing).toMatchObject({ titleLead: "Start the", titleEmphasis: "conversation." });
   });
@@ -90,11 +89,12 @@ describe("getSpeaking in Spanish", () => {
   });
 });
 
-describe.each(["en", "es"] as const)("getSpeaking bio in %s", (lang) => {
-  it("introduces him without repeating the Consulate figures that live on the journey", () => {
-    const { bio } = getSpeaking(lang);
-    expect(bio).toContain("Y Combinator W22");
-    expect(bio).not.toContain("270+");
+describe.each(["en", "es"] as const)("getSpeaking without the About section in %s", (lang) => {
+  it("keeps no bio, no bio heading and no founder profile label", () => {
+    const speaking = getSpeaking(lang) as Record<string, unknown>;
+    expect(speaking.bio).toBeUndefined();
+    expect(speaking.founderProfileLabel).toBeUndefined();
+    expect(speaking.sections).not.toHaveProperty("bio");
   });
 });
 

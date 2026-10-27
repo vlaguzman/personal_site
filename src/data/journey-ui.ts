@@ -10,6 +10,8 @@ export type JourneyUi = {
   arcLabel: string;
   /** Label of the "what I learned" box of a milestone. */
   learnedLabel: string;
+  /** Label of the founder profile download under the intro. */
+  profileLabel: string;
 };
 
 const JOURNEY_UI: Record<Locale, JourneyUi> = {
@@ -26,6 +28,7 @@ const JOURNEY_UI: Record<Locale, JourneyUi> = {
       "Building, learning and starting again since 2010, guided by a question: why do some people transform their lives while others, equally talented, never get the chance?",
     arcLabel: "The arc of the journey",
     learnedLabel: "What I learned",
+    profileLabel: "Download founder profile",
   },
   es: {
     meta: {
@@ -40,6 +43,7 @@ const JOURNEY_UI: Record<Locale, JourneyUi> = {
       "Construyendo, aprendiendo y volviendo a empezar desde 2010, guiado por una pregunta: ¿por qué algunas personas transforman sus vidas mientras otras, igual de talentosas, nunca tienen la oportunidad?",
     arcLabel: "El arco de la trayectoria",
     learnedLabel: "Lo que aprendí",
+    profileLabel: "Descargar perfil de fundador",
   },
 };
 
