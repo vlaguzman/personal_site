@@ -252,7 +252,6 @@ export const milestones: Milestone[] = [
     blocks: [
       p("I’m building Gingga: AI solutions for entrepreneurs."),
       { kind: "button", label: "Explore Gingga", href: "https://gingga.com/" },
-      p("The next step: consolidate our early pilots and demonstrate repeatable customer value.", "small"),
     ],
   },
 ];

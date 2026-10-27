@@ -26,8 +26,8 @@ describe.each(["en", "es"] as const)("Gingga copy in %s", (lang) => {
     );
   });
 
-  it("keeps the Now milestone to the general line, the button and the next step", () => {
-    expect(now.blocks.map((b) => b.kind)).toEqual(["paragraph", "button", "paragraph"]);
+  it("keeps the Now milestone to the general line and the button, with no roadmap line", () => {
+    expect(now.blocks.map((b) => b.kind)).toEqual(["paragraph", "button"]);
   });
 
   it("describes Gingga the same general way in the arc, the speaking bio and the work page", () => {
