@@ -70,7 +70,7 @@ describe("getWork in Spanish", () => {
 
   it("opens a conversation through the same booking link", () => {
     expect(work.cta).toEqual({ label: "Agenda una conversación", href: SITE.calendly });
-    expect(work.secondaryCta).toEqual({ label: "Conoce la experiencia detrás", href: "/journey" });
+    expect(work.secondaryCta).toEqual({ label: "Conoce la experiencia detrás de esto", href: "/journey" });
   });
 
   it("keeps Gingga separate and closes with the decision", () => {

@@ -1,6 +1,8 @@
 import type { Locale } from "@/i18n/config";
 
 export const SITE = {
+  /** Production origin, used to make canonical and hreflang URLs absolute. Override per environment. */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://vlaguzman.com",
   themeColor: "#0F1F18",
   email: "guzman.vla@gmail.com",
   calendly: "https://calendly.com/guzman-vla/ideas",

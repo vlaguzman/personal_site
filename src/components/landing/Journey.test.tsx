@@ -179,12 +179,20 @@ describe("Journey", () => {
     expect(labels).toEqual(["Developer", "Product", "Founder", "AI builder"]);
   });
 
+  it("does not turn every lesson into a duplicate landmark, and labels the venture tree as a group", () => {
+    const { container } = render(<Journey lang="en" />);
+    expect(container.querySelectorAll("aside")).toHaveLength(0);
+    const tree = container.querySelector(".venture-tree");
+    expect(tree).toHaveAttribute("role", "group");
+    expect(tree).toHaveAttribute("aria-label");
+  });
+
   it("renders the learned callout only for milestones that define it, before gallery and posts", () => {
     const { container } = render(<Journey lang="en" />);
-    const callouts = container.querySelectorAll("aside.learned");
+    const callouts = container.querySelectorAll(".learned");
     expect(callouts).toHaveLength(milestones.filter((m) => m.learned).length);
     for (const m of milestones) {
-      const el = container.querySelector(`#${m.id} aside.learned`);
+      const el = container.querySelector(`#${m.id} .learned`);
       if (!m.learned) {
         expect(el, m.id).toBeNull();
         continue;
@@ -254,7 +262,7 @@ describe("Journey with the Spanish locale", () => {
 
   it("labels the learned box, the venture tree and the Gingga button in Spanish", () => {
     const { container } = render(<Journey lang="es" />);
-    expect(container.querySelector("#year2010 aside.learned")).toHaveTextContent("Lo que aprendí");
+    expect(container.querySelector("#year2010 .learned")).toHaveTextContent("Lo que aprendí");
     expect(screen.getByLabelText("Emprendimientos que surgieron de Dfounders")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Conoce Gingga/ })).toHaveAttribute("href", "https://gingga.com/");
   });

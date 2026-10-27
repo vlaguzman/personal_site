@@ -1676,10 +1676,6 @@ footer {
 /* ==========================================================================
    Speaking page
    ========================================================================== */
-.page-closing {
-  --focus: var(--accent);
-}
-
 .speaking-intro {
   padding-top: 96px;
   padding-bottom: 72px;
@@ -1814,6 +1810,7 @@ footer {
 }
 
 .page-closing {
+  --focus: var(--accent);
   background: var(--primary);
   color: var(--on-dark);
   padding: 96px 0;

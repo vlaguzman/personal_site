@@ -46,7 +46,7 @@ export function pickLocale(acceptLanguage: string | null | undefined): Locale {
       const parsed = qParam ? Number(qParam.slice(2)) : 1;
       return {
         language: tag.trim().split("-")[0]?.toLowerCase() ?? "",
-        q: Number.isNaN(parsed) ? 1 : parsed,
+        q: Number.isNaN(parsed) ? 0 : parsed, // a malformed weight disqualifies the entry
         index,
       };
     })

@@ -114,12 +114,16 @@ describe("pickLocale", () => {
 
   it("ignores entries with q=0 and malformed q-values", () => {
     expect(pickLocale("es;q=0, en;q=0.1")).toBe("en");
-    expect(pickLocale("es;q=abc")).toBe("es");
+    expect(pickLocale("es;q=abc")).toBe("en");
   });
 
   it("prefers the earlier entry on equal weight", () => {
     expect(pickLocale("es, en")).toBe("es");
     expect(pickLocale("en, es")).toBe("en");
+  });
+
+  it("ignores a language whose q-value is malformed instead of giving it full weight", () => {
+    expect(pickLocale("es;q=abc,en;q=0.9")).toBe("en");
   });
 });
 

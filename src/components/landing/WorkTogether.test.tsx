@@ -62,7 +62,7 @@ describe("WorkTogether in Spanish", () => {
   it("prefixes the internal links with the active locale", () => {
     render(<WorkTogether lang="es" />);
     expect(screen.getByRole("link", { name: /Conoce las charlas/ })).toHaveAttribute("href", "/es/speaking");
-    expect(screen.getByRole("link", { name: /Conoce la experiencia detrás/ })).toHaveAttribute("href", "/es/journey");
+    expect(screen.getByRole("link", { name: /Conoce la experiencia detrás de esto/ })).toHaveAttribute("href", "/es/journey");
   });
 
   it("leaves the external booking and Gingga links untouched and opens them safely", () => {

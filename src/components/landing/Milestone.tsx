@@ -51,7 +51,7 @@ function BlockView({ block, lang }: { block: Block; lang: Locale }) {
       );
     case "ventureTree":
       return (
-        <div className="venture-tree" aria-label={block.ariaLabel}>
+        <div className="venture-tree" role="group" aria-label={block.ariaLabel}>
           <div className="venture-root">
             <span className="eyebrow">{block.root.eyebrow}</span>
             <strong>{block.root.name}</strong>
@@ -121,10 +121,10 @@ function BlockView({ block, lang }: { block: Block; lang: Locale }) {
 function Learned({ text, lang }: { text: string; lang: Locale }) {
   const { learnedLabel } = getJourneyUi(lang);
   return (
-    <aside className="learned" aria-label={learnedLabel}>
+    <div className="learned">
       <span className="eyebrow">{learnedLabel}</span>
       <p>{text}</p>
-    </aside>
+    </div>
   );
 }
 

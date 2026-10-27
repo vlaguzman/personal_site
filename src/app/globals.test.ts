@@ -21,4 +21,8 @@ describe("globals.css", () => {
     expect(rule).toMatch(/border:\s*1px solid/);
     expect(rule).toMatch(/color:\s*var\(--primary\)/);
   });
+
+  it("defines the shared closing band once, so its rules cannot drift apart", () => {
+    expect(css.match(/^\.page-closing \{/gm)).toHaveLength(1);
+  });
 });

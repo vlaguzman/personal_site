@@ -47,14 +47,21 @@ describe("root layout", () => {
 
 describe("layout metadata", () => {
   it("defaults the title and description to the site meta of the route locale", async () => {
-    expect(await layoutModule.generateMetadata(params({ lang: "en" }))).toEqual({
+    expect(await layoutModule.generateMetadata(params({ lang: "en" }))).toMatchObject({
       title: "Vladimir Guzmán | A builder’s journey",
       description: expect.stringMatching(/founder of Gingga/),
     });
-    expect(await layoutModule.generateMetadata(params({ lang: "es" }))).toEqual({
+    expect(await layoutModule.generateMetadata(params({ lang: "es" }))).toMatchObject({
       title: "Vladimir Guzmán | El camino de un constructor",
       description: expect.stringMatching(/fundador de Gingga/),
     });
+  });
+
+  it("resolves canonical and hreflang URLs against an absolute site URL", async () => {
+    for (const lang of ["en", "es"]) {
+      const meta = await layoutModule.generateMetadata(params({ lang }));
+      expect(String(meta.metadataBase)).toBe("https://vlaguzman.com/");
+    }
   });
 
   it("keeps the viewport and theme colour", () => {

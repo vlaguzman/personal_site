@@ -45,4 +45,9 @@ describe("TalkFeature in Spanish", () => {
     expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent("Unlocking Human Potentialin the Age of AI");
     expect(container.textContent).toContain("CHARLA EN CONFERENCIA");
   });
+
+  it.each(["en", "es"] as const)("marks the English slide cover as English for screen readers (%s)", (lang) => {
+    render(<TalkFeature lang={lang} />);
+    expect(screen.getByAltText(TALK.coverAlt)).toHaveAttribute("lang", "en");
+  });
 });

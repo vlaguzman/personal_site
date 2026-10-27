@@ -79,7 +79,7 @@ const WORK: Record<Locale, WorkContent> = {
     intro:
       "Trabajo con fundadores y líderes de negocio que necesitan tomar mejores decisiones sobre estrategia, tecnología y crecimiento.",
     cta: { label: "Agenda una conversación", href: BOOK_HREF },
-    secondaryCta: { label: "Conoce la experiencia detrás", href: JOURNEY_HREF },
+    secondaryCta: { label: "Conoce la experiencia detrás de esto", href: JOURNEY_HREF },
     offersTitle: "Cómo puedo ayudar",
     offersLabel: "Formas de trabajar juntos",
     offers: [

@@ -15,7 +15,7 @@ export function TalkFeature({ id, lang }: { id?: string; lang: Locale }) {
         aria-label={talk.coverLinkLabel}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={talk.cover} alt={talk.coverAlt} width={1440} height={810} loading="lazy" />
+        <img src={talk.cover} alt={talk.coverAlt} lang="en" width={1440} height={810} loading="lazy" />
       </a>
       <div className="talk-description">
         <span className="eyebrow">{talk.eyebrow}</span>

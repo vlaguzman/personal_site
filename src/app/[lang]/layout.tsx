@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Pick<LayoutProps<"/[lang]">, 
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const { title, description } = getSiteMeta(lang);
-  return { title, description };
+  return { metadataBase: new URL(SITE.url), title, description };
 }
 
 export const viewport: Viewport = {

@@ -31,4 +31,13 @@ describe("localeRedirect", () => {
   it("does not treat a similar-looking segment as a locale", () => {
     expect(localeRedirect("/english", "", "es")).toBe("/es/english");
   });
+
+  it("never produces a protocol-relative target, whatever slashes the request carries", () => {
+    for (const pathname of ["//evil.com/x", "///evil.com", "//", "/\\evil.com"]) {
+      const target = localeRedirect(pathname, "", "es");
+      expect(target, pathname).toMatch(/^\/(en|es)(\/|$)/);
+      expect(target, pathname).not.toMatch(/^\/\//);
+      expect(new URL(target!, "https://site.com").origin, pathname).toBe("https://site.com");
+    }
+  });
 });
