@@ -71,7 +71,7 @@ describe("getExperience", () => {
 
   it("backs the story with the money raised and two operating figures", () => {
     for (const data of [experience, es]) {
-      expect(data.figures.map((f) => f.value)).toEqual(["US$4.5m", "US$5m", "20+", "270+"]);
+      expect(data.figures.map((f) => f.value)).toEqual(["US$4.5m", "US$5.5m", "20+", "270+"]);
       const text = [...data.paragraphs, ...data.roles.flatMap((r) => [r.title, r.context])].join(" ");
       for (const figure of data.figures) {
         expect(text).not.toContain(figure.value);
@@ -89,13 +89,13 @@ describe("getExperience", () => {
   it("labels every figure in each language", () => {
     expect(experience.figures.map((f) => f.label)).toEqual([
       "Series A at FLUVIP, 2018",
-      "Seed round at HoyTrabajas, 2022",
+      "Raised in total at HoyTrabajas",
       "people in the teams I have led across my companies",
       "entrepreneurs reached at the Colombian Consulate in London",
     ]);
     expect(es.figures.map((f) => f.label)).toEqual([
       "Serie A en FLUVIP, 2018",
-      "Ronda semilla en HoyTrabajas, 2022",
+      "Levantados en total en HoyTrabajas",
       "personas en los equipos que he liderado en mis empresas",
       "emprendedores alcanzados en el Consulado de Colombia en Londres",
     ]);
@@ -118,7 +118,7 @@ describe("getExperience", () => {
     }
     expect(experience.figures.filter((f) => f.source).map((f) => f.label)).toEqual([
       "Series A at FLUVIP, 2018",
-      "Seed round at HoyTrabajas, 2022",
+      "Raised in total at HoyTrabajas",
     ]);
   });
 

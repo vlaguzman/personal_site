@@ -2,7 +2,7 @@ import type { Locale } from "@/i18n/config";
 import { getHero, type HeroContent } from "./hero";
 import { milestones } from "./milestones";
 import { SITE } from "./site";
-import type { Fact, GalleryImage } from "./types";
+import type { GalleryImage } from "./types";
 
 export type SpeakingContent = {
   meta: { title: string; description: string };
@@ -13,7 +13,7 @@ export type SpeakingContent = {
   photo: HeroContent["photo"];
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
-  sections: { topics: string; featured: string; community: string; bio: string };
+  sections: { topics: string; featured: string; teaching: string; bio: string };
   /** Accessible name of the topics list. */
   topicsLabel: string;
   topics: { title: string; text: string }[];
@@ -45,7 +45,7 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
     sections: {
       topics: "What I speak about",
       featured: "Featured talk",
-      community: "In the community",
+      teaching: "Teaching",
       bio: "About Vladimir",
     },
     topicsLabel: "Speaking topics",
@@ -63,7 +63,7 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
         text: "Exploring education, meaningful work, leadership, inclusion and what helps people discover and develop their capabilities.",
       },
     ],
-    bio: "Vladimir Guzmán is a Colombian entrepreneur and technology builder based in London. He is the co-founder and former CTO of HoyTrabajas (Y Combinator W22), a former technology leader at FLUVIP, and is now building Gingga, AI-powered sales systems. At the Colombian Consulate in London he supported 270+ entrepreneurs through programmes and workshops.",
+    bio: "Vladimir Guzmán is a Colombian entrepreneur and technology builder based in London. He is the co-founder and former CTO of HoyTrabajas (Y Combinator W22), a former technology leader at FLUVIP, and is now building Gingga, AI-powered sales systems.",
     founderProfileLabel: "Download founder profile",
     closing: {
       titleLead: "Start the",
@@ -87,7 +87,7 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
     sections: {
       topics: "Sobre qué hablo",
       featured: "Charla destacada",
-      community: "En la comunidad",
+      teaching: "Docencia",
       bio: "Sobre Vladimir",
     },
     topicsLabel: "Temas de las charlas",
@@ -105,7 +105,7 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
         text: "Explorar la educación, el trabajo con sentido, el liderazgo, la inclusión y lo que ayuda a las personas a descubrir y desarrollar sus capacidades.",
       },
     ],
-    bio: "Vladimir Guzmán es un emprendedor colombiano y constructor de tecnología radicado en Londres. Es cofundador y ex-CTO de HoyTrabajas (Y Combinator W22), exlíder tecnológico de FLUVIP y hoy construye Gingga, sistemas de ventas con inteligencia artificial. En el Consulado de Colombia en Londres acompañó a 270+ emprendedores a través de programas y talleres.",
+    bio: "Vladimir Guzmán es un emprendedor colombiano y constructor de tecnología radicado en Londres. Es cofundador y ex-CTO de HoyTrabajas (Y Combinator W22), exlíder tecnológico de FLUVIP y hoy construye Gingga, sistemas de ventas con inteligencia artificial.",
     founderProfileLabel: "Descargar perfil de fundador",
     closing: {
       titleLead: "Empieza la",
@@ -115,40 +115,27 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
   },
 };
 
-const COMMUNITY: Record<Locale, CommunityText> = {
-  en: {
-    eyebrow: "LONDON · 2023–2025 · PROGRAMMES & WORKSHOPS",
-    title: "Colombian Consulate in London",
-    text: "I designed entrepreneurship programmes and delivered workshops for migrant entrepreneurs, from business development to digital transformation.",
-  },
-  es: {
-    eyebrow: "LONDRES · 2023–2025 · PROGRAMAS Y TALLERES",
-    title: "Consulado de Colombia en Londres",
-    text: "Diseñé programas de emprendimiento e impartí talleres para emprendedores migrantes, desde el desarrollo de negocios hasta la transformación digital.",
-  },
+const TEACHING: Record<Locale, { text: string }> = {
+  en: { text: "I have been a professor of entrepreneurship and AI applied to business." },
+  es: { text: "He sido profesor de emprendimiento e IA aplicada a los negocios." },
 };
+
+/** Photos from the journey in which he appears. More can be added here as they are uploaded. */
+const TEACHING_PHOTOS = ["/images/journey/consulate-london.jpg"];
 
 export function getSpeaking(lang: Locale): SpeakingContent {
   return { ...SPEAKING[lang], photo: getHero(lang).photo };
 }
 
 /**
- * The Consulate programmes as a speaking engagement. The video, photos and facts are read from
- * the journey so nothing is repeated; until the journey is translated their text stays English.
+ * His teaching. The general Consulate story (video, figures, all photos) lives on the journey;
+ * here only the photos where he appears are shown, read from the journey so nothing is repeated.
+ * Until the journey is translated, the photo alt text stays English.
  */
-export function getConsulateEngagement(lang: Locale) {
-  const milestone = milestones.find((m) => m.id === "year2023-community");
-  if (!milestone) throw new Error("Consulate milestone not found");
-  const video = milestone.blocks.find((b) => b.kind === "video");
-  const gallery = milestone.blocks.find((b) => b.kind === "gallery");
-  const facts = milestone.blocks.find((b) => b.kind === "facts");
-  if (video?.kind !== "video" || gallery?.kind !== "gallery" || facts?.kind !== "facts") {
-    throw new Error("Consulate milestone is missing its video, photos or facts");
-  }
-  return {
-    ...COMMUNITY[lang],
-    video: { youtubeId: video.youtubeId, title: video.title },
-    images: gallery.images as GalleryImage[],
-    facts: facts.items as Fact[],
-  };
+export function getTeaching(lang: Locale) {
+  const gallery = milestones.find((m) => m.id === "year2023-community")?.blocks.find((b) => b.kind === "gallery");
+  if (gallery?.kind !== "gallery") throw new Error("Consulate milestone has no photos");
+  const images = (gallery.images as GalleryImage[]).filter((i) => TEACHING_PHOTOS.includes(i.src));
+  if (images.length !== TEACHING_PHOTOS.length) throw new Error("A teaching photo is missing from the journey");
+  return { ...TEACHING[lang], images };
 }

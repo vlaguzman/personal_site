@@ -34,14 +34,13 @@ describe("Speaking", () => {
     expect(screen.getByAltText(TALK.coverAlt)).toBeInTheDocument();
   });
 
-  it("documents the Consulate programmes with the video, the photos and the figures", () => {
+  it("says he has taught, with the photo where he appears and none of the Consulate figures", () => {
     const { container } = render(<Speaking lang="en" />);
-    expect(screen.getByTitle(/Documentary of the first Entrepreneurship programme/)).toHaveAttribute(
-      "src",
-      expect.stringContaining("mp1-CpcOQUE"),
-    );
-    expect(container.querySelectorAll(".gallery-item")).toHaveLength(4);
-    expect(screen.getByText("270+")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Teaching" })).toBeInTheDocument();
+    expect(screen.getByText(/professor of entrepreneurship and AI applied to business/)).toBeInTheDocument();
+    expect(container.querySelectorAll(".gallery-item")).toHaveLength(1);
+    expect(container.querySelector("iframe")).toBeNull();
+    expect(container.textContent).not.toMatch(/270\+|NPS|87\.1/);
   });
 
   it("offers a short bio and the founder profile to download", () => {
@@ -82,12 +81,12 @@ describe("Speaking in Spanish", () => {
   it("translates the sections, the topics list, the talk and the bio", () => {
     render(<Speaking lang="es" />);
     expect(screen.getByRole("img", { name: "Vladimir Guzmán presentando en Clare Hall, Cambridge" })).toBeInTheDocument();
-    for (const name of ["Sobre qué hablo", "Charla destacada", "En la comunidad", "Sobre Vladimir"]) {
+    for (const name of ["Sobre qué hablo", "Charla destacada", "Docencia", "Sobre Vladimir"]) {
       expect(screen.getByRole("heading", { level: 2, name })).toBeInTheDocument();
     }
     expect(screen.getByRole("list", { name: "Temas de las charlas" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Ver diapositivas \(en inglés\)/ })).toHaveAttribute("href", TALK.pdf);
-    expect(screen.getByRole("link", { name: /Ver en YouTube/ })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /YouTube/ })).toBeNull();
     expect(screen.getByRole("link", { name: /Descargar perfil de fundador/ })).toHaveAttribute(
       "href",
       FOUNDER_PROFILE_PDF,

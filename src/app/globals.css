@@ -1734,7 +1734,7 @@ footer {
 
 .speaking-topics,
 .speaking-featured,
-.speaking-community,
+.speaking-teaching,
 .speaking-bio {
   padding-top: 64px;
   padding-bottom: 64px;
@@ -1742,7 +1742,7 @@ footer {
 
 .speaking-topics h2,
 .speaking-featured h2,
-.speaking-community h2,
+.speaking-teaching h2,
 .speaking-bio h2 {
   margin-bottom: 40px;
 }
@@ -1773,53 +1773,26 @@ footer {
   margin: 14px 0 0;
 }
 
-.speaking-community-grid {
+.speaking-teaching-grid {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 56px;
-  align-items: start;
+  align-items: center;
 }
 
-.speaking-community h3 {
+.speaking-teaching-grid p {
+  max-width: 480px;
+  font-family: var(--font-display);
+  font-weight: 700;
   font-size: var(--fs-h3);
-  line-height: 1.15;
-  margin-bottom: 16px;
-}
-
-.speaking-community-grid p {
-  font-size: var(--fs-body);
-  line-height: var(--lh-read);
-  color: var(--text-secondary);
-  margin: 0 0 28px;
-}
-
-.speaking-community .video {
-  margin: 0;
-  max-width: none;
-}
-
-.speaking-community .gallery {
-  max-width: none;
-  margin: 40px 0 0;
-}
-
-.speaking-facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px 40px;
+  line-height: 1.25;
+  letter-spacing: var(--tracking-heading);
   margin: 0;
 }
 
-.speaking-facts dt {
-  font-family: var(--font-mono);
-  font-size: var(--fs-h4);
-  line-height: 1.2;
-}
-
-.speaking-facts dd {
-  margin: 4px 0 0;
-  font-size: var(--fs-ui-sm);
-  color: var(--text-secondary);
+.speaking-teaching .gallery {
+  max-width: none;
+  margin: 0;
 }
 
 .speaking-bio {
@@ -2179,7 +2152,7 @@ footer {
 
   .speaking-topics,
   .speaking-featured,
-  .speaking-community,
+  .speaking-teaching,
   .speaking-bio {
     padding-top: 40px;
     padding-bottom: 40px;
@@ -2187,17 +2160,17 @@ footer {
 
   .speaking-topics h2,
   .speaking-featured h2,
-  .speaking-community h2 {
+  .speaking-teaching h2 {
     margin-bottom: 28px;
   }
 
   .speaking-topics ul,
-  .speaking-community-grid,
+  .speaking-teaching-grid,
   .speaking-bio {
     grid-template-columns: 1fr;
   }
 
-  .speaking-community-grid {
+  .speaking-teaching-grid {
     gap: 28px;
   }
 

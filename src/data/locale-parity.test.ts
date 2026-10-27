@@ -11,7 +11,7 @@ import { getIntro } from "./intro";
 import { getMedia } from "./media";
 import { getPurpose } from "./purpose";
 import { getSiteMeta } from "./site";
-import { getConsulateEngagement, getSpeaking } from "./speaking";
+import { getSpeaking, getTeaching } from "./speaking";
 import { getTalk } from "./talk";
 import { getWork } from "./work";
 
@@ -48,7 +48,7 @@ const getters = {
   chrome: getChrome,
   siteMeta: getSiteMeta,
   speaking: getSpeaking,
-  consulateEngagement: getConsulateEngagement,
+  teaching: getTeaching,
   talk: getTalk,
   media: getMedia,
   work: getWork,

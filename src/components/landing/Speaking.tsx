@@ -1,10 +1,9 @@
 import Image from "next/image";
 import { FOUNDER_PROFILE_PDF } from "@/data/site";
-import { getConsulateEngagement, getSpeaking } from "@/data/speaking";
+import { getSpeaking, getTeaching } from "@/data/speaking";
 import type { Locale } from "@/i18n/config";
 import { Gallery } from "./Gallery";
 import { TalkFeature } from "./TalkFeature";
-import { VideoEmbed } from "./VideoEmbed";
 
 function InviteLink({ className, cta }: { className: string; cta: { label: string; href: string } }) {
   return (
@@ -16,7 +15,7 @@ function InviteLink({ className, cta }: { className: string; cta: { label: strin
 
 export function Speaking({ lang }: { lang: Locale }) {
   const speaking = getSpeaking(lang);
-  const engagement = getConsulateEngagement(lang);
+  const teaching = getTeaching(lang);
 
   return (
     <>
@@ -70,25 +69,12 @@ export function Speaking({ lang }: { lang: Locale }) {
         <TalkFeature lang={lang} id="cambridge" />
       </section>
 
-      <section className="speaking-community wrap" aria-labelledby="speaking-community-title">
-        <h2 id="speaking-community-title">{speaking.sections.community}</h2>
-        <div className="speaking-community-grid">
-          <div>
-            <span className="eyebrow">{engagement.eyebrow}</span>
-            <h3>{engagement.title}</h3>
-            <p>{engagement.text}</p>
-            <dl className="speaking-facts">
-              {engagement.facts.map((fact) => (
-                <div key={fact.label}>
-                  <dt>{fact.value}</dt>
-                  <dd>{fact.label}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-          <VideoEmbed lang={lang} youtubeId={engagement.video.youtubeId} title={engagement.video.title} />
+      <section className="speaking-teaching wrap" aria-labelledby="speaking-teaching-title">
+        <h2 id="speaking-teaching-title">{speaking.sections.teaching}</h2>
+        <div className="speaking-teaching-grid">
+          <p>{teaching.text}</p>
+          <Gallery lang={lang} images={teaching.images} />
         </div>
-        <Gallery lang={lang} images={engagement.images} />
       </section>
 
       <section className="speaking-bio wrap" aria-labelledby="speaking-bio-title">

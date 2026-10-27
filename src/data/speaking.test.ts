@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { SITE } from "./site";
-import { getConsulateEngagement, getSpeaking } from "./speaking";
+import { getSpeaking, getTeaching } from "./speaking";
 
 describe("getSpeaking in English", () => {
   const speaking = getSpeaking("en");
@@ -31,7 +31,7 @@ describe("getSpeaking in English", () => {
     expect(speaking.sections).toEqual({
       topics: "What I speak about",
       featured: "Featured talk",
-      community: "In the community",
+      teaching: "Teaching",
       bio: "About Vladimir",
     });
     expect(speaking.closing).toMatchObject({ titleLead: "Start the", titleEmphasis: "conversation." });
@@ -76,44 +76,31 @@ describe("getSpeaking in Spanish", () => {
 });
 
 describe.each(["en", "es"] as const)("getSpeaking bio in %s", (lang) => {
-  it("introduces him with facts that appear elsewhere on the site", () => {
+  it("introduces him without repeating the Consulate figures that live on the journey", () => {
     const { bio } = getSpeaking(lang);
     expect(bio).toContain("Y Combinator W22");
-    expect(bio).toContain("270+");
+    expect(bio).not.toContain("270+");
   });
 });
 
-describe.each(["en", "es"] as const)("getConsulateEngagement in %s", (lang) => {
-  const engagement = getConsulateEngagement(lang);
-
-  it("is derived from the Consulate milestone instead of repeating it", () => {
-    expect(engagement.video.youtubeId).toBe("mp1-CpcOQUE");
-    expect(engagement.facts.map((f) => f.value)).toEqual(["270+", "87.1"]);
+describe("getTeaching", () => {
+  it("says he has taught entrepreneurship and AI applied to business", () => {
+    expect(getTeaching("en").text).toBe("I have been a professor of entrepreneurship and AI applied to business.");
+    expect(getTeaching("es").text).toBe("He sido profesor de emprendimiento e IA aplicada a los negocios.");
   });
 
-  it("has four photos that exist in public/", () => {
-    expect(engagement.images).toHaveLength(4);
-    for (const image of engagement.images) {
+  it.each(["en", "es"] as const)("shows only the photo where he appears, taken from the journey (%s)", (lang) => {
+    const teaching = getTeaching(lang);
+    expect(teaching.images.map((i) => i.src)).toEqual(["/images/journey/consulate-london.jpg"]);
+    for (const image of teaching.images) {
       expect(existsSync(`public${image.src}`), image.src).toBe(true);
       expect(image.alt.length).toBeGreaterThan(0);
     }
   });
-});
 
-describe("getConsulateEngagement copy", () => {
-  it("has English and Spanish text", () => {
-    expect(getConsulateEngagement("en")).toMatchObject({
-      eyebrow: "LONDON · 2023–2025 · PROGRAMMES & WORKSHOPS",
-      title: "Colombian Consulate in London",
-    });
-    expect(getConsulateEngagement("es")).toMatchObject({
-      eyebrow: "LONDRES · 2023–2025 · PROGRAMAS Y TALLERES",
-      title: "Consulado de Colombia en Londres",
-    });
-  });
-
-  // KNOWN LIMITATION until the journey is translated: the video title, photo alts and fact labels come from milestones.ts.
-  it("still reads the video title from the English milestone", () => {
-    expect(getConsulateEngagement("es").video.title).toBe(getConsulateEngagement("en").video.title);
+  it("leaves the video and the Consulate figures to the journey", () => {
+    const teaching = getTeaching("en") as Record<string, unknown>;
+    expect(teaching.video).toBeUndefined();
+    expect(teaching.facts).toBeUndefined();
   });
 });

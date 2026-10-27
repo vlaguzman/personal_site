@@ -41,7 +41,7 @@ const FIGURES = [
     },
   },
   {
-    value: "US$5m",
+    value: "US$5.5m",
     source: {
       label: "Forbes Colombia",
       href: "https://forbes.co/emprendedores/plataforma-de-empleos-hoytrabajas-capta-us5-millones-en-ronda-semilla",
@@ -73,7 +73,7 @@ const EXPERIENCE: Record<Locale, ExperienceText> = {
     figuresLabel: "Track record",
     figureLabels: [
       "Series A at FLUVIP, 2018",
-      "Seed round at HoyTrabajas, 2022",
+      "Raised in total at HoyTrabajas",
       "people in the teams I have led across my companies",
       "entrepreneurs reached at the Colombian Consulate in London",
     ],
@@ -98,7 +98,7 @@ const EXPERIENCE: Record<Locale, ExperienceText> = {
     figuresLabel: "Trayectoria en cifras",
     figureLabels: [
       "Serie A en FLUVIP, 2018",
-      "Ronda semilla en HoyTrabajas, 2022",
+      "Levantados en total en HoyTrabajas",
       "personas en los equipos que he liderado en mis empresas",
       "emprendedores alcanzados en el Consulado de Colombia en Londres",
     ],
