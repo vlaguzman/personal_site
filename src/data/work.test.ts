@@ -76,7 +76,7 @@ describe("getWork in Spanish", () => {
   it("keeps Gingga separate and closes with the decision", () => {
     expect(work.gingga).toEqual({
       title: "¿Buscas Gingga?",
-      text: "Gingga, la empresa que construye sistemas de ventas con inteligencia artificial, es independiente de este trabajo y tiene su propio sitio web. Si es lo que buscas, empieza por allí.",
+      text: "Gingga, la empresa que construye soluciones con inteligencia artificial para emprendedores, es independiente de este trabajo y tiene su propio sitio web. Si es lo que buscas, empieza por allí.",
       linkLabel: "Visitar Gingga",
     });
     expect(work.closing).toMatchObject({ titleLead: "Empieza por la", titleEmphasis: "decisión." });

@@ -251,8 +251,7 @@ export const milestonesEs: Milestone[] = [
     titleEmphasis: "Menos trabajo manual.",
     current: true,
     blocks: [
-      p("Estoy construyendo Gingga: sistemas de ventas con IA para negocios que invierten en Meta Ads y se relacionan con sus clientes potenciales a través de WhatsApp."),
-      p("Nuestro enfoque actual es el sector inmobiliario y la captación de estudiantes. Ayudamos a los negocios a responder consultas, calificar leads y hacer seguimiento, con personas involucradas donde importan el criterio y las relaciones."),
+      p("Estoy construyendo Gingga: soluciones con IA para emprendedores."),
       { kind: "button", label: "Conoce Gingga", href: "https://gingga.com/" },
       p("El siguiente paso: consolidar nuestros pilotos iniciales y demostrar un valor repetible para los clientes.", "small"),
     ],

@@ -61,7 +61,7 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
         text: "Exploring education, meaningful work, leadership, inclusion and what helps people discover and develop their capabilities.",
       },
     ],
-    bio: "Vladimir Guzmán is a Colombian entrepreneur and technology builder based in London. He is the co-founder and former CTO of HoyTrabajas (Y Combinator W22), a former technology leader at FLUVIP, and is now building Gingga, AI-powered sales systems.",
+    bio: "Vladimir Guzmán is a Colombian entrepreneur and technology builder based in London. He is the co-founder and former CTO of HoyTrabajas (Y Combinator W22), a former technology leader at FLUVIP, and is now building Gingga, AI solutions for entrepreneurs.",
     founderProfileLabel: "Download founder profile",
     closing: {
       titleLead: "Start the",
@@ -103,7 +103,7 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
         text: "Explorar la educación, el trabajo con sentido, el liderazgo, la inclusión y lo que ayuda a las personas a descubrir y desarrollar sus capacidades.",
       },
     ],
-    bio: "Vladimir Guzmán es un emprendedor colombiano y constructor de tecnología radicado en Londres. Es cofundador y ex-CTO de HoyTrabajas (Y Combinator W22), exlíder tecnológico de FLUVIP y hoy construye Gingga, sistemas de ventas con inteligencia artificial.",
+    bio: "Vladimir Guzmán es un emprendedor colombiano y constructor de tecnología radicado en Londres. Es cofundador y ex-CTO de HoyTrabajas (Y Combinator W22), exlíder tecnológico de FLUVIP y hoy construye Gingga, soluciones con inteligencia artificial para emprendedores.",
     founderProfileLabel: "Descargar perfil de fundador",
     closing: {
       titleLead: "Empieza la",

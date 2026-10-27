@@ -58,7 +58,7 @@ const WORK: Record<Locale, WorkContent> = {
     approach: "Engagements are considered individually, based on the problem, potential impact and fit.",
     gingga: {
       title: "Looking for Gingga?",
-      text: "Gingga, the company building AI-powered sales systems, is independent from this work and has its own website. If that is what you are looking for, start there.",
+      text: "Gingga, the company building AI solutions for entrepreneurs, is independent from this work and has its own website. If that is what you are looking for, start there.",
       linkLabel: "Visit Gingga",
     },
     closing: {
@@ -100,7 +100,7 @@ const WORK: Record<Locale, WorkContent> = {
     approach: "Cada colaboración se evalúa de forma individual, según el problema, el impacto potencial y la afinidad.",
     gingga: {
       title: "¿Buscas Gingga?",
-      text: "Gingga, la empresa que construye sistemas de ventas con inteligencia artificial, es independiente de este trabajo y tiene su propio sitio web. Si es lo que buscas, empieza por allí.",
+      text: "Gingga, la empresa que construye soluciones con inteligencia artificial para emprendedores, es independiente de este trabajo y tiene su propio sitio web. Si es lo que buscas, empieza por allí.",
       linkLabel: "Visitar Gingga",
     },
     closing: {
