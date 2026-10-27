@@ -1523,6 +1523,20 @@ footer {
   max-width: 760px;
 }
 
+/* Two videos in a row stay small enough to scan; a lone video keeps the full measure. */
+.video-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 38px 0;
+  max-width: 760px;
+}
+
+.video-row .video {
+  margin: 0;
+  max-width: none;
+}
+
 .video-embed {
   display: block;
   width: 100%;
@@ -2113,6 +2127,10 @@ footer {
    Mobile
    ========================================================================== */
 @media (max-width: 760px) {
+  .video-row {
+    grid-template-columns: 1fr;
+  }
+
   header {
     flex-wrap: wrap;
     gap: 18px;
