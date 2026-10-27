@@ -39,6 +39,15 @@ describe("Gallery", () => {
     expect(document.activeElement).toBe(screen.getByRole("button", { name: "Close photo viewer" }));
   });
 
+  it("keeps the alt text on the image but never shows it as a visible caption", () => {
+    render(<Gallery lang="en" images={images} />);
+    open("Second photo");
+    const dialog = screen.getByRole("dialog");
+    expect(dialog.querySelector("figcaption")).toBeNull();
+    expect(dialog.querySelector("img")).toHaveAttribute("alt", "Second photo");
+    expect(dialog).not.toHaveTextContent("Second photo");
+  });
+
   it("closes on Escape and returns focus to the trigger", () => {
     render(<Gallery lang="en" images={images} />);
     const trigger = screen.getByRole("button", { name: "Third photo" });

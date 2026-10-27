@@ -22,9 +22,9 @@ const IDEAS: Record<Locale, IdeasContent> = {
     listLabel: "Ideas worth challenging",
     items: [
       {
-        claim: "Not every business needs AI.",
+        claim: "Faster isn’t always better.",
         argument:
-          "Technology should solve meaningful problems, not simply follow trends. The question isn’t what we can automate, but what becomes possible when we do.",
+          "“Make it faster” is a founding premise of digital entrepreneurship, and AI has amplified it. What I’ve learned is that you don’t always have to run: whoever runs without knowing where they’re going never arrives anywhere.",
       },
       {
         claim: "Raising money isn’t the same as building a successful business.",
@@ -48,9 +48,9 @@ const IDEAS: Record<Locale, IdeasContent> = {
     listLabel: "Ideas que vale la pena cuestionar",
     items: [
       {
-        claim: "No todos los negocios necesitan inteligencia artificial.",
+        claim: "No siempre más rápido es mejor.",
         argument:
-          "La tecnología debe resolver problemas reales, no simplemente seguir tendencias. La pregunta no es cuánto podemos automatizar, sino qué nuevas posibilidades podemos crear.",
+          "Aunque “make it faster” es una premisa del emprendimiento digital, potenciada por la IA, he aprendido que no siempre hay que correr: quien corre sin saber a dónde va no llega a ningún lugar.",
       },
       {
         claim: "Levantar inversión no es lo mismo que construir una empresa exitosa.",

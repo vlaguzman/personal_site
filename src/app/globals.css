@@ -1628,15 +1628,6 @@ footer {
   border-radius: 6px;
 }
 
-.lightbox-figure figcaption {
-  max-width: 70ch;
-  margin: 16px auto 0;
-  text-align: center;
-  font-size: var(--fs-ui-sm);
-  line-height: var(--lh-ui);
-  color: var(--on-dark-secondary);
-}
-
 .lightbox-close,
 .lightbox-nav {
   position: absolute;

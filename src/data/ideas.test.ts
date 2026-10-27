@@ -22,22 +22,22 @@ describe("getIdeas", () => {
 
   it("states each idea as a claim, with a supporting argument", () => {
     expect(getIdeas("en").items.map((i) => i.claim)).toEqual([
-      "Not every business needs AI.",
+      "Faster isn’t always better.",
       "Raising money isn’t the same as building a successful business.",
       "Talent isn’t always the problem. Opportunity often is.",
     ]);
     expect(getIdeas("es").items.map((i) => i.claim)).toEqual([
-      "No todos los negocios necesitan inteligencia artificial.",
+      "No siempre más rápido es mejor.",
       "Levantar inversión no es lo mismo que construir una empresa exitosa.",
       "El talento no siempre es el problema. Las oportunidades muchas veces sí.",
     ]);
     expect(getIdeas("es").items.map((i) => i.argument)).toEqual([
-      "La tecnología debe resolver problemas reales, no simplemente seguir tendencias. La pregunta no es cuánto podemos automatizar, sino qué nuevas posibilidades podemos crear.",
+      "Aunque “make it faster” es una premisa del emprendimiento digital, potenciada por la IA, he aprendido que no siempre hay que correr: quien corre sin saber a dónde va no llega a ningún lugar.",
       "El capital abre puertas, pero son los clientes, la disciplina financiera y el valor que generamos los que sostienen un negocio.",
       "¿Y si una de nuestras mayores riquezas no estuviera en la tecnología, sino en el potencial de millones de personas que todavía no hemos aprendido a reconocer?",
     ]);
     expect(getIdeas("en").items.map((i) => i.argument)).toEqual([
-      "Technology should solve meaningful problems, not simply follow trends. The question isn’t what we can automate, but what becomes possible when we do.",
+      "“Make it faster” is a founding premise of digital entrepreneurship, and AI has amplified it. What I’ve learned is that you don’t always have to run: whoever runs without knowing where they’re going never arrives anywhere.",
       "Funding creates opportunities, but customers, financial discipline and real value are what sustain a company.",
       "What if our greatest untapped resource isn’t technology, but the human potential we haven’t learned to recognise?",
     ]);
