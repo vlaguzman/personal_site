@@ -35,11 +35,11 @@ describe("Speaking", () => {
     expect(screen.getByAltText(TALK.coverAlt)).toBeInTheDocument();
   });
 
-  it("says he has taught, with the photo where he appears and none of the Consulate figures", () => {
+  it("says he has taught, with the photos where he appears and none of the Consulate figures", () => {
     const { container } = render(<Speaking lang="en" />);
     expect(screen.getByRole("heading", { level: 2, name: "Teaching" })).toBeInTheDocument();
     expect(screen.queryByText(/taught across three lines|He dado formación/)).not.toBeInTheDocument();
-    expect(container.querySelectorAll(".speaking-classes .gallery-item")).toHaveLength(1);
+    expect(container.querySelectorAll(".speaking-classes .gallery-item")).toHaveLength(2);
     expect(container.querySelector("iframe")).toBeNull();
     expect(container.textContent).not.toMatch(/270\+|NPS|87\.1/);
   });

@@ -127,15 +127,24 @@ describe("getTeaching", () => {
     ]);
   });
 
-  it.each(["en", "es"] as const)("shows the portrait of him speaking with a microphone (%s)", (lang) => {
+  it.each(["en", "es"] as const)("shows the portrait of him speaking and the business model class (%s)", (lang) => {
     const { images } = getTeaching(lang);
-    expect(images.map((i) => i.src)).toEqual(["/images/speaking/speaker-microphone.jpg"]);
-    expect(existsSync(`public${images[0].src}`)).toBe(true);
+    expect(images.map((i) => i.src)).toEqual([
+      "/images/speaking/speaker-microphone.jpg",
+      "/images/speaking/business-model-class.jpg",
+    ]);
+    for (const image of images) expect(existsSync(`public${image.src}`)).toBe(true);
   });
 
-  it("describes the photo in each language", () => {
-    expect(getTeaching("en").images[0].alt).toBe("Vladimir Guzmán speaking into a microphone at an event");
-    expect(getTeaching("es").images[0].alt).toBe("Vladimir Guzmán hablando con un micrófono en un evento");
+  it("describes each photo in each language", () => {
+    expect(getTeaching("en").images.map((i) => i.alt)).toEqual([
+      "Vladimir Guzmán speaking into a microphone at an event",
+      "Vladimir Guzmán in a group selfie with workshop participants holding up their Business Model Canvas posters",
+    ]);
+    expect(getTeaching("es").images.map((i) => i.alt)).toEqual([
+      "Vladimir Guzmán hablando con un micrófono en un evento",
+      "Vladimir Guzmán en una selfie grupal con los participantes de un taller, mostrando sus pósters del Business Model Canvas",
+    ]);
   });
 
   it("leaves the video and the Consulate figures to the journey", () => {
@@ -192,6 +201,17 @@ describe("getCommunityProgram", () => {
       expect(existsSync(`public${image.src}`)).toBe(true);
       expect(image.alt.length).toBeGreaterThan(0);
     }
+  });
+
+  it("describes the photos with who is in them and what they show (en, es)", () => {
+    expect(getCommunityProgram("en").images.map((i) => i.alt)).toEqual([
+      "Vladimir Guzmán and Cristian Pedraza, leader of Spanglish, at the closing of the English classes of The Giving Lab programme",
+      "Vladimir Guzmán in a class of the skills-strengthening programme",
+    ]);
+    expect(getCommunityProgram("es").images.map((i) => i.alt)).toEqual([
+      "Vladimir Guzmán y Cristian Pedraza, líder de Spanglish, en el cierre de las clases del programa de inglés de The Giving Lab",
+      "Vladimir Guzmán en una clase del programa de fortalecimiento de habilidades",
+    ]);
   });
 });
 

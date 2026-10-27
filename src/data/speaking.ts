@@ -115,7 +115,7 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
 type TeachingText = {
   talksLabel: string;
   talks: string[];
-  photoAlt: string;
+  photoAlts: string[];
 };
 
 const TEACHING: Record<Locale, TeachingText> = {
@@ -128,7 +128,10 @@ const TEACHING: Record<Locale, TeachingText> = {
       "MVP Testing and Customer Feedback: Validating Ideas Through Real-World Experiments",
       "Marketing with AI",
     ],
-    photoAlt: "Vladimir Guzmán speaking into a microphone at an event",
+    photoAlts: [
+      "Vladimir Guzmán speaking into a microphone at an event",
+      "Vladimir Guzmán in a group selfie with workshop participants holding up their Business Model Canvas posters",
+    ],
   },
   es: {
     talksLabel: "Tuve la oportunidad de trabajar con la comunidad colombiana y la tecnología en clases como:",
@@ -139,12 +142,15 @@ const TEACHING: Record<Locale, TeachingText> = {
       "Pruebas de MVP y feedback de clientes: validar ideas con experimentos reales",
       "Marketing con IA",
     ],
-    photoAlt: "Vladimir Guzmán hablando con un micrófono en un evento",
+    photoAlts: [
+      "Vladimir Guzmán hablando con un micrófono en un evento",
+      "Vladimir Guzmán en una selfie grupal con los participantes de un taller, mostrando sus pósters del Business Model Canvas",
+    ],
   },
 };
 
-/** Photos of him teaching. Add more here as they are uploaded; each needs its alt text in both languages. */
-const TEACHING_PHOTOS = ["/images/speaking/speaker-microphone.jpg"];
+/** Photos of him teaching. Add more here as they are uploaded; each needs its alt text in both languages, in the same order. */
+const TEACHING_PHOTOS = ["/images/speaking/speaker-microphone.jpg", "/images/speaking/business-model-class.jpg"];
 
 export function getSpeaking(lang: Locale): SpeakingContent {
   return { ...SPEAKING[lang], photo: getHero(lang).photo };
@@ -152,8 +158,8 @@ export function getSpeaking(lang: Locale): SpeakingContent {
 
 /** His teaching: the classes he gave and the photos where he appears. The general Consulate story lives on the journey. */
 export function getTeaching(lang: Locale) {
-  const { photoAlt, ...rest } = TEACHING[lang];
-  return { ...rest, images: TEACHING_PHOTOS.map((src) => ({ src, alt: photoAlt })) };
+  const { photoAlts, ...rest } = TEACHING[lang];
+  return { ...rest, images: TEACHING_PHOTOS.map((src, i) => ({ src, alt: photoAlts[i] })) };
 }
 
 type CommunityProgramText = {
@@ -171,8 +177,8 @@ const COMMUNITY_PROGRAM: Record<Locale, CommunityProgramText> = {
     classes: ["English for work", "English from zero", "English for older adults", "Soft skills development"],
     linkLabel: "Visit The Giving Lab",
     photoAlts: [
-      "Vladimir Guzmán and another person smiling in front of a screen with the Spanglish and The Giving Lab logos",
-      "Adult learners around a table in an English class, with Vladimir Guzmán standing at the back",
+      "Vladimir Guzmán and Cristian Pedraza, leader of Spanglish, at the closing of the English classes of The Giving Lab programme",
+      "Vladimir Guzmán in a class of the skills-strengthening programme",
     ],
   },
   es: {
@@ -187,8 +193,8 @@ const COMMUNITY_PROGRAM: Record<Locale, CommunityProgramText> = {
     ],
     linkLabel: "Conocer The Giving Lab",
     photoAlts: [
-      "Vladimir Guzmán y otra persona sonriendo frente a una pantalla con los logos de Spanglish y The Giving Lab",
-      "Personas adultas alrededor de una mesa en una clase de inglés, con Vladimir Guzmán de pie al fondo",
+      "Vladimir Guzmán y Cristian Pedraza, líder de Spanglish, en el cierre de las clases del programa de inglés de The Giving Lab",
+      "Vladimir Guzmán en una clase del programa de fortalecimiento de habilidades",
     ],
   },
 };
