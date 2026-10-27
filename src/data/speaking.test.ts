@@ -89,13 +89,19 @@ describe("getTeaching", () => {
     expect(getTeaching("es").text).toBe("He sido profesor de emprendimiento e IA aplicada a los negocios.");
   });
 
-  it.each(["en", "es"] as const)("shows only the photo where he appears, taken from the journey (%s)", (lang) => {
-    const teaching = getTeaching(lang);
-    expect(teaching.images.map((i) => i.src)).toEqual(["/images/journey/consulate-london.jpg"]);
-    for (const image of teaching.images) {
-      expect(existsSync(`public${image.src}`), image.src).toBe(true);
-      expect(image.alt.length).toBeGreaterThan(0);
-    }
+  it.each(["en", "es"] as const)("shows the portrait of him speaking at the Consulate (%s)", (lang) => {
+    const { images } = getTeaching(lang);
+    expect(images.map((i) => i.src)).toEqual(["/images/speaking/consulate-speaker.jpg"]);
+    expect(existsSync(`public${images[0].src}`)).toBe(true);
+  });
+
+  it("describes the photo in each language", () => {
+    expect(getTeaching("en").images[0].alt).toBe(
+      "Vladimir Guzmán speaking into a microphone at a Colombian Consulate event in London",
+    );
+    expect(getTeaching("es").images[0].alt).toBe(
+      "Vladimir Guzmán hablando con un micrófono en un evento del Consulado de Colombia en Londres",
+    );
   });
 
   it("leaves the video and the Consulate figures to the journey", () => {

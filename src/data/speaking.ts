@@ -1,8 +1,6 @@
 import type { Locale } from "@/i18n/config";
 import { getHero, type HeroContent } from "./hero";
-import { milestones } from "./milestones";
 import { SITE } from "./site";
-import type { GalleryImage } from "./types";
 
 export type SpeakingContent = {
   meta: { title: string; description: string };
@@ -115,27 +113,26 @@ const SPEAKING: Record<Locale, Omit<SpeakingContent, "photo">> = {
   },
 };
 
-const TEACHING: Record<Locale, { text: string }> = {
-  en: { text: "I have been a professor of entrepreneurship and AI applied to business." },
-  es: { text: "He sido profesor de emprendimiento e IA aplicada a los negocios." },
+const TEACHING: Record<Locale, { text: string; photoAlt: string }> = {
+  en: {
+    text: "I have been a professor of entrepreneurship and AI applied to business.",
+    photoAlt: "Vladimir Guzmán speaking into a microphone at a Colombian Consulate event in London",
+  },
+  es: {
+    text: "He sido profesor de emprendimiento e IA aplicada a los negocios.",
+    photoAlt: "Vladimir Guzmán hablando con un micrófono en un evento del Consulado de Colombia en Londres",
+  },
 };
 
-/** Photos from the journey in which he appears. More can be added here as they are uploaded. */
-const TEACHING_PHOTOS = ["/images/journey/consulate-london.jpg"];
+/** Photos of him teaching. Add more here as they are uploaded; each needs its alt text in both languages. */
+const TEACHING_PHOTOS = ["/images/speaking/consulate-speaker.jpg"];
 
 export function getSpeaking(lang: Locale): SpeakingContent {
   return { ...SPEAKING[lang], photo: getHero(lang).photo };
 }
 
-/**
- * His teaching. The general Consulate story (video, figures, all photos) lives on the journey;
- * here only the photos where he appears are shown, read from the journey so nothing is repeated.
- * Until the journey is translated, the photo alt text stays English.
- */
+/** His teaching: a line about it and the photos where he appears. The general Consulate story lives on the journey. */
 export function getTeaching(lang: Locale) {
-  const gallery = milestones.find((m) => m.id === "year2023-community")?.blocks.find((b) => b.kind === "gallery");
-  if (gallery?.kind !== "gallery") throw new Error("Consulate milestone has no photos");
-  const images = (gallery.images as GalleryImage[]).filter((i) => TEACHING_PHOTOS.includes(i.src));
-  if (images.length !== TEACHING_PHOTOS.length) throw new Error("A teaching photo is missing from the journey");
-  return { ...TEACHING[lang], images };
+  const { text, photoAlt } = TEACHING[lang];
+  return { text, images: TEACHING_PHOTOS.map((src) => ({ src, alt: photoAlt })) };
 }
