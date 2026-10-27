@@ -31,8 +31,8 @@ export default async function Home({ params }: Props) {
       <main>
         <Hero lang={lang} />
         <Intro lang={lang} />
-        <Ideas lang={lang} />
         <Experience lang={lang} />
+        <Ideas lang={lang} />
         <Beliefs lang={lang} />
         <Purpose lang={lang} />
         <Conversations lang={lang} />

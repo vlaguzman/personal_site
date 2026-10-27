@@ -6,7 +6,7 @@ import { excerpt } from "@/lib/essays";
 // next/font/google is resolved by the Next compiler; stub it for node/jsdom tests.
 vi.mock("next/font/google", () => {
   const font = () => ({ variable: "font-var", className: "font-class" });
-  return { Inter: font, JetBrains_Mono: font, Playfair_Display: font };
+  return { Geist: font, Geist_Mono: font, Newsreader: font };
 });
 
 import RootLayout, * as layoutModule from "./layout";
@@ -65,7 +65,7 @@ describe("layout metadata", () => {
   });
 
   it("keeps the viewport and theme colour", () => {
-    expect(layoutModule.viewport).toMatchObject({ width: "device-width", themeColor: "#0F1F18" });
+    expect(layoutModule.viewport).toMatchObject({ width: "device-width", themeColor: "#172033" });
   });
 
   it("returns no metadata for an unsupported locale", async () => {

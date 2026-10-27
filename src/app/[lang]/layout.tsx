@@ -1,29 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { Geist, Geist_Mono, Newsreader } from "next/font/google";
 import { notFound } from "next/navigation";
 import { getSiteMeta, SITE } from "@/data/site";
 import { hasLocale, LOCALES } from "@/i18n/config";
 import "../globals.css";
 
-const playfair = Playfair_Display({
+// Editorial headlines: Newsreader (variable weight, with italics for the emphasised word).
+const newsreader = Newsreader({
   subsets: ["latin"],
-  weight: "700",
   style: ["normal", "italic"],
-  variable: "--font-playfair",
+  variable: "--font-newsreader",
   display: "swap",
 });
 
-const inter = Inter({
+// Body and interface.
+const geist = Geist({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-inter",
+  variable: "--font-geist",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+// Small labels and figures.
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-jetbrains",
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
@@ -52,7 +52,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   if (!hasLocale(lang)) notFound();
 
   return (
-    <html lang={lang} className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang={lang} className={`${newsreader.variable} ${geist.variable} ${geistMono.variable}`}>
       <body>{children}</body>
     </html>
   );
