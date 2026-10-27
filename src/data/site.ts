@@ -4,6 +4,7 @@ export const SITE = {
     "Vladimir Guzmán. Colombian entrepreneur, software engineer and founder of Gingga. A journey through technology, entrepreneurship and community.",
   themeColor: "#0F1F18",
   email: "guzman.vla@gmail.com",
+  calendly: "https://calendly.com/guzman-vla/ideas",
   linkedin: "https://www.linkedin.com/in/vlaguzman/",
 } as const;
 

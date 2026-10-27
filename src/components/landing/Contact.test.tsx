@@ -4,9 +4,13 @@ import { SITE } from "@/data/site";
 import { Contact } from "./Contact";
 
 describe("Contact", () => {
-  it("renders the mailto link", () => {
+  it("links to the Calendly booking page in a new tab instead of email", () => {
     render(<Contact />);
-    expect(screen.getByRole("link", { name: new RegExp(SITE.email) })).toHaveAttribute("href", `mailto:${SITE.email}`);
+    const link = screen.getByRole("link", { name: /Book a conversation/ });
+    expect(link).toHaveAttribute("href", SITE.calendly);
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(screen.queryByRole("link", { name: new RegExp(SITE.email) })).not.toBeInTheDocument();
   });
 
   it("opens LinkedIn safely in a new tab", () => {
