@@ -31,6 +31,11 @@ describe("Header", () => {
     expect(screen.getByRole("link", { name: "Speaking" })).toHaveAttribute("href", "/speaking");
   });
 
+  it("links to the work together page with a plain route", () => {
+    render(<Header />);
+    expect(screen.getByRole("link", { name: "Work together" })).toHaveAttribute("href", "/work-together");
+  });
+
   it("links to the essays hub with a plain route", () => {
     render(<Header />);
     expect(screen.getByRole("link", { name: "Essays" })).toHaveAttribute("href", "/essays");

@@ -32,4 +32,9 @@ describe("Footer", () => {
     render(<Footer />);
     expect(screen.getByRole("link", { name: "Speaking" })).toHaveAttribute("href", "/speaking");
   });
+
+  it("links to the work together page", () => {
+    render(<Footer />);
+    expect(screen.getByRole("link", { name: "Work together" })).toHaveAttribute("href", "/work-together");
+  });
 });

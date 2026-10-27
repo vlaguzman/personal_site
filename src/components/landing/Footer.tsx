@@ -7,6 +7,7 @@ export function Footer({ year = new Date().getFullYear() }: { year?: number }) {
       <span>Colombian entrepreneur. Based in London.</span>
       <Link href="/journey">Journey</Link>
       <Link href="/speaking">Speaking</Link>
+      <Link href="/work-together">Work together</Link>
       <Link href="/essays">Essays</Link>
       <a href="#home">Back to top ↑</a>
     </footer>

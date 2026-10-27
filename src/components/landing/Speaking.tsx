@@ -99,7 +99,7 @@ export function Speaking() {
         </div>
       </section>
 
-      <section className="speaking-closing">
+      <section className="page-closing">
         <div className="wrap">
           <h2>
             Start the <em>conversation.</em>
