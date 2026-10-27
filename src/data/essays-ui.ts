@@ -3,7 +3,8 @@ import type { Topic } from "./types";
 
 /**
  * Interface text of the essays hub and the essay page. The essays themselves
- * (titles, bodies, slugs) are not translated here: they are Spanish originals.
+ * (titles, bodies, slugs) are not here: see `posts.ts` (Spanish originals) and
+ * `posts-en.ts` (English translations).
  * `Topic` keys stay English because they drive filtering; only the label is localised.
  */
 export type EssaysUi = {
@@ -23,6 +24,11 @@ export type EssaysUi = {
   readingTimeShort: (minutes: number) => string;
   /** Notice for an essay written in a language other than the page's. Receives the essay's language. */
   languageNote: { short: (essayLang: Locale) => string; long: (essayLang: Locale) => string };
+  /**
+   * Labels for the AI translations. `badge` is the chip shown wherever a translated essay appears;
+   * `note` and `readOriginal` sit in the translated article's header; `readTranslation` sits in the original's.
+   */
+  translation: { badge: string; note: string; readOriginal: string; readTranslation: string };
   share: { label: string; x: string; linkedin: string };
   newsletter: {
     title: string;
@@ -52,7 +58,7 @@ const ESSAYS_UI: Record<Locale, EssaysUi> = {
       titleLead: "Lessons from",
       titleEmphasis: "building",
       intro:
-        "Notes on startups, strategy and building companies, written after the fact from my own ventures. Organised by topic rather than date, so you can read in whatever order serves you. The essays are in Spanish, the language I wrote them in.",
+        "Notes on startups, strategy and building companies, written after the fact from my own ventures. Organised by topic rather than date, so you can read in whatever order serves you. The originals are in Spanish, the language I wrote them in. Each one also has an English translation, made with AI.",
     },
     filterLabel: "Filter by topic",
     allLabel: "All",
@@ -71,6 +77,12 @@ const ESSAYS_UI: Record<Locale, EssaysUi> = {
     languageNote: {
       short: (essayLang) => `In ${LANGUAGE_NAMES.en[essayLang]}`,
       long: (essayLang) => `Written in ${LANGUAGE_NAMES.en[essayLang]}`,
+    },
+    translation: {
+      badge: "Translated with AI",
+      note: "Translated with AI from the Spanish original.",
+      readOriginal: "Read the original in Spanish",
+      readTranslation: "Read in English (translated with AI)",
     },
     share: { label: "SHARE", x: "Share on X", linkedin: "Share on LinkedIn" },
     newsletter: {
@@ -94,7 +106,7 @@ const ESSAYS_UI: Record<Locale, EssaysUi> = {
       titleLead: "Lo que aprendí",
       titleEmphasis: "construyendo",
       intro:
-        "Notas sobre startups, estrategia y cómo construir empresas, escritas en retrospectiva a partir de mis propios proyectos. Organizadas por tema y no por fecha, para que las leas en el orden que más te sirva. Están en su idioma original, el español.",
+        "Notas sobre startups, estrategia y cómo construir empresas, escritas en retrospectiva a partir de mis propios proyectos. Organizadas por tema y no por fecha, para que las leas en el orden que más te sirva. Están en su idioma original, el español. Cada uno tiene también una traducción al inglés hecha con IA.",
     },
     filterLabel: "Filtrar por tema",
     allLabel: "Todos",
@@ -113,6 +125,12 @@ const ESSAYS_UI: Record<Locale, EssaysUi> = {
     languageNote: {
       short: (essayLang) => `En ${LANGUAGE_NAMES.es[essayLang]}`,
       long: (essayLang) => `Escrito en ${LANGUAGE_NAMES.es[essayLang]}`,
+    },
+    translation: {
+      badge: "Traducido con IA",
+      note: "Traducido con IA a partir del original en español.",
+      readOriginal: "Leer el original en español",
+      readTranslation: "Leer en inglés (traducido con IA)",
     },
     share: { label: "COMPARTIR", x: "Compartir en X", linkedin: "Compartir en LinkedIn" },
     newsletter: {

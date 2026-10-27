@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import { ESSAYS } from "@/data/essays";
+import { ESSAYS, getEssays } from "@/data/essays";
 import { alternatesFor } from "@/i18n/config";
+import { excerpt } from "@/lib/essays";
 
 // next/font/google is resolved by the Next compiler; stub it for node/jsdom tests.
 vi.mock("next/font/google", () => {
@@ -113,5 +114,23 @@ describe("page metadata", () => {
     const metadata = await essay.generateMetadata(params({ lang: "es", slug }));
     expect(metadata.alternates).toEqual(alternatesFor("es", `/essays/${slug}`));
     expect(metadata.title).toContain("Vladimir Guzmán");
+    expect(metadata.title).toContain(ESSAYS[0]!.title);
+  });
+
+  it("english essay pages use the translated title and excerpt, with the same alternates", async () => {
+    for (const [i, translation] of getEssays("en").entries()) {
+      const slug = ESSAYS[i]!.slug;
+      const metadata = await essay.generateMetadata(params({ lang: "en", slug }));
+      expect(metadata.title).toBe(`${translation.title} | Vladimir Guzmán`);
+      expect(metadata.title).not.toContain(ESSAYS[i]!.title);
+      expect(metadata.description).toBe(excerpt(translation.sections, 160));
+      expect(metadata.alternates).toEqual(alternatesFor("en", `/essays/${slug}`));
+      expect(metadata.openGraph).toMatchObject({ locale: "en", title: translation.title });
+    }
+  });
+
+  it("spanish essay pages keep the original title and locale", async () => {
+    const metadata = await essay.generateMetadata(params({ lang: "es", slug: ESSAYS[0]!.slug }));
+    expect(metadata.openGraph).toMatchObject({ locale: "es", title: ESSAYS[0]!.title });
   });
 });

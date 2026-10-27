@@ -6,7 +6,7 @@ export type Venture = { href: string; name: string; note: string };
 
 export type PostSection = { heading?: string; text: string };
 
-/** A blog entry, written in Spanish. */
+/** A blog entry. The originals are in Spanish; `posts-en.ts` holds the English translations. */
 export type Post = { title: string; sections: PostSection[] };
 
 export type GalleryImage = { src: string; alt: string };
@@ -60,6 +60,8 @@ export type Essay = {
   /** Omitted when the title and body do not clearly belong to one topic. */
   topic?: Topic;
   lang: "es" | "en";
+  /** True for an English translation of a Spanish original, made with AI. Always shown to the reader. */
+  translatedWithAI?: boolean;
   sections: PostSection[];
   image?: { src: string; alt: string; width: number; height: number };
 };

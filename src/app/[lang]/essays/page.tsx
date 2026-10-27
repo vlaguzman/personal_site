@@ -5,7 +5,7 @@ import { Footer } from "@/components/landing/Footer";
 import { Header } from "@/components/landing/Header";
 import { NewsletterSignup } from "@/components/landing/NewsletterSignup";
 import { StartHere } from "@/components/landing/StartHere";
-import { ESSAYS, START_HERE_SLUG } from "@/data/essays";
+import { getEssays, START_HERE_SLUG } from "@/data/essays";
 import { getEssaysUi } from "@/data/essays-ui";
 import { NEWSLETTER, SITE } from "@/data/site";
 import { alternatesFor, hasLocale } from "@/i18n/config";
@@ -27,7 +27,8 @@ export default async function EssaysPage({ params }: Props) {
   if (!hasLocale(lang)) notFound();
 
   const ui = getEssaysUi(lang);
-  const startHere = getEssay(START_HERE_SLUG, ESSAYS);
+  const essays = getEssays(lang);
+  const startHere = getEssay(START_HERE_SLUG, essays);
 
   return (
     <>
@@ -41,7 +42,7 @@ export default async function EssaysPage({ params }: Props) {
           <p>{ui.hub.intro}</p>
         </div>
         {startHere && <StartHere lang={lang} essay={startHere} />}
-        <EssayBrowser lang={lang} essays={ESSAYS} />
+        <EssayBrowser lang={lang} essays={essays} />
         <NewsletterSignup lang={lang} endpoint={NEWSLETTER.endpoint} email={SITE.email} />
       </main>
       <Footer lang={lang} />

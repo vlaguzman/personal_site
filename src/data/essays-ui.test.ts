@@ -21,7 +21,10 @@ describe("getEssaysUi", () => {
     const ui = getEssaysUi("en");
     expect(ui.meta.title).toBe("Essays | Vladimir Guzmán");
     expect(ui.hub).toMatchObject({ eyebrow: "ESSAYS", titleLead: "Lessons from", titleEmphasis: "building" });
-    expect(ui.hub.intro).toContain("The essays are in Spanish");
+    expect(ui.hub.intro).toMatch(
+      /The originals are in Spanish, the language I wrote them in\. Each one also has an English translation, made with AI\.$/,
+    );
+    expect(ui.hub.intro).not.toContain("The essays are in Spanish");
     expect(ui.filterLabel).toBe("Filter by topic");
     expect(ui.allLabel).toBe("All");
     expect(ui.startHere).toBe("Start here");
@@ -57,7 +60,25 @@ describe("getEssaysUi", () => {
     expect(ui.meta.title).toBe("Ensayos | Vladimir Guzmán");
     expect(ui.hub.eyebrow).toBe("ENSAYOS");
     expect(ui.startHere).toBe("Empieza aquí");
-    expect(ui.hub.intro).toContain("su idioma original");
+    expect(ui.hub.intro).toMatch(/Están en su idioma original, el español\. Cada uno tiene también una traducción al inglés hecha con IA\.$/);
     expect(ui.topics.Product).toBe("Producto");
+  });
+
+  it("labels the AI translation in English", () => {
+    expect(getEssaysUi("en").translation).toEqual({
+      badge: "Translated with AI",
+      note: "Translated with AI from the Spanish original.",
+      readOriginal: "Read the original in Spanish",
+      readTranslation: "Read in English (translated with AI)",
+    });
+  });
+
+  it("labels the AI translation in Spanish", () => {
+    expect(getEssaysUi("es").translation).toEqual({
+      badge: "Traducido con IA",
+      note: "Traducido con IA a partir del original en español.",
+      readOriginal: "Leer el original en español",
+      readTranslation: "Leer en inglés (traducido con IA)",
+    });
   });
 });

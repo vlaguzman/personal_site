@@ -24,9 +24,10 @@ const pages: Record<string, (lang: Locale) => Promise<ReactElement>> = {
 describe.each(LOCALES)("internal links on the %s site", (lang) => {
   it.each(Object.keys(pages))("every internal link on %s carries the locale prefix", async (name) => {
     const { container } = render(await pages[name]!(lang));
-    // The language switcher deliberately links to the other locale, so it is checked separately below.
+    // The language switcher and the original/translation links deliberately point to the other
+    // locale; the switcher is checked separately below, the translation links in essays-translation.test.tsx.
     const hrefs = [...container.querySelectorAll("a[href]")]
-      .filter((a) => !a.closest("nav.lang-switch"))
+      .filter((a) => !a.closest("nav.lang-switch") && !a.closest(".essay-translation"))
       .map((a) => a.getAttribute("href") ?? "");
     expect(hrefs.length).toBeGreaterThan(0);
 

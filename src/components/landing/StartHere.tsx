@@ -3,6 +3,7 @@ import { getEssaysUi } from "@/data/essays-ui";
 import type { Essay } from "@/data/types";
 import { localePath, type Locale } from "@/i18n/config";
 import { excerpt, readingTimeMinutes } from "@/lib/essays";
+import { TranslationBadge } from "./TranslationBadge";
 
 export function StartHere({ essay, lang }: { essay: Essay; lang: Locale }) {
   const ui = getEssaysUi(lang);
@@ -13,6 +14,7 @@ export function StartHere({ essay, lang }: { essay: Essay; lang: Locale }) {
       <h2 id="essays-start-title" lang={essay.lang}>
         <Link href={localePath(lang, `/essays/${essay.slug}`)}>{essay.title}</Link>
       </h2>
+      {essay.translatedWithAI && <TranslationBadge lang={lang} />}
       <p lang={essay.lang}>{excerpt(essay.sections, 220)}</p>
       <p className="essay-meta">
         {essay.topic && <span>{ui.topics[essay.topic]}</span>}

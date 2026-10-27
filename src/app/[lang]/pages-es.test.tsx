@@ -31,6 +31,8 @@ const ENGLISH_PHRASES = [
   "Subscribe",
   "Related reading",
   "Start here",
+  "Translated with AI",
+  "Read the original in Spanish",
 ];
 
 const slug = ESSAYS[0]!.slug;

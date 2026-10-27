@@ -44,3 +44,26 @@ describe("StartHere with the Spanish locale", () => {
     expect(screen.queryByText(/En español/)).not.toBeInTheDocument();
   });
 });
+
+describe("StartHere translation label", () => {
+  const translation: Essay = { ...essay, title: "Read this first", lang: "en", translatedWithAI: true };
+
+  it("shows a visible Translated with AI label on an AI translation", () => {
+    render(<StartHere lang="en" essay={translation} />);
+    expect(screen.getByText("Translated with AI")).toBeVisible();
+    expect(screen.getByText("Translated with AI")).toHaveClass("essay-ai-badge");
+    expect(screen.getByRole("link", { name: "Read this first" })).toHaveAttribute("href", "/en/essays/primero");
+    expect(screen.queryByText("In Spanish")).not.toBeInTheDocument();
+  });
+
+  it("does not label an original", () => {
+    render(<StartHere lang="es" essay={essay} />);
+    expect(screen.queryByText(/Translated with AI|Traducido con IA/)).not.toBeInTheDocument();
+  });
+
+  it("labels in the page language", () => {
+    render(<StartHere lang="es" essay={translation} />);
+    expect(screen.getByText("Traducido con IA")).toHaveClass("essay-ai-badge");
+  });
+});
+

@@ -2722,6 +2722,44 @@ footer {
   margin-bottom: 20px;
 }
 
+/* Chip that marks an AI translation. Bordered text on cream: the words are the signal, not the colour. */
+.essay-ai-badge {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 16px;
+  padding: 2px 10px;
+  border: 1px solid var(--primary);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  line-height: var(--lh-ui);
+  color: var(--primary);
+}
+
+.essay-translation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+  margin: 20px 0 0;
+  font-size: var(--fs-ui-sm);
+  color: var(--text);
+}
+
+.essay-translation p {
+  margin: 0;
+}
+
+.essay-translation .essay-ai-badge {
+  margin-bottom: 0;
+}
+
+.essay-translation a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .essay-body {
   font-size: 1.125rem; /* 18px; steps up to 20px on wide screens */
   line-height: var(--lh-read);

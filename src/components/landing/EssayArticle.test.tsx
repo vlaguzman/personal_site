@@ -105,3 +105,46 @@ describe("EssayArticle with the Spanish locale", () => {
     expect(container.querySelector(".essay-share")).toHaveAttribute("lang", "es");
   });
 });
+
+describe("EssayArticle translation", () => {
+  const translation: Essay = { ...fixture, slug: "ser-emprendedor", translatedWithAI: true };
+  const original: Essay = { ...fixture, slug: "ser-emprendedor", lang: "es", title: "Ser emprendedor" };
+
+  it("labels an AI translation in the header and links to the Spanish original", () => {
+    const { container } = render(<EssayArticle lang="en" essay={translation} related={[]} />);
+    const header = container.querySelector(".essay-header")!;
+    expect(within(header as HTMLElement).getByText("Translated with AI")).toHaveClass("essay-ai-badge");
+    expect(within(header as HTMLElement).getByText("Translated with AI from the Spanish original.")).toBeVisible();
+    expect(within(header as HTMLElement).getByRole("link", { name: "Read the original in Spanish" })).toHaveAttribute(
+      "href",
+      "/es/essays/ser-emprendedor",
+    );
+  });
+
+  it("shows no language notice for a translation read in its own language", () => {
+    render(<EssayArticle lang="en" essay={translation} related={[]} />);
+    expect(screen.queryByText(/Written in Spanish/)).not.toBeInTheDocument();
+  });
+
+  it("keeps the translation block out of an original that has no translation", () => {
+    render(<EssayArticle lang="es" essay={original} related={[]} />);
+    expect(screen.queryByText(/Translated with AI|Traducido con IA/)).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Leer en inglés/ })).not.toBeInTheDocument();
+  });
+
+  it("offers the English translation from a Spanish original that has one", () => {
+    render(<EssayArticle lang="es" essay={original} related={[]} translationAvailable />);
+    expect(screen.getByRole("link", { name: "Leer en inglés (traducido con IA)" })).toHaveAttribute(
+      "href",
+      "/en/essays/ser-emprendedor",
+    );
+    expect(screen.queryByText("Traducido con IA")).not.toBeInTheDocument();
+  });
+
+  it("labels and links in the page language", () => {
+    render(<EssayArticle lang="es" essay={translation} related={[]} />);
+    expect(screen.getByText("Traducido con IA")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Leer el original en español" })).toHaveAttribute("href", "/es/essays/ser-emprendedor");
+  });
+});
+
