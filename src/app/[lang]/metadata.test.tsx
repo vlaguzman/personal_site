@@ -4,9 +4,14 @@ import { alternatesFor } from "@/i18n/config";
 import { excerpt } from "@/lib/essays";
 
 // next/font/google is resolved by the Next compiler; stub it for node/jsdom tests.
+// The options each font factory receives are kept so tests can assert the font setup.
+const fontOptions = vi.hoisted(() => ({}) as Record<string, Record<string, unknown>>);
 vi.mock("next/font/google", () => {
-  const font = () => ({ variable: "font-var", className: "font-class" });
-  return { Geist: font, Geist_Mono: font, Newsreader: font };
+  const font = (name: string) => (options: Record<string, unknown>) => {
+    fontOptions[name] = options;
+    return { variable: "font-var", className: "font-class" };
+  };
+  return { Geist: font("Geist"), Geist_Mono: font("Geist_Mono"), Newsreader: font("Newsreader") };
 });
 
 import RootLayout, * as layoutModule from "./layout";
@@ -42,6 +47,13 @@ describe("root layout", () => {
 
   it("answers 404 for an unsupported locale", async () => {
     await expect(RootLayout({ children: null, ...params({ lang: "fr" }) })).rejects.toThrow();
+  });
+});
+
+describe("typefaces", () => {
+  it("loads Newsreader with its optical-size axis so large headlines get the refined display cut", () => {
+    expect(fontOptions.Newsreader.axes).toEqual(["opsz"]);
+    expect(fontOptions.Newsreader.style).toEqual(["normal", "italic"]);
   });
 });
 

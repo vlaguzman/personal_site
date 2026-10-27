@@ -99,7 +99,7 @@ h2,
 h3 {
   text-wrap: balance;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.1;
   letter-spacing: var(--tracking-heading);
   margin: 0;
@@ -119,7 +119,7 @@ h3 {
 
 em {
   font-style: italic;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--accent);
 }
 
@@ -212,7 +212,7 @@ nav a:last-child {
 
 .wordmark {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.4rem;
   letter-spacing: var(--tracking-heading);
   /* With three header children, absorb the free space so the main nav and the language switcher sit together on the right. */
@@ -618,7 +618,7 @@ nav a:last-child {
 .arc strong {
   display: block;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   letter-spacing: var(--tracking-heading);
   line-height: 1.15;
@@ -672,7 +672,7 @@ nav a:last-child {
   top: 110px;
   align-self: start;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-display);
   letter-spacing: var(--tracking-heading);
   padding-right: 25px;
@@ -735,7 +735,7 @@ nav a:last-child {
 .story .reflection {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   line-height: 1.35;
   letter-spacing: var(--tracking-heading);
@@ -769,7 +769,7 @@ nav a:last-child {
 .story .learned p {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-lead);
   line-height: 1.4;
   letter-spacing: var(--tracking-heading);
@@ -846,7 +846,7 @@ details[open] summary span {
   padding: 14px 0;
   border-bottom: 1px solid var(--line);
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   line-height: 1.3;
   letter-spacing: var(--tracking-heading);
@@ -871,7 +871,7 @@ details[open] summary span {
 blockquote {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   line-height: 1.4;
   letter-spacing: var(--tracking-heading);
@@ -900,7 +900,7 @@ blockquote {
 
 .yc div {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   letter-spacing: var(--tracking-heading);
 }
@@ -1035,7 +1035,7 @@ blockquote {
 
 .purpose p {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-display);
   line-height: 1.18;
   max-width: 930px;
@@ -1057,7 +1057,7 @@ blockquote {
 
 .purpose-bottom span:first-child {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
 }
 
@@ -1089,7 +1089,7 @@ blockquote {
 
 .beliefs-statement {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h3);
   line-height: 1.15;
   letter-spacing: var(--tracking-heading);
@@ -1207,7 +1207,7 @@ blockquote {
 
 .closing-cta p {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h3);
   letter-spacing: var(--tracking-heading);
   line-height: 1.15;
@@ -1339,7 +1339,7 @@ blockquote {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h4);
   letter-spacing: var(--tracking-heading);
   border-bottom: 1px solid var(--primary);
@@ -1405,7 +1405,7 @@ footer {
 .venture-root > strong {
   display: block;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h3);
   letter-spacing: var(--tracking-heading);
 }
@@ -1458,7 +1458,7 @@ footer {
 .venture-branches strong {
   display: block;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-lead);
   letter-spacing: var(--tracking-heading);
 }
@@ -1790,7 +1790,7 @@ footer {
 .speaking-teaching-grid p {
   max-width: 480px;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h3);
   line-height: 1.25;
   letter-spacing: var(--tracking-heading);
@@ -1937,7 +1937,7 @@ footer {
   padding-left: 28px;
   border-left: 3px solid var(--accent);
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h3);
   line-height: 1.25;
   letter-spacing: var(--tracking-heading);
@@ -2882,7 +2882,7 @@ footer {
   padding: 18px 0;
   font-family: var(--font-display);
   font-size: var(--fs-lead);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.3;
 }
 

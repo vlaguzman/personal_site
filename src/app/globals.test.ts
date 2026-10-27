@@ -153,4 +153,19 @@ describe("tablet reading width", () => {
     expect(css).toMatch(/h1,\s*h2,\s*h3\s*\{[^}]*text-wrap:\s*balance/);
     expect(css).toMatch(/\bp\s*\{[^}]*text-wrap:\s*pretty/);
   });
+
+});
+
+describe("display typography", () => {
+  it("sets display-serif text in weight 600, not 700, so the optical-size cut can stay fine", () => {
+    const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+    const heavy = rules
+      .filter(([, , body]) => /font-family:\s*var\(--font-display\)/.test(body) && /font-weight:\s*700/.test(body))
+      .map(([, sel]) => sel.trim().split("\n").pop());
+    expect(heavy).toEqual([]);
+  });
+
+  it("keeps the emphasised italic at the same weight as the headline", () => {
+    expect(css).toMatch(/\bem\s*\{[^}]*font-weight:\s*600/);
+  });
 });

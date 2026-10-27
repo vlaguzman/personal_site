@@ -5,9 +5,11 @@ import { getSiteMeta, SITE } from "@/data/site";
 import { hasLocale, LOCALES } from "@/i18n/config";
 import "../globals.css";
 
-// Editorial headlines: Newsreader (variable weight, with italics for the emphasised word).
+// Editorial headlines: Newsreader (variable weight and optical size, with italics for the emphasised word).
 const newsreader = Newsreader({
   subsets: ["latin"],
+  // The optical-size axis lets the browser switch to the finer display cut as headlines grow (font-optical-sizing: auto).
+  axes: ["opsz"],
   style: ["normal", "italic"],
   variable: "--font-newsreader",
   display: "swap",
