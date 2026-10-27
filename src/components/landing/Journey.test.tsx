@@ -8,7 +8,17 @@ describe("Journey", () => {
     const { container } = render(<Journey />);
     expect(container.querySelector("section#journey")).not.toBeNull();
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Different ventures.One purpose.");
-    expect(screen.queryAllByRole("heading", { level: 2 })).toEqual([]);
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+  });
+
+  it("titles every milestone with an h2, never skipping a heading level", () => {
+    const { container } = render(<Journey />);
+    expect(container.querySelectorAll("article.milestone > .story > h2")).toHaveLength(milestones.length);
+    const levels = [...container.querySelectorAll("h1, h2, h3, h4, h5, h6")].map((h) => Number(h.tagName[1]));
+    expect(levels[0]).toBe(1);
+    levels.forEach((level, i) => {
+      if (i > 0) expect(level, `heading #${i} jumps from h${levels[i - 1]} to h${level}`).toBeLessThanOrEqual(levels[i - 1] + 1);
+    });
   });
 
   it("renders every milestone as an article with its id and eyebrow", () => {

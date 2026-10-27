@@ -672,7 +672,12 @@ nav a:last-child {
   margin: 22px 0;
 }
 
-.story h3 + p {
+/* Milestone titles are h2 for the heading outline but keep the h3 scale. */
+.story h2 {
+  font-size: var(--fs-h3);
+}
+
+.story h2 + p {
   font-size: var(--fs-lead);
   line-height: 1.6;
 }

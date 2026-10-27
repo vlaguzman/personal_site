@@ -161,7 +161,7 @@ export function Milestone({ milestone }: { milestone: MilestoneData }) {
       <div className="story">
         {blocks[0]?.kind === "origin" && <BlockView block={blocks[0]} />}
         <span className="eyebrow">{eyebrow}</span>
-        <h3>
+        <h2>
           {titleLines.map((line, i) => (
             <Fragment key={line}>
               {i > 0 && <br />}
@@ -174,7 +174,7 @@ export function Milestone({ milestone }: { milestone: MilestoneData }) {
               <em>{titleEmphasis}</em>
             </>
           )}
-        </h3>
+        </h2>
         {blocks.map((block, i) => {
           if (blocks[0]?.kind === "origin" && i === 0) return null;
           return (
