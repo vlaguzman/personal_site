@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { getMilestones, milestones } from "@/data/milestones";
 import {
@@ -30,6 +30,28 @@ describe("Journey", () => {
     expect(link).toHaveAttribute("download", "founder-profile.pdf");
     expect(container.querySelector(".section-heading")).toContainElement(link);
     expect(screen.getAllByRole("link", { name: new RegExp(label) })).toHaveLength(1);
+  });
+
+  it("embeds the two Conectando Mentes videos in the 2011 milestone", () => {
+    const { container } = render(<Journey lang="en" />);
+    const frames = [...container.querySelectorAll("#year2011 iframe.video-embed")];
+    expect(frames.map((f) => f.getAttribute("src"))).toEqual([
+      "https://www.youtube-nocookie.com/embed/lpaQh2NsWX8",
+      "https://www.youtube-nocookie.com/embed/dI8pSxSmIOc",
+    ]);
+    expect(frames.map((f) => f.getAttribute("title"))).toEqual([
+      "Connecting Minds - Entirely for reference",
+      "Mindup - A workshop to validate and advance business ideas - Conectando Mentes",
+    ]);
+  });
+
+  it("shows the two Conectando Mentes videos side by side in one row, and leaves a lone video alone", () => {
+    const { container } = render(<Journey lang="en" />);
+    const row = container.querySelector("#year2011 .video-row") as HTMLElement;
+    expect(row.querySelectorAll("figure.video")).toHaveLength(2);
+    expect(container.querySelectorAll("#year2011 .video-row")).toHaveLength(1);
+    expect(container.querySelector("#year2023-community figure.video")).not.toBeNull();
+    expect(container.querySelector("#year2023-community .video-row")).toBeNull();
   });
 
   it("titles every milestone with an h2, never skipping a heading level", () => {
@@ -174,7 +196,8 @@ describe("Journey", () => {
     expect(frame).toHaveAttribute("src", "https://www.youtube-nocookie.com/embed/mp1-CpcOQUE");
     expect(frame).toHaveAttribute("title", expect.stringMatching(/documentary/i));
     expect(frame).toHaveAttribute("loading", "lazy");
-    expect(screen.getByRole("link", { name: /Watch on YouTube/ })).toHaveAttribute(
+    const milestone = container.querySelector("#year2023-community") as HTMLElement;
+    expect(within(milestone).getByRole("link", { name: /Watch on YouTube/ })).toHaveAttribute(
       "href",
       "https://www.youtube.com/watch?v=mp1-CpcOQUE",
     );

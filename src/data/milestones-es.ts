@@ -34,6 +34,8 @@ export const milestonesEs: Milestone[] = [
     blocks: [
       p("Conectando Mentes comenzó como la propuesta de una red social para emprendedores. Desarrollé la marca, trabajé en ventas y construí el MVP técnico de contactU, una aplicación pensada para hacer más útiles los espacios de networking."),
       p("Creamos los talleres Mindup y Visionario, llevando la idea a un formato presencial."),
+      { kind: "video" as const, youtubeId: "lpaQh2NsWX8", title: "Conectando mentes - Video enteramente referencial - Ver descripción completa" },
+      { kind: "video" as const, youtubeId: "dI8pSxSmIOc", title: "Mindup - Un taller para validar y avanzar en ideas de negocio - Conectando mentes" },
       posts(beingAnEntrepreneur),
     ],
   },

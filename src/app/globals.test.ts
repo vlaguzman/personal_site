@@ -189,3 +189,14 @@ describe("display typography", () => {
     expect(css).toMatch(/\bem\s*\{[^}]*font-weight:\s*600/);
   });
 });
+
+describe("video rows", () => {
+  it("puts consecutive videos side by side in two columns", () => {
+    expect(css).toMatch(/\.video-row\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
+  });
+
+  it("stacks the videos on phones so the previews stay watchable", () => {
+    const phone = [...css.matchAll(/@media \(max-width: 760px\) \{([\s\S]*?)\n\}/g)].map((m) => m[1]).join("\n");
+    expect(phone).toMatch(/\.video-row\s*\{[^}]*grid-template-columns:\s*1fr/);
+  });
+});

@@ -33,6 +33,8 @@ export const milestones: Milestone[] = [
     blocks: [
       p("Conectando Mentes began as a proposal for a social network for entrepreneurs. I developed the brand, worked on sales and built the technical MVP of contactU, an application designed to make networking spaces more useful."),
       p("We created Mindup and Visionario workshops, taking the idea into an in-person format."),
+      { kind: "video" as const, youtubeId: "lpaQh2NsWX8", title: "Connecting Minds - Entirely for reference" },
+      { kind: "video" as const, youtubeId: "dI8pSxSmIOc", title: "Mindup - A workshop to validate and advance business ideas - Conectando Mentes" },
       posts(beingAnEntrepreneur),
     ],
   },
